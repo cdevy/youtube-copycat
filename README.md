@@ -1,13 +1,19 @@
 # pcd2016
-Projet de conception et de développement.
 
-Utilisez ce Readme comme support à la documentation de votre projet. Vous y détaillerez
+Auteurs
 
-* La liste des fonctionnalités prévues, en cours de développement, réalisées
-* Les instructions pour installer et utiliser votre programme
-* Les informations utiles à son fonctionnement.
+	Guillaume GARCIA
+	Gauthier ZAMBAUX
+	Maud FARIZON
+	Charlotte DEVY
 
-Ce Readme sera régulièrement consulté par vos encadrants
+Dépendances
+
+	JavaSE-1.6
+
+Execute
+
+	javac -jar pcd2016.jar
 
 
 ## Importer le projet avec Maven

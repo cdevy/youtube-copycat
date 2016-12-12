@@ -11,11 +11,15 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
+import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchResult;
+import com.google.api.services.youtube.model.Thumbnail;
 
 import codingweek2016.features.Model;
 
@@ -29,7 +33,8 @@ public class View extends JPanel implements Observer {
 	
 	private JButton searchButton = new JButton("Search");
 	private JTextField searchField = new JTextField();
-	private JTextArea resultArea = new JTextArea();
+	//private JTextArea resultArea = new JTextArea();
+	private JEditorPane resultPane = new JEditorPane();
 	
 	public View(Model m) {
 		
@@ -45,33 +50,34 @@ public class View extends JPanel implements Observer {
             public void actionPerformed(ActionEvent e) {
             	String text = searchField.getText();
             	model.searchKeyWord(text);
-            	
+
             	if (videos != null) {
+            		String result = "<html><head></head><body>";
             		if (!videos.iterator().hasNext()) {
-            		    resultArea.append(" There aren't any results for your query.");
+            			result += "<p> There aren't any results for your query.</p>";//resultArea.append(" There aren't any results for your query.");
             		} else {
-            			resultArea.append("\n=============================================================\n");
-                		resultArea.append("First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + text + "\".\n"); 
-                		resultArea.append("=============================================================\n");
+            			result += "<p><br/>=============================================================<br/>";//resultArea.append("\n=============================================================\n");
+            			result += "First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + text + "\".<br/>";//resultArea.append("First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + text + "\".\n"); 
+            			result += "=============================================================<br/></p>";//resultArea.append("=============================================================\n");
             		}
             		
-            		/**
-            		 * @TODO : correct the display error !
-    		        while (videos.iterator().hasNext()) {
-
-    		            SearchResult singleVideo = videos.iterator().next();
-    		            ResourceId rId = singleVideo.getId();
-    		            System.out.println("1");
-
-    		            if (rId.getKind().equals("youtube#video")) {
-    		                Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
-
-    		                resultArea.append(" Video Id" + rId.getVideoId());
-    		                resultArea.append(" Title: " + singleVideo.getSnippet().getTitle());
-    		                resultArea.append(" Thumbnail: " + thumbnail.getUrl());
-    		                resultArea.append("\n-------------------------------------------------------------\n");
-    		            }
-    		        }*/
+    		        //while (videos.iterator().hasNext()) {
+            		for (int i=0;i<videos.size();i++) {
+	    		            SearchResult singleVideo = videos.get(i);//videos.iterator().next();
+	    		            ResourceId rId = singleVideo.getId();
+	
+	    		            if (rId.getKind().equals("youtube#video")) {
+	    		                Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
+	
+	    		                //result += "<p> Video Id: " + rId.getVideoId()+"<br/>";//resultArea.append(" Video Id" + rId.getVideoId());
+	    		                result += " Title: " + singleVideo.getSnippet().getTitle()+"<br/>";//resultArea.append(" Title: " + singleVideo.getSnippet().getTitle());
+	    		                result += "<img src=" + thumbnail.getUrl()+" width=50 height=50></img><br/>";//resultArea.append(" Thumbnail: " + thumbnail.getUrl());
+	    		                result += "<br/>-------------------------------------------------------------<br/></p>";//resultArea.append("\n-------------------------------------------------------------\n");
+	    		            }
+    		        }
+            		result += "</body></html>";
+            		resultPane.setContentType("text/html");
+            		resultPane.setText(result);
                 }
             }
         });
@@ -83,7 +89,8 @@ public class View extends JPanel implements Observer {
 		
 		this.add(searchPanel, BorderLayout.NORTH);
 		
-		this.add(resultArea, BorderLayout.CENTER);
+		this.add(resultPane, BorderLayout.CENTER);
+		//this.add(resultArea, BorderLayout.CENTER);
 	}
 
 	@SuppressWarnings("unchecked")

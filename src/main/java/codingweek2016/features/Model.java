@@ -41,6 +41,7 @@ public class Model extends Observable {
         }
         
         try {
+
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
             	
                 public void initialize(HttpRequest request) throws IOException {
@@ -55,14 +56,14 @@ public class Model extends Observable {
             String apiKey = properties.getProperty("youtube.apikey");
             search.setKey(apiKey);
             search.setQ(queryTerm);
-
+            System.out.println("");
             search.setType("video");
 
             search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
             search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
             SearchListResponse searchResponse = search.execute();
             videos = searchResponse.getItems();
-            
+            System.out.println("");
             /* Notify observer of changes */
             setChanged();
             notifyObservers(videos);

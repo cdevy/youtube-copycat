@@ -1,11 +1,14 @@
-package codingweek2016.features;
+package codingweek2016.model;
 
+import java.awt.GridLayout;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Properties;
+
+import javax.swing.JPanel;
 
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
@@ -16,19 +19,19 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
-public class Model extends Observable {
+public class SearchRequest extends Observable {
 	
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 3;
+    private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
     private static YouTube youtube;
     
-    private List<SearchResult> videos = new ArrayList<SearchResult>();
+    private List<Video> videos = new ArrayList<Video>();
 	
-	public Model() {
+	public SearchRequest() {
 		super();
 	}
 	
-	public void searchKeyWord(String userInput) {
+	public List<SearchResult> searchKeyWord(String userInput) {
         Properties properties = new Properties();
         try {
             InputStream in = Search.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
@@ -59,14 +62,11 @@ public class Model extends Observable {
             System.out.println("");
             search.setType("video");
 
-            search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
+            search.setFields("items(id/kind,id/videoId,snippet/title,snippet/description,snippet/thumbnails/default/url)");
             search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
             SearchListResponse searchResponse = search.execute();
-            videos = searchResponse.getItems();
-            System.out.println("");
-            /* Notify observer of changes */
-            setChanged();
-            notifyObservers(videos);
+            
+            return(searchResponse.getItems());
             
         } catch (GoogleJsonResponseException e) {
             System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
@@ -76,10 +76,28 @@ public class Model extends Observable {
         } catch (Throwable t) {
             t.printStackTrace();
         }
+		return null;
 	}
 	
-	public List<SearchResult> getVideos() {
-		return videos;
+	public void loadVideos(List<SearchResult> results) {
+		for (int i=0;i<results.size();i++) {
+			SearchResult singleVideo = results.get(i);
+			videos.add(new Video(singleVideo));    
+        }
+		this.setChanged();
+		this.notifyObservers(videos);
 	}
+	
+	public JPanel display() {
+		JPanel panel = new JPanel();
+		GridLayout grid = new GridLayout(25,1);
+		grid.setVgap(10);
+		panel.setLayout(grid);
+		
+		for (int i=0; i<videos.size(); i++) {
+    		panel.add(videos.get(i));
+    	}	
+		return panel;
+	} 
 
 }

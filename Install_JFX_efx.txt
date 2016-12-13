@@ -1,0 +1,29 @@
+***Installer le plugin e(fx)clipse
+
+Pour eclispe 3.8 :
+
+-Install New software > add : http://download.eclipse.org/efxclipse/updates-released/0.9.0/site
+-Seulement cocher e(fx)clipse - IDE - Juno/Indigo dans e(fx)clipse - single components
+
+Pour eclipse plus récent :
+
+-Install New software > add : http://download.eclipse.org/efxclipse/updates-released/2.4.0/site
+-Seulement cocher e(fx)clipse - IDE - Kepler dans e(fx)clipse - install
+
+
+
+***Lier la lib JavaFX SDK au projet :
+
+Si la version du Java SE/SDK est inférieur à 7u35:
+
+il faudra télécharger la JavaFX SDK à :
+http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javafx-419431.html#javafx_sdk-1.3.1-oth-JPR
+
+Sinon, elle est déjà comprise dans le SE/SDK de Java.
+
+Rechercher dans le SE/SDK de Java / ou l'endroit où est installé le SDK de JavaFX : jfxrt.jar
+
+Dans eclipse : clic droit sur le projet > Build Path > Configure Builde Path
+Dans la fenetre qui s'ouvre > Add External JARs > choisir jfxrt.jar
+
+Ne pas oublier d'importer après :) !  :   import javafx.....;

@@ -1,0 +1,51 @@
+**** Objectifs de la semaine : ****
+
+- développer une application Java utilisant l'API de Youtube
+- l'application doit pouvoir faire des requêtes YT et sauvegarder les données pour visionnement hors-ligne
+
+
+
+**** LUNDI ****
+
+Démarrage du SRS
+Mise en place de la base de l'interface graphique (Cahier des charges)
+Mise en place de la base de données -> MySQL, Quantum pour Eclipse
+Choix des technologies : Eclipse, Java : JavaSE-1.6, API YT, Swing, Github, BD : MySQL ou SQLite, gestionnaire d'accès BD : JDBC
+roadmap
+organisation du git : branche master, branche dev composée des branches freatures que l'on merge à la fin de la journée
+requêtes avec l'API + barre de recherche, bouton validé et affichage des résultats
+
+
+**** MARDI ****
+
+
+
+
+**** MERCREDI ****
+
+
+**** JEUDI ****
+
+
+**** VENDREDI/FINAL ****
+
+
+
+
+
+
+-> Webographie :
+openclassrooms.com : Interactions avec les BD
+
+
+Remerciements :
+Romaric Molard pour son fichier décrivant l'installation de l'API
+
+
+
+
+
+
+Questions : 
+
+    Clé démo ?

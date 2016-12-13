@@ -1,10 +1,12 @@
 package codingweek2016;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -13,13 +15,12 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
+import com.google.api.services.youtube.model.VideoPlayer;
 
 import codingweek2016.features.Model;
 
@@ -37,7 +38,7 @@ public class View extends JPanel implements Observer {
 	private JEditorPane resultPane = new JEditorPane();
 	
 	public View(Model m) {
-		
+		String id = "";
 		model = m;
 		model.addObserver(this);
 		
@@ -68,13 +69,15 @@ public class View extends JPanel implements Observer {
 	
 	    		            if (rId.getKind().equals("youtube#video")) {
 	    		                Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
-	
+	    		                id = rId.getVideoId();
 	    		                //result += "<p> Video Id: " + rId.getVideoId()+"<br/>";//resultArea.append(" Video Id" + rId.getVideoId());
-	    		                result += " Title: " + singleVideo.getSnippet().getTitle()+"<br/>";//resultArea.append(" Title: " + singleVideo.getSnippet().getTitle());
+	    		                	//lien vidéo : https://www.youtube.com/watch?v= + id
+	    		                result += "<p> Title: " + singleVideo.getSnippet().getTitle()+"<br/>";//resultArea.append(" Title: " + singleVideo.getSnippet().getTitle());
 	    		                result += "<img src=" + thumbnail.getUrl()+" width=50 height=50></img><br/>";//resultArea.append(" Thumbnail: " + thumbnail.getUrl());
 	    		                result += "<br/>-------------------------------------------------------------<br/></p>";//resultArea.append("\n-------------------------------------------------------------\n");
 	    		            }
     		        }
+            		//result += "<embed width=\"420\" height=\"315\" src=\"https://www.youtube.com/embed/"+id+"\"/>";//"<video width=320 height=240 controls>  <source src=\"https://www.youtube.com/watch?v=" + id + "\" type=\"video/mp4\">Your browser does not support the video tag.</video>";
             		result += "</body></html>";
             		resultPane.setContentType("text/html");
             		resultPane.setText(result);
@@ -82,6 +85,14 @@ public class View extends JPanel implements Observer {
             }
         });
 		
+		//file you want to play
+        URL mediaURL = new URL("https://www.youtube.com/embed/"+id);
+        //create the media player with the media url
+        Player mediaPlayer = Manager.createRealizedPlayer(mediaURL);
+        //get components for video and playback controls
+        Component video = mediaPlayer.getVisualComponent();
+        Component controls = mediaPlayer.getControlPanelComponent();
+
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(new FlowLayout());
 		searchPanel.add(searchField);

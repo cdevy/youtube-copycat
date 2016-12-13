@@ -21,7 +21,7 @@ import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.VideoPlayer;
 
-import codingweek2016.features.Model;
+import codingweek2016.model.SearchRequest;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
@@ -33,7 +33,7 @@ public class View extends JPanel implements Observer {
 	
 	private static final long NUMBER_OF_VIDEOS_RETURNED = 3;
 	
-	private Model model;
+	private SearchRequest request;
 	private List<SearchResult> videos = new ArrayList<SearchResult>();
 	
 	private JButton searchButton = new JButton("Search");
@@ -43,11 +43,11 @@ public class View extends JPanel implements Observer {
 	private final JFXPanel jfxPanel = new JFXPanel();
 	private String id = "";
 	
-	public View(Model m) {
+	public View(SearchRequest r) {
 		
 		
-		model = m;
-		model.addObserver(this);
+		request = r;
+		request.addObserver(this);
 		
 		this.setLayout(new BorderLayout());
 		
@@ -58,7 +58,7 @@ public class View extends JPanel implements Observer {
             public void actionPerformed(ActionEvent e) {
             	
             	String text = searchField.getText();
-            	model.searchKeyWord(text);
+            	request.searchKeyWord(text);
 
             	if (videos != null) {
             		
@@ -118,7 +118,6 @@ public class View extends JPanel implements Observer {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public void update(Observable observable, Object videos) {
 		if (videos instanceof List<?>) {
 			this.videos = (List<SearchResult>) videos;

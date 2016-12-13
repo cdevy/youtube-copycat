@@ -5,18 +5,18 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import codingweek2016.features.Model;
+import codingweek2016.model.SearchRequest;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 	
-	public MainWindow(Model model) {
+	public MainWindow(SearchRequest request) {
 		super("Youtube Copycat");
 		setPreferredSize(new Dimension(700,500));
 				
 		setLayout(new BorderLayout());
 		
-		View v = new View(model);
+		View v = new View(request);
 		
 		this.add(v);
 		

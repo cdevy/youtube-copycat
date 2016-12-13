@@ -102,7 +102,6 @@ public class UploadThumbnail {
 
             // Set the upload state for the thumbnail image.
             MediaHttpUploaderProgressListener progressListener = new MediaHttpUploaderProgressListener() {
-                @Override
                 public void progressChanged(MediaHttpUploader uploader) throws IOException {
                     switch (uploader.getUploadState()) {
                         // This value is set before the initiation request is

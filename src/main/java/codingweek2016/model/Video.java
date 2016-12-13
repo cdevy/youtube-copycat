@@ -1,9 +1,7 @@
-package codingweek2016.features;
+package codingweek2016.model;
 
 import java.awt.BorderLayout;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import com.google.api.services.youtube.model.SearchResult;
 
@@ -78,13 +75,13 @@ public class Video extends JPanel {
 		List<SearchResult> results = new ArrayList<SearchResult>();
 		JTextArea resultPane = new JTextArea();
 		
-		Model m = new Model();
+		SearchRequest r = new SearchRequest();
 		
-    	results = m.searchKeyWord("lol");
+    	results = r.searchKeyWord("lol");
     	System.out.println(results);
 		    	
     	List<Video> videos = new ArrayList<Video>(); 
-    	videos = m.loadVideos(results);
+    	videos = r.loadVideos(results);
     	System.out.println(videos);
     	
     	resultPane.setOpaque(false);

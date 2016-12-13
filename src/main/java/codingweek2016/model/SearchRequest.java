@@ -1,11 +1,14 @@
 package codingweek2016.model;
 
+import java.awt.GridLayout;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Properties;
+
+import javax.swing.JPanel;
 
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
@@ -19,22 +22,13 @@ import com.google.api.services.youtube.model.SearchResult;
 public class SearchRequest extends Observable {
 	
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 3;
+    private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
     private static YouTube youtube;
     
-    private List<SearchResult> videos = new ArrayList<SearchResult>();
+    private List<Video> videos = new ArrayList<Video>();
 	
 	public SearchRequest() {
 		super();
-	}
-	
-	public List<Video> loadVideos(List<SearchResult> results) {
-		List<Video> videos2 = new ArrayList<Video>();
-		for (int i=0;i<results.size();i++) {
-			SearchResult singleVideo = results.get(i);
-			videos2.add(new Video(singleVideo));    
-        }
-		return videos2;
 	}
 	
 	public List<SearchResult> searchKeyWord(String userInput) {
@@ -71,6 +65,7 @@ public class SearchRequest extends Observable {
             search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
             search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
             SearchListResponse searchResponse = search.execute();
+            
             return(searchResponse.getItems());
             
         } catch (GoogleJsonResponseException e) {
@@ -84,8 +79,25 @@ public class SearchRequest extends Observable {
 		return null;
 	}
 	
-	public List<SearchResult> getVideos() {
-		return videos;
+	public void loadVideos(List<SearchResult> results) {
+		for (int i=0;i<results.size();i++) {
+			SearchResult singleVideo = results.get(i);
+			videos.add(new Video(singleVideo));    
+        }
+		this.setChanged();
+		this.notifyObservers(videos);
 	}
+	
+	public JPanel display() {
+		JPanel panel = new JPanel();
+		GridLayout grid = new GridLayout(25,1);
+		grid.setVgap(10);
+		panel.setLayout(grid);
+		
+		for (int i=0; i<videos.size(); i++) {
+    		panel.add(videos.get(i));
+    	}	
+		return panel;
+	} 
 
 }

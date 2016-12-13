@@ -1,7 +1,6 @@
 package codingweek2016;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -23,6 +22,11 @@ import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.VideoPlayer;
 
 import codingweek2016.features.Model;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 @SuppressWarnings("serial")
 public class View extends JPanel implements Observer {
@@ -36,9 +40,12 @@ public class View extends JPanel implements Observer {
 	private JTextField searchField = new JTextField();
 	//private JTextArea resultArea = new JTextArea();
 	private JEditorPane resultPane = new JEditorPane();
+	private final JFXPanel jfxPanel = new JFXPanel();
+	private String id = "";
 	
 	public View(Model m) {
-		String id = "";
+		
+		
 		model = m;
 		model.addObserver(this);
 		
@@ -49,10 +56,12 @@ public class View extends JPanel implements Observer {
 		searchButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
+            	
             	String text = searchField.getText();
             	model.searchKeyWord(text);
 
             	if (videos != null) {
+            		
             		String result = "<html><head></head><body>";
             		if (!videos.iterator().hasNext()) {
             			result += "<p> There aren't any results for your query.</p>";//resultArea.append(" There aren't any results for your query.");
@@ -81,18 +90,21 @@ public class View extends JPanel implements Observer {
             		result += "</body></html>";
             		resultPane.setContentType("text/html");
             		resultPane.setText(result);
+            		Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            initFX(jfxPanel,id);
+                        }			
+                    });
                 }
             }
         });
 		
-		//file you want to play
-        URL mediaURL = new URL("https://www.youtube.com/embed/"+id);
-        //create the media player with the media url
-        Player mediaPlayer = Manager.createRealizedPlayer(mediaURL);
-        //get components for video and playback controls
-        Component video = mediaPlayer.getVisualComponent();
-        Component controls = mediaPlayer.getControlPanelComponent();
+		
 
+	    // jfxPanel.setScene(new Scene(view));
+		
+		
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(new FlowLayout());
 		searchPanel.add(searchField);
@@ -101,6 +113,7 @@ public class View extends JPanel implements Observer {
 		this.add(searchPanel, BorderLayout.NORTH);
 		
 		this.add(resultPane, BorderLayout.CENTER);
+		this.add(jfxPanel, BorderLayout.SOUTH);
 		//this.add(resultArea, BorderLayout.CENTER);
 	}
 
@@ -110,6 +123,16 @@ public class View extends JPanel implements Observer {
 		if (videos instanceof List<?>) {
 			this.videos = (List<SearchResult>) videos;
 		}
+	}
+	
+	private static void initFX(JFXPanel jfxPanel,String id) {
+		WebView view = new WebView();
+		WebEngine webEngine = view.getEngine();
+				webEngine.load(
+				"http://www.youtube.com/embed/"+id+"?autoplay=0"
+	    );
+		view.setPrefSize(200, 200);
+        jfxPanel.setScene(new Scene(view));
 	}
 
 }

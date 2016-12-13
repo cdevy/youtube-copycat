@@ -12,7 +12,7 @@ public class MainWindow extends JFrame {
 	
 	public MainWindow(SearchRequest request) {
 		super("Youtube Copycat");
-		setPreferredSize(new Dimension(1000,700));
+		setPreferredSize(new Dimension(1200,700));
 				
 		setLayout(new BorderLayout());
 		

@@ -28,14 +28,11 @@ import com.google.api.services.youtubereporting.model.Report;
 import com.google.common.collect.Lists;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-
-import javax.print.attribute.standard.Media;
 
 /**
  * This sample retrieves reports created by a specific job by:

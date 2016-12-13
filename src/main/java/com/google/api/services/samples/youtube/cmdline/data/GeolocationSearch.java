@@ -88,7 +88,6 @@ public class GeolocationSearch {
             // initialized when the HttpRequest is initialized, we override
             // the interface and provide a no-op function.
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
-                @Override
                 public void initialize(HttpRequest request) throws IOException {
                 }
             }).setApplicationName("youtube-cmdline-geolocationsearch-sample").build();

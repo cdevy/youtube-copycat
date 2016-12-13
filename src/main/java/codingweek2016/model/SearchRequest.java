@@ -1,4 +1,4 @@
-package codingweek2016.features;
+package codingweek2016.model;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +16,7 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
-public class Model extends Observable {
+public class SearchRequest extends Observable {
 	
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
     private static final long NUMBER_OF_VIDEOS_RETURNED = 3;
@@ -24,11 +24,20 @@ public class Model extends Observable {
     
     private List<SearchResult> videos = new ArrayList<SearchResult>();
 	
-	public Model() {
+	public SearchRequest() {
 		super();
 	}
 	
-	public void searchKeyWord(String userInput) {
+	public List<Video> loadVideos(List<SearchResult> results) {
+		List<Video> videos2 = new ArrayList<Video>();
+		for (int i=0;i<results.size();i++) {
+			SearchResult singleVideo = results.get(i);
+			videos2.add(new Video(singleVideo));    
+        }
+		return videos2;
+	}
+	
+	public List<SearchResult> searchKeyWord(String userInput) {
         Properties properties = new Properties();
         try {
             InputStream in = Search.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
@@ -62,11 +71,7 @@ public class Model extends Observable {
             search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
             search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
             SearchListResponse searchResponse = search.execute();
-            videos = searchResponse.getItems();
-            System.out.println("");
-            /* Notify observer of changes */
-            setChanged();
-            notifyObservers(videos);
+            return(searchResponse.getItems());
             
         } catch (GoogleJsonResponseException e) {
             System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
@@ -76,6 +81,7 @@ public class Model extends Observable {
         } catch (Throwable t) {
             t.printStackTrace();
         }
+		return null;
 	}
 	
 	public List<SearchResult> getVideos() {

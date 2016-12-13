@@ -150,7 +150,7 @@ public class Search {
      *
      * @param query Search query (String)
      */
-    public static void prettyPrint(Iterator<SearchResult> iteratorSearchResults, String query) {
+    private static void prettyPrint(Iterator<SearchResult> iteratorSearchResults, String query) {
 
         System.out.println("\n=============================================================");
         System.out.println(

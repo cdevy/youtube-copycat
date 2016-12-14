@@ -49,9 +49,9 @@ public class MainMenu extends JPanel {
 	private static YouTube youtube;
 	
 	private JPanel logPanel = new JPanel();
-	private JButton searchButton = new JButton("Search");
+	private JButton searchButton = new JButton("Favoris");
 	private JButton suggestionButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
-	private JButton abonnementButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
+	private JButton abonnementButton = new JButton(new ImageIcon("src/main/resources/icons/ic_pages_black_36dp_1x.png"));
 	private JButton settingsButton = new JButton(new ImageIcon("src/main/resources/icons/ic_settings_black_36dp_1x.png"));
 	private JButton logButton = new JButton("Log in");
 	private JLabel nameLabel = new JLabel("   You are logged in.");
@@ -105,7 +105,7 @@ public class MainMenu extends JPanel {
 		settingsButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	add(new SettingsView());
+            	//add(new SettingsView());
             }
         });
 		
@@ -182,6 +182,7 @@ public class MainMenu extends JPanel {
 		} 
 		
 		logPanel.add(logButton);
+		logPanel.add(abonnementButton);
 		logPanel.add(searchButton);
 		logPanel.add(suggestionButton);
 		logPanel.add(settingsButton);

@@ -39,11 +39,14 @@ Execute
 * Mise en place de la possibilité de se connecter à son compte YT
 	-> l'authentification n'a pas été ajoutée à la release car il est plus difficile que prévu de l'implémenter (nous avons choisi d'utiliser le package com.google.gdata qui pose des problème d'installation)
 * Mise en place du visionnage de vidéos
+	-> le visionnage de vidéos est infructueux avec JavaFX : on peut ouvrir le player Youtube mais on obtient une erreur lorsqu'on essaie de lancer la vidéo.
 
 
 ### Mercredi
 
 * Mise en ligne de vidéos depuis son compte
+	-> mise en place réussie du visionnage de vidéos avec SWT (sauf pour certaines vidéos -> trouver la cause du problème)
+	-> mise en place de l'authenfication réussie
 * Consultation des commentaires d'une vidéos (éventuellement ajout de commentaires et ajout d'un pouce en l'air ou vers le bas)
 
 

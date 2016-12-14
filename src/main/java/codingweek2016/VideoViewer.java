@@ -1,51 +1,33 @@
 package codingweek2016;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
-import javax.swing.JFrame;
-
-import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.VideoPlayer;
-
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-
-@SuppressWarnings("serial")
-public class VideoViewer extends JFrame {
+public class VideoViewer {
 	
 	public VideoViewer(String title, final String id) {
-		super(title);
 		
-		setPreferredSize(new Dimension(600,500));
-				
-		setLayout(new BorderLayout());
-		
-		final JFXPanel jfxPanel = new JFXPanel();
-		Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                initFX(jfxPanel, id);
-            }			
-        });
+		String url = "http://www.youtube.com/embed/"+id+"?autoplay=1";
 
-		this.add(jfxPanel);
-		
-		pack();
-		setVisible(true);
+        Display display = new Display();
+        Shell shell = new Shell(display);
+
+        Browser browser = new Browser(shell, SWT.NONE);
+        browser.setBounds(5,5,500,300);
+
+        browser.setUrl(url);    
+        shell.open();
+
+        browser.setVisible(true);
+        shell.setVisible(true);
+
+        while (!shell.isDisposed())
+        {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
 	}
-	
-	private static void initFX(JFXPanel jfxPanel, String id) {
-		WebView view = new WebView();
-		WebEngine webEngine = view.getEngine();
-		webEngine.load(
-				"http://www.youtube.com/embed/"+id+"?autoplay=0"
-	    );
-		view.setPrefSize(200, 200);
-        jfxPanel.setScene(new Scene(view));
-	}
-	
 }

@@ -36,6 +36,7 @@ public class MainMenu extends JPanel {
 		logButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
+            	new GoogleClientSecrets();
             	if (account == null) {
 	            	try {
 						account = new Account();
@@ -47,16 +48,16 @@ public class MainMenu extends JPanel {
 						logPanel.repaint();
 						logPanel.add(new JLabel("Logged in"));
 						
-						addSubscribtions();
-						Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/client_secrets.json"));
-				        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(Auth.JSON_FACTORY, clientSecretReader);
+						//addSubscribtions();
+						//Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/client_secrets.json"));
+				       // GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(Auth.JSON_FACTORY, clientSecretReader);
 
 				        // Checks that the defaults have been replaced (Default = "Enter X here").
 				        
-						URL webSite = new URL("https://www.googleapis.com/youtube/v3/channels?part=id%2Csnippet%2Cstatistics%2CcontentDetails%2CtopicDetails&forUsername=KarlWolfVEVO&key="+clientSecrets.getDetails().getClientSecret());
-				        URLConnection connection = webSite.openConnection();
-				        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-						System.out.println("You are logged in under: "+in);//youtube.channels().list("snippets.title").execute());
+						//URL webSite = new URL("https://www.googleapis.com/youtube/v3/channels?part=id%2Csnippet%2Cstatistics%2CcontentDetails%2CtopicDetails&forUsername=KarlWolfVEVO&key="+clientSecrets.getDetails().getClientSecret());
+				        //URLConnection connection = webSite.openConnection();
+				        //BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+						System.out.println("You are logged in under: "+youtube.channels().list("snippet.title"));//youtube.channels().list("snippets.title").execute());
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}

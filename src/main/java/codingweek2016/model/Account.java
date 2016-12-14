@@ -5,8 +5,9 @@ import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.services.samples.youtube.cmdline.Auth;
 import com.google.common.collect.Lists;
+
+import codingweek2016.model.Authentification;
 
 public class Account {
 	
@@ -19,7 +20,7 @@ public class Account {
 		
 		try {
 			// Authorize the request.
-			credential = Auth.authorize(scopes, "addsubscription");
+			credential = Authentification.authorize(scopes, "addsubscription");
 		} catch (GoogleJsonResponseException e) {
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
                     + e.getDetails().getMessage());

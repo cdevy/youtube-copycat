@@ -14,11 +14,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import codingweek2016.model.Account;
+
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.services.samples.youtube.cmdline.Auth;
 import com.google.api.services.youtube.YouTube;
 
-@SuppressWarnings("serial")
 public class MainMenu extends JPanel {
 	
 	private Account account = null;
@@ -48,14 +49,14 @@ public class MainMenu extends JPanel {
 						
 						//addSubscribtions();
 						//Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/client_secrets.json"));
-				       // GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(Auth.JSON_FACTORY, clientSecretReader);
+						//GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(Auth.JSON_FACTORY, clientSecretReader);
 
 				        // Checks that the defaults have been replaced (Default = "Enter X here").
 				        
 						//URL webSite = new URL("https://www.googleapis.com/youtube/v3/channels?part=id%2Csnippet%2Cstatistics%2CcontentDetails%2CtopicDetails&forUsername=KarlWolfVEVO&key="+clientSecrets.getDetails().getClientSecret());
 				        //URLConnection connection = webSite.openConnection();
 				        //BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-						System.out.println("You are logged in under: "+youtube.channels().list("snippet.title"));//youtube.channels().list("snippets.title").execute());
+						//System.out.println("You are logged in under: "+youtube.channels().list("snippet.defaultlanguage").execute());//youtube.channels().list("snippets.title").execute());
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}

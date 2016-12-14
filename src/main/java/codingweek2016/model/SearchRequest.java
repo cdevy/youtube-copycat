@@ -14,7 +14,6 @@ import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.services.samples.youtube.cmdline.Auth;
-import com.google.api.services.samples.youtube.cmdline.data.Search;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
@@ -34,7 +33,7 @@ public class SearchRequest extends Observable {
 	public List<SearchResult> searchKeyWord(String userInput) {
         Properties properties = new Properties();
         try {
-            InputStream in = Search.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
+            InputStream in = SearchRequest.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
             properties.load(in);
 
         } catch (IOException e) {

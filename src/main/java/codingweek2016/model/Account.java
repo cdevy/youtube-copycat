@@ -1,4 +1,4 @@
-package codingweek2016;
+package codingweek2016.model;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,10 +6,6 @@ import java.util.List;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.samples.youtube.cmdline.Auth;
-/*
-import com.google.gdata.client.youtube.YouTubeService;
-import com.google.gdata.data.youtube.UserProfileEntry;
-import com.google.gdata.util.ServiceException; */
 import com.google.common.collect.Lists;
 
 public class Account {

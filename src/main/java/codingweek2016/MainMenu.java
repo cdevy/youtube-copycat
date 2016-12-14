@@ -18,6 +18,7 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Properties;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +26,8 @@ import javax.swing.JTextField;
 
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerator;
+
+import view.SettingsView;
 
 import codingweek2016.model.Account;
 
@@ -47,8 +50,13 @@ public class MainMenu extends JPanel {
 	
 	private JPanel logPanel = new JPanel();
 	private JButton searchButton = new JButton("Search");
-	private JButton suggestionButton = new JButton("Suggestions");
-	private JButton settingsButton = new JButton("Settings");
+	private JButton suggestionButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
+	private JButton abonnementButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
+	private JButton settingsButton = new JButton(new ImageIcon("src/main/resources/icons/ic_settings_black_36dp_1x.png"));
+	private JButton logButton = new JButton("Log in");
+	private JLabel nameLabel = new JLabel("   You are logged in.");
+	private Dimension dim4Buttons = new Dimension(100,50);
+	private String usrName = "";
 	
 	/*private JPanel subscriptionsPanel = new JPanel();
 	private JButton logButton = new JButton("Log in");
@@ -56,22 +64,34 @@ public class MainMenu extends JPanel {
 	private JLabel enterName = new JLabel("Enter your name: ");
 	private JTextField enterNameZone = new JTextField();
 	private JButton enterNameButton = new JButton("Confirm");*/
-	
-	private String usrName = "";
+
 	
 	public MainMenu() {
-		GridLayout layout = new GridLayout(3,1);
+		
+		
+		GridLayout layout = new GridLayout(5,1);
 		layout.setVgap(10);
 		logPanel.setLayout(layout);
 		
-		searchButton.setPreferredSize(new Dimension(150,50));
-		suggestionButton.setPreferredSize(new Dimension(150,50));
-		settingsButton.setPreferredSize(new Dimension(150,50));
+		logButton.setPreferredSize(dim4Buttons);
+		abonnementButton.setPreferredSize(dim4Buttons);
+		searchButton.setPreferredSize(dim4Buttons);
+		suggestionButton.setPreferredSize(dim4Buttons);
+		settingsButton.setPreferredSize(dim4Buttons);
+		
+		//settingsButton.setIcon(new ImageIcon("/resources/icons/ic_settings_black_36dp_1x.png")); 
 		
 		searchButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	
+            	//add(new View(new SearchRequest()));
+            }
+        });
+		
+		abonnementButton.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	//add(new View(new SearchRequest()));
             }
         });
 		
@@ -85,18 +105,11 @@ public class MainMenu extends JPanel {
 		settingsButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	
+            	add(new SettingsView());
             }
         });
 		
-		logPanel.add(searchButton);
-		logPanel.add(suggestionButton);
-		logPanel.add(settingsButton);
-
-		this.setLayout(new FlowLayout()); 
-		this.add(logPanel);
-		
-		/*enterNameZone.setPreferredSize(new Dimension(50,20));
+		/*enterNameZone.setPreferredSize(new Dimension(50,20));*/
 		
 		logButton.addActionListener(new ActionListener() {
 			  
@@ -107,9 +120,15 @@ public class MainMenu extends JPanel {
 						youtube = new YouTube.Builder(Authentification.HTTP_TRANSPORT, Authentification.JSON_FACTORY, account.getCredential())
 				                .setApplicationName("youtube-cmdline-localizations-sample").build();
 						
-						logPanel.remove(logButton);
+						logPanel.removeAll();
 						logPanel.revalidate();
 						logPanel.repaint();
+						logPanel.add(nameLabel);
+						logPanel.add(abonnementButton);
+						logPanel.add(searchButton);
+						logPanel.add(suggestionButton);
+						logPanel.add(settingsButton);
+
 						
 				        
 				        //JsonFactory jsonfactory = new JsonFactory();
@@ -117,17 +136,17 @@ public class MainMenu extends JPanel {
 						//JsonGenerator jsonGenerator = jsonfactory.createJsonGenerator(writer);
 						//System.out.println(account.getCredential().getJsonFactory().toPrettyString(jsonGenerator));
 						//System.out.println(youtube.channels().list("snippet").getJsonContent());
-						
+						/*
 						logPanel.add(enterName);
 						logPanel.add(enterNameZone);
-						logPanel.add(enterNameButton);
+						logPanel.add(enterNameButton);*/
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
             	}
             }
         });
-		
+		/*
 		enterNameButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
@@ -153,15 +172,23 @@ public class MainMenu extends JPanel {
             	}
             }
             	
-        });
+        });*/
+		
+		
 		
 		this.setLayout(new FlowLayout());
 		if (account ==  null) {		
 			logPanel.add(logButton);
 		} 
 		
+		logPanel.add(logButton);
+		logPanel.add(searchButton);
+		logPanel.add(suggestionButton);
+		logPanel.add(settingsButton);
+
+		this.setLayout(new FlowLayout()); 
 		this.add(logPanel);
-		this.add(subscriptionsPanel);*/
+		//this.add(subscriptionsPanel);
 	}
 	
 	public void connect() throws IOException {
@@ -177,8 +204,7 @@ public class MainMenu extends JPanel {
         }
 		String apiKey = properties.getProperty("youtube.apikey");
 		
-		URL webSite = null;
-		webSite = new URL("https://www.googleapis.com/youtube/v3/channels?part=id%2Csnippet%2Cstatistics%2CcontentDetails%2CtopicDetails&forUsername="+usrName+"&key="+apiKey);
+		URL webSite = new URL("https://www.googleapis.com/youtube/v3/channels?part=id%2Csnippet%2Cstatistics%2CcontentDetails%2CtopicDetails&forUsername="+usrName+"&key="+apiKey);
 		
         URLConnection connection = null;
 		connection = webSite.openConnection();

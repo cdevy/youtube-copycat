@@ -1,7 +1,12 @@
 package codingweek2016;
 
+import java.awt.Component;
+import java.awt.GridLayout;
 import java.io.IOException;
 import java.util.List;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -19,7 +24,7 @@ import com.google.common.collect.Lists;
 
 import codingweek2016.model.Video;
 
-public class Comment {
+public class Comment extends JPanel {
 	
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
     private static final long NUMBER_OF_VIDEOS_RETURNED = 3;
@@ -97,7 +102,34 @@ public class Comment {
 		
 	}
 	
-	
+	public JPanel display( List<CommentThread> videoComments){
+		JPanel panel = new JPanel();
+		GridLayout grid = new GridLayout(25,1);
+		grid.setVgap(10);
+		panel.setLayout(grid);
+		
+		/*if (videoComments.isEmpty()) {
+             System.out.println("Can't get video comments.");
+         } else {
+             System.out.println("\n================== Video Comments ==================\n");
+             for (CommentThread videoComment : videoComments) {
+                 CommentSnippet snippet = videoComment.getSnippet().getTopLevelComment()
+                         .getSnippet();
+                 System.out.println("  - Author: " + snippet.getAuthorDisplayName());
+                 System.out.println("  - Comment: " + snippet.getTextDisplay());
+                 System.out.println("\n-------------------------------------------------------------\n");
+             }
+         }*/
+		for (CommentThread videoComment : videoComments) {
+			CommentSnippet snippet = videoComment.getSnippet().getTopLevelComment().getSnippet();
+			String author = snippet.getAuthorDisplayName();
+			String comment = snippet.getTextDisplay();
+			panel.add(new JLabel(author));
+			panel.add(new JLabel(comment));
+		}
+		return panel;
+		
+	}
 	
 
 }

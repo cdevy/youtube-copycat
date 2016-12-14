@@ -42,6 +42,7 @@ public class View extends JPanel implements Observer {
 
 	private JEditorPane resultHead = new JEditorPane();
 	private JPanel resultGrid = new JPanel();
+	private JPanel mainMenu = new MainMenu();
 	
 	public View(SearchRequest r) {
 		
@@ -132,6 +133,7 @@ public class View extends JPanel implements Observer {
 		
 		this.add(searchPanel, BorderLayout.NORTH);
 		this.add(resultGrid, BorderLayout.CENTER);
+		this.add(mainMenu,BorderLayout.WEST);
 	}
 
 	@SuppressWarnings("unchecked")

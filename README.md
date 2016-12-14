@@ -11,7 +11,7 @@ Dépendances
 
 	JavaSE-1.6
 	Maven
-	JavaFX
+	SWT
 
 Execute
 

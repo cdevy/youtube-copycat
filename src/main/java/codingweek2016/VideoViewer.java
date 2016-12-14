@@ -22,7 +22,7 @@ public class VideoViewer {
 	
 	public VideoViewer(String title, final String id) {
 		
-		String url = "http://www.youtube.com/embed/"+id+"?autoplay=1";
+		String url = "http://www.youtube.com/embed/"+id+"?autoplay=0";
 
         Display display = new Display();
         Shell shell = new Shell(display);
@@ -39,7 +39,6 @@ public class VideoViewer {
         
         java.awt.Frame frame = SWT_AWT.new_Frame(cmp);
         java.awt.Panel panel = new java.awt.Panel(new java.awt.BorderLayout());
-        frame.add(panel);
         
         final javax.swing.JPanel commentsArea = new javax.swing.JPanel();
         
@@ -63,6 +62,7 @@ public class VideoViewer {
         
         
         panel.add(commentsArea);
+        frame.add(panel);
         
         // FIN ESSAI POUR INTEGRER UN JPANEL
         

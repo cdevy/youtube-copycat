@@ -13,18 +13,20 @@ public class VideoViewer {
 
         Display display = new Display();
         Shell shell = new Shell(display);
+        shell.setBounds(20,20,700,600);
+        shell.setText(title);
 
         Browser browser = new Browser(shell, SWT.NONE);
-        browser.setBounds(5,5,500,300);
-
-        browser.setUrl(url);    
+        browser.setBounds(100,30,500,300);
+        browser.setUrl(url);
+        
         shell.open();
 
         browser.setVisible(true);
         shell.setVisible(true);
-
-        while (!shell.isDisposed())
-        {
+        
+        /* While the viewer window is open,  */
+        while (!shell.isDisposed()) {
             if (!display.readAndDispatch())
                 display.sleep();
         }

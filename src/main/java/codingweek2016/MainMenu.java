@@ -3,20 +3,18 @@ package codingweek2016;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.net.URLConnection;
+
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.services.samples.youtube.cmdline.Auth;
 import com.google.api.services.youtube.YouTube;
+
+import codingweek2016.model.Account;
+import codingweek2016.model.Authentification;
 
 @SuppressWarnings("serial")
 public class MainMenu extends JPanel {
@@ -40,7 +38,7 @@ public class MainMenu extends JPanel {
             	if (account == null) {
 	            	try {
 						account = new Account();
-						youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, account.getCredential())
+						youtube = new YouTube.Builder(Authentification.HTTP_TRANSPORT, Authentification.JSON_FACTORY, account.getCredential())
 				                .setApplicationName("youtube-cmdline-localizations-sample").build();
 						
 						logPanel.remove(logButton);
@@ -57,7 +55,7 @@ public class MainMenu extends JPanel {
 						//URL webSite = new URL("https://www.googleapis.com/youtube/v3/channels?part=id%2Csnippet%2Cstatistics%2CcontentDetails%2CtopicDetails&forUsername=KarlWolfVEVO&key="+clientSecrets.getDetails().getClientSecret());
 				        //URLConnection connection = webSite.openConnection();
 				        //BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-						System.out.println("You are logged in under: "+youtube.channels().list("snippet.title"));//youtube.channels().list("snippets.title").execute());
+						System.out.println("You are logged in under: "+youtube.channels().list("snippet.defaultLanguage"));//youtube.channels().list("snippets.title").execute());
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}

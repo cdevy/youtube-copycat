@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.services.samples.youtube.cmdline.Auth;
+import codingweek2016.model.Authentification;
 import com.google.api.services.youtube.YouTube;
 //import com.google.api.services.youtube.model.Comment;
 import com.google.api.services.youtube.model.CommentListResponse;

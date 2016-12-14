@@ -1,109 +1,142 @@
 package codingweek2016.model;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import com.google.api.services.youtube.model.SearchResult;
 
+import codingweek2016.VideoViewer;
+
+@SuppressWarnings("serial")
 public class Video extends JPanel {
 	
 	private JButton thumbnail = new JButton();
 	private JButton title = new JButton();
-	private String url = "https://www.youtube.com/watch?v=";
+	private JTextArea description = new JTextArea();
+	private String id;
 	
 	public Video(SearchResult result) {
 		super();
-		this.setLayout(new BorderLayout());
 		
-		url += result.getId().getVideoId();
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		
+		this.add(Box.createHorizontalStrut(10));
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		
+		id = result.getId().getVideoId();
+		
+		description.setText(result.getSnippet().getDescription());
 		
 		try {
-			thumbnail.setIcon(new ImageIcon(new URL(result.getSnippet().getThumbnails().getDefault().getUrl())));
+			ImageIcon img = new ImageIcon(new URL(result.getSnippet().getThumbnails().getDefault().getUrl()));
+			thumbnail.setIcon(new ImageIcon(img.getImage().getScaledInstance(150, 100, java.awt.Image.SCALE_SMOOTH)));
 		} catch (Exception e) {
 		    System.out.println(e);
 		}
+		/* Cursor changes when entering and exiting the video thumbnail */
+		thumbnail.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				thumbnail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				thumbnail.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
+		/* Action when clicking on the video thumbnail */
 		thumbnail.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	System.out.println("Read video");
+            	new VideoViewer(title.getText(), id);
             }
         });
+		new GridBagLayout();
 		thumbnail.setOpaque(false);
 		thumbnail.setContentAreaFilled(false);
 		thumbnail.setBorderPainted(false);
-		thumbnail.setPreferredSize(new Dimension(200,0));
-		this.add(thumbnail, BorderLayout.WEST);
-		
+		thumbnail.setPreferredSize(new Dimension(150,100));
+		this.add(thumbnail);
+
 		title.setText(result.getSnippet().getTitle());
+		/* Cursor changes when entering and exiting the video title */
+		title.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				title.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				title.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
+		/* Action when clicking on the video title */
 		title.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	System.out.println("Read video");
+            	new VideoViewer(title.getText(), id);
             }
         });
 		title.setOpaque(false);
 		title.setContentAreaFilled(false);
 		title.setBorderPainted(false);
-		this.add(title);
+
+		description.setOpaque(false);
+		
+		panel.add(title, BorderLayout.NORTH);
+		panel.add(description, BorderLayout.CENTER);
+		
+		this.add(Box.createHorizontalStrut(10));
+		
+		this.add(panel);
 	}
 	
-	public void display() {
-		
+	public String getTitle() {
+		return title.getText();
 	}
 	
-	public static void main(String args[]) {
-		JFrame frame = new JFrame("");
-		frame.setLayout(new BorderLayout());
-		frame.setPreferredSize(new Dimension(900,700));
-		
-		JPanel panel = new JPanel();
-		GridLayout grid = new GridLayout(10,1);
-		grid.setVgap(10);
-		panel.setLayout(grid);
-		List<SearchResult> results = new ArrayList<SearchResult>();
-		JTextArea resultPane = new JTextArea();
-		
-		SearchRequest r = new SearchRequest();
-		
-    	results = r.searchKeyWord("lol");
-    	System.out.println(results);
-		    	
-    	List<Video> videos = new ArrayList<Video>(); 
-    	videos = r.loadVideos(results);
-    	System.out.println(videos);
-    	
-    	resultPane.setOpaque(false);
-	    
-		if (videos != null) {
-			if (!videos.iterator().hasNext()) {
-				resultPane.append("There aren't any results for your query.\n");
-			} else {
-		    	resultPane.append("=============================================================\n");
-		    	resultPane.append("First " + 3 + " videos for search on \"" + "lol" + "\".\n");
-		    	resultPane.append("=============================================================\n");
-		   	}
-		}
-		
-		for (int i=0; i<videos.size(); i++) {
-    		panel.add(videos.get(i));
-    	}
-		
-		frame.add(resultPane, BorderLayout.NORTH);
-		frame.add(panel, BorderLayout.CENTER);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
+	public String getID() {
+		return id;
 	}
+	
 }

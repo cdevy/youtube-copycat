@@ -1,50 +1,50 @@
 package codingweek2016;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import com.google.api.services.youtube.model.ResourceId;
-import com.google.api.services.youtube.model.SearchResult;
-import com.google.api.services.youtube.model.Thumbnail;
-import com.google.api.services.youtube.model.VideoPlayer;
-
 import codingweek2016.model.SearchRequest;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import codingweek2016.model.Video;
 
 @SuppressWarnings("serial")
 public class View extends JPanel implements Observer {
 	
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 3;
+	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
+	
+	private JLabel logo;
 	
 	private SearchRequest request;
-	private List<SearchResult> videos = new ArrayList<SearchResult>();
+	private List<Video> videos = new ArrayList<Video>();
 	
 	private JButton searchButton = new JButton("Search");
 	private JTextField searchField = new JTextField();
-	//private JTextArea resultArea = new JTextArea();
-	private JEditorPane resultPane = new JEditorPane();
-	private final JFXPanel jfxPanel = new JFXPanel();
-	private String id = "";
+
+	private JEditorPane resultHead = new JEditorPane();
+	private JPanel resultGrid = new JPanel();
+	private JPanel mainMenu = new MainMenu();
 	
 	public View(SearchRequest r) {
-		
 		
 		request = r;
 		request.addObserver(this);
@@ -53,85 +53,94 @@ public class View extends JPanel implements Observer {
 		
 		searchField.setPreferredSize(new Dimension(300,25));
 		
+		searchButton.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
+		
 		searchButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
             	
             	String text = searchField.getText();
-            	request.searchKeyWord(text);
-
-            	if (videos != null) {
+            	
+            	if (text.length()>0) {
             		
-            		String result = "<html><head></head><body>";
-            		if (!videos.iterator().hasNext()) {
-            			result += "<p> There aren't any results for your query.</p>";//resultArea.append(" There aren't any results for your query.");
-            		} else {
-            			result += "<p><br/>=============================================================<br/>";//resultArea.append("\n=============================================================\n");
-            			result += "First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + text + "\".<br/>";//resultArea.append("First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + text + "\".\n"); 
-            			result += "=============================================================<br/></p>";//resultArea.append("=============================================================\n");
-            		}
-            		
-    		        //while (videos.iterator().hasNext()) {
-            		for (int i=0;i<videos.size();i++) {
-	    		            SearchResult singleVideo = videos.get(i);//videos.iterator().next();
-	    		            ResourceId rId = singleVideo.getId();
+	            	request.loadVideos(request.searchKeyWord(text));
 	
-	    		            if (rId.getKind().equals("youtube#video")) {
-	    		                Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
-	    		                id = rId.getVideoId();
-	    		                //result += "<p> Video Id: " + rId.getVideoId()+"<br/>";//resultArea.append(" Video Id" + rId.getVideoId());
-	    		                	//lien vidéo : https://www.youtube.com/watch?v= + id
-	    		                result += "<p> Title: " + singleVideo.getSnippet().getTitle()+"<br/>";//resultArea.append(" Title: " + singleVideo.getSnippet().getTitle());
-	    		                result += "<img src=" + thumbnail.getUrl()+" width=50 height=50></img><br/>";//resultArea.append(" Thumbnail: " + thumbnail.getUrl());
-	    		                result += "<br/>-------------------------------------------------------------<br/></p>";//resultArea.append("\n-------------------------------------------------------------\n");
-	    		            }
-    		        }
-            		//result += "<embed width=\"420\" height=\"315\" src=\"https://www.youtube.com/embed/"+id+"\"/>";//"<video width=320 height=240 controls>  <source src=\"https://www.youtube.com/watch?v=" + id + "\" type=\"video/mp4\">Your browser does not support the video tag.</video>";
-            		result += "</body></html>";
-            		resultPane.setContentType("text/html");
-            		resultPane.setText(result);
-            		Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            initFX(jfxPanel,id);
-                        }			
-                    });
-                }
+	            	if (videos != null) {
+	            		
+	            		String head = "<html><body>";
+	            		
+	            		if (!videos.iterator().hasNext()) {
+	            			head += "<p><center><b> There aren't any results for your query.<b/></center></p>";
+	            		} else {
+	            			head += "<p><center><b>First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + text + "\".<b/><br/><br/><br/><br/>";
+	            		}
+	            		
+	            		head += "</body></html>";
+	            		
+	            		resultHead.setOpaque(false);
+	            		resultHead.setContentType("text/html");
+	            		resultHead.setText(head);
+	            		
+	            		BorderLayout grid = new BorderLayout();
+	            		resultGrid.removeAll();
+	            		resultGrid.setLayout(grid);
+	            		
+	            		JScrollPane scrollBar = new JScrollPane(request.display());
+	            		scrollBar.setBorder(null);
+	            		
+	            		resultGrid.add(resultHead, BorderLayout.NORTH);
+	            		resultGrid.add(scrollBar, BorderLayout.CENTER);
+	            		resultGrid.revalidate();
+	            		resultGrid.repaint();
+	                }
+            	}
             }
-        });
-		
-		
-
-	    // jfxPanel.setScene(new Scene(view));
-		
+        });		
 		
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(new FlowLayout());
+		
+		try {
+			ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
+			logo = new JLabel(new ImageIcon(img.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
+			searchPanel.add(logo);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		searchPanel.add(searchField);
 		searchPanel.add(searchButton);
 		
 		this.add(searchPanel, BorderLayout.NORTH);
-		
-		this.add(resultPane, BorderLayout.CENTER);
-		this.add(jfxPanel, BorderLayout.SOUTH);
-		//this.add(resultArea, BorderLayout.CENTER);
+		this.add(resultGrid, BorderLayout.CENTER);
+		this.add(mainMenu,BorderLayout.WEST);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void update(Observable observable, Object videos) {
 		if (videos instanceof List<?>) {
-			this.videos = (List<SearchResult>) videos;
+			this.videos = (List<Video>) videos;
 		}
-	}
-	
-	private static void initFX(JFXPanel jfxPanel,String id) {
-		WebView view = new WebView();
-		WebEngine webEngine = view.getEngine();
-				webEngine.load(
-				"http://www.youtube.com/embed/"+id+"?autoplay=0"
-	    );
-		view.setPrefSize(200, 200);
-        jfxPanel.setScene(new Scene(view));
 	}
 
 }

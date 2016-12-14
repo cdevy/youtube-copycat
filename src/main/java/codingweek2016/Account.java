@@ -1,27 +1,62 @@
 package codingweek2016;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.List;
 
-
-import com.google.api.services.youtube.YouTube;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
+import com.google.api.services.samples.youtube.cmdline.Auth;
+/*
 import com.google.gdata.client.youtube.YouTubeService;
 import com.google.gdata.data.youtube.UserProfileEntry;
-import com.google.gdata.util.ServiceException; 
+import com.google.gdata.util.ServiceException; */
+import com.google.common.collect.Lists;
 
 public class Account {
 	
+	//UserProfileEntry user ;
 	
-	UserProfileEntry user ;
+	private Credential credential;
 	
-	//
-	public static void main(String[] args) throws MalformedURLException, IOException, ServiceException {
-		YouTubeService service = new YouTubeService("166631906314-lvle0u9f7i47honorsmecm0onpe79m67.apps.googleusercontent.com", "44334");
+	public Account() throws IOException {
+		List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
+		
+		try {
+			// Authorize the request.
+			credential = Auth.authorize(scopes, "addsubscription");
+		} catch (GoogleJsonResponseException e) {
+            System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            System.err.println("IOException: " + e.getMessage());
+            e.printStackTrace();
+        }
+	}
+	
+	public Credential getCredential() {
+		return credential;
+	}
+
+	public static void main(String[] args) { //throws MalformedURLException, IOException, ServiceException {
+		
+		try {
+            // This object is used to make YouTube Data API requests.
+            /*youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
+                    "youtube-cmdline-addsubscription-sample").build();*/
+
+        
+        } catch (Throwable t) {
+            System.err.println("Throwable: " + t.getMessage());
+            t.printStackTrace();
+        }
+		
+		/*YouTubeService service = new YouTubeService("166631906314-lvle0u9f7i47honorsmecm0onpe79m67.apps.googleusercontent.com", "44334");
 		//YouTubeService service = new YouTubeService("");
 		String profileUrl = "http://gdata.youtube.com/feeds/api/users/YTdebates";
 		UserProfileEntry profileEntry = service.getEntry(new URL(profileUrl), UserProfileEntry.class);
-		System.out.println( profileEntry.getFirstName());
+		System.out.println( profileEntry.getFirstName());*/
 		
 		/**
 		 * Apparement il y a un conflit de library : il semble que c'est guava.jar qui fout la merde !

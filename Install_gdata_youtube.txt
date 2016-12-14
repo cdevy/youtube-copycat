@@ -1,0 +1,21 @@
+Lier les APIs Google Data et l'API gdata Youtube à eclipse :
+
+Dans eclipse : clic droit sur le projet > Build Path > Configure Builde Path
+Dans la fenetre qui s'ouvre > Add External JARs > séléctionner :
+
+/* Nécessaire à gdata (dépendances) */
+activation.jar
+mail.jar
+servlet.jar
+
+/* APIs principales de Google Data */
+gdata-client-1.0.jar
+gdata-client-meta-1.0.jar
+gdata-core-1.0.jar
+gdata-media-1.0.jar
+
+/* APIs supplémentaires pour le projet (Google documents API et Youtube API) */
+gdata-docs-1.0.jar
+gdata-docs-meta-1.0.jar
+gdata-youtube-1.0.jar
+gdata-youtube-meta-2.0.jar

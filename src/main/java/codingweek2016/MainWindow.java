@@ -5,6 +5,8 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import view.SearchView;
+
 import codingweek2016.model.SearchRequest;
 
 @SuppressWarnings("serial")
@@ -16,7 +18,7 @@ public class MainWindow extends JFrame {
 				
 		setLayout(new BorderLayout());
 		
-		View v = new View(request);
+		SearchView v = new SearchView(request);
 		
 		this.add(v);
 		

@@ -1,4 +1,4 @@
-package codingweek2016;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -24,11 +24,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+
+import codingweek2016.MainMenu;
 import codingweek2016.model.SearchRequest;
 import codingweek2016.model.Video;
 
 @SuppressWarnings("serial")
-public class View extends JPanel implements Observer {
+public class SearchView extends AbstractView {
 	
 	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
 	
@@ -44,7 +46,7 @@ public class View extends JPanel implements Observer {
 	private JPanel resultGrid = new JPanel();
 	private JPanel mainMenu = new MainMenu();
 	
-	public View(SearchRequest r) {
+	public SearchView(SearchRequest r) {
 		
 		request = r;
 		request.addObserver(this);
@@ -134,13 +136,6 @@ public class View extends JPanel implements Observer {
 		this.add(searchPanel, BorderLayout.NORTH);
 		this.add(resultGrid, BorderLayout.CENTER);
 		this.add(mainMenu,BorderLayout.WEST);
-	}
-
-	@SuppressWarnings("unchecked")
-	public void update(Observable observable, Object videos) {
-		if (videos instanceof List<?>) {
-			this.videos = (List<Video>) videos;
-		}
 	}
 
 }

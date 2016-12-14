@@ -1,4 +1,4 @@
-package codingweek2016;
+package codingweek2016.model;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -9,17 +9,13 @@ import com.google.api.services.youtube.YouTube;
 import com.google.gdata.client.youtube.YouTubeService;
 import com.google.gdata.data.youtube.UserProfileEntry;
 import com.google.gdata.util.ServiceException;*/
-
 import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.services.samples.youtube.cmdline.Auth;
-/*
-import com.google.gdata.client.youtube.YouTubeService;
-import com.google.gdata.data.youtube.UserProfileEntry;
-import com.google.gdata.util.ServiceException; */
 import com.google.common.collect.Lists;
+
+import codingweek2016.model.Authentification;
 
 public class Account {
 	
@@ -32,7 +28,7 @@ public class Account {
 		
 		try {
 			// Authorize the request.
-			credential = Auth.authorize(scopes, "addsubscription");
+			credential = Authentification.authorize(scopes, "addsubscription");
 		} catch (GoogleJsonResponseException e) {
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
                     + e.getDetails().getMessage());
@@ -82,5 +78,4 @@ public class Account {
 		 */
 		
 	}
-    
 }

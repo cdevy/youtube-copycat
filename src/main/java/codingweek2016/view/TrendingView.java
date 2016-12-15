@@ -1,12 +1,14 @@
 package codingweek2016.view;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import codingweek2016.MainMenu;
 import codingweek2016.MainWindow;
@@ -22,6 +24,11 @@ public class TrendingView extends AbstractView {
 		mainMenu = new MainMenu(mainWindow);
 		
 		this.setLayout(new BorderLayout());
+		
+		
+		
+		JPanel north = new JPanel();
+		north.setLayout(new FlowLayout());
 		
 		this.add(mainMenu,BorderLayout.WEST);
 		try {

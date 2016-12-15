@@ -5,6 +5,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -50,6 +54,116 @@ public class UploadView extends AbstractView {
 		
 		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
 		mainPanel.setBorder(new EmptyBorder(50, 20, 70, 20));
+		
+		pathField.setEnabled(false);
+		pathField.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent event) {
+        		pathField.setEnabled(true);
+        		pathField.requestFocus();
+            }
+        });
+		pathField.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (pathField.getText().equals("Path of the video to upload")){
+					pathField.setText("");
+				}
+			}
+
+			public void focusLost(FocusEvent e) {
+				if (pathField.getText().equals("")){
+					pathField.setText("Path of the video to upload");
+					pathField.setEnabled(false);
+				}
+			}
+        });
+		
+		nameField.setEnabled(false);
+		nameField.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent event) {
+        		nameField.setEnabled(true);
+        		nameField.requestFocus();
+            }
+        });
+		nameField.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (nameField.getText().equals("Name")){
+					nameField.setText("");
+				}
+			}
+
+			public void focusLost(FocusEvent e) {
+				if (nameField.getText().equals("")){
+					nameField.setText("Name");
+					nameField.setEnabled(false);
+				}
+			}
+        });
+		
+		statusField.setEnabled(false);
+		statusField.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent event) {
+        		statusField.setEnabled(true);
+        		statusField.requestFocus();
+            }
+        });
+		statusField.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (statusField.getText().equals("Status (public, private or unlisted)")){
+					statusField.setText("");
+				}
+			}
+
+			public void focusLost(FocusEvent e) {
+				if (statusField.getText().equals("")){
+					statusField.setText("Status (public, private or unlisted)");
+					statusField.setEnabled(false);
+				}
+			}
+        });
+		
+		description.setEnabled(false);
+		description.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent event) {
+        		description.setEnabled(true);
+        		description.requestFocus();
+            }
+        });
+		description.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (description.getText().equals("Description")){
+					description.setText("");
+				}
+			}
+
+			public void focusLost(FocusEvent e) {
+				if (description.getText().equals("")){
+					description.setText("Description");
+					description.setEnabled(false);
+				}
+			}
+        });
+		
+		tags.setEnabled(false);
+		tags.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent event) {
+        		tags.setEnabled(true);
+        		tags.requestFocus();
+            }
+        });
+		tags.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (tags.getText().equals("Tags, separated with commas")){
+					tags.setText("");
+				}
+			}
+
+			public void focusLost(FocusEvent e) {
+				if (tags.getText().equals("")){
+					tags.setText("Tags, separated with commas");
+					tags.setEnabled(false);
+				}
+			}
+        });
 		
 		uploadButton.addActionListener(new ActionListener() {
 			  

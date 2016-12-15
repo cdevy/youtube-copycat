@@ -30,8 +30,9 @@ public class CommentsWindow extends JFrame {
 	
 	private JTextArea commentEntry;
 	
-	private JScrollPane scrollComment;
+	private JPanel scrollComment = new JPanel();
 	private JPanel createComment = new JPanel();
+	private JScrollPane scroll;
 
 	public CommentsWindow(String title, final String id){
 		super("Comments on " + title);
@@ -68,7 +69,7 @@ public class CommentsWindow extends JFrame {
         createComment.add(commentEntry);
        
         
-        JButton publish = new JButton("publish");
+        JButton publish = new JButton("Publish");
         publish.setPreferredSize(new Dimension(150,40));
         createComment.add(publish);
         
@@ -84,7 +85,15 @@ public class CommentsWindow extends JFrame {
 		}
         
         
-        scrollComment = new JScrollPane(com.display(videoComments));
+        scroll = new JScrollPane(com.display(videoComments));
+        scroll.setPreferredSize(new Dimension(450,610));
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+  		   public void run() { 
+  			 scroll.getVerticalScrollBar().setValue(0);
+  			 scroll.getHorizontalScrollBar().setValue(0);
+  		   }
+  		});
+        scrollComment.add(scroll);
 		scrollComment.setBorder(null);
 		
 		
@@ -96,30 +105,31 @@ public class CommentsWindow extends JFrame {
             	Comment com = new Comment(id);
             	com.postcomment(text);
             	
-            	/*scrollComment.removeAll();
-            	scrollComment.revalidate();
-            	scrollComment.repaint();
-            	
-            	try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+            	scrollComment.removeAll();
             	
             	List<CommentThread> videoComments = new ArrayList<CommentThread>();
             	try {
         			videoComments = com.getComments();
-        			System.out.println("Dans le try");
         		} catch (IOException ex) {
         			ex.printStackTrace();
         		}
-            	System.out.println(videoComments.size());
-            	scrollComment = new JScrollPane(com.display(videoComments));
+            	scroll = new JScrollPane(com.display(videoComments));
+            	scroll.setPreferredSize(new Dimension(450,610));
+            	javax.swing.SwingUtilities.invokeLater(new Runnable() {
+          		   public void run() { 
+          			 scroll.getVerticalScrollBar().setValue(0);
+          			scroll.getHorizontalScrollBar().setValue(0);
+          		   }
+          		});
+            	scrollComment.add(scroll);
             	scrollComment.setBorder(null);
-            	scrollComment.revalidate();
+            	
+            	commentEntry.setText("Write your comment here");
+				commentEntry.setEnabled(false);
+				
+				scrollComment.revalidate();
             	scrollComment.repaint();
-            	System.out.println("Mise à jour");*/
+            	//pack();
             	            	
             }
         });

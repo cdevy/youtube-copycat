@@ -76,6 +76,7 @@ public class SearchView extends AbstractView {
 	            		
 	            		resultHead.setOpaque(false);
 	            		resultHead.setContentType("text/html");
+	            		resultHead.setEditable(false);
 	            		resultHead.setText(head);
 	            		
 	            		BorderLayout grid = new BorderLayout();

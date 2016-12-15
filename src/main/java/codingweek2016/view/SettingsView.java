@@ -2,28 +2,34 @@ package codingweek2016.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
 import codingweek2016.MainMenu;
 import codingweek2016.MainWindow;
 
 @SuppressWarnings("serial")
 public class SettingsView extends AbstractView {
 	
-	private JTextField heightField = new JTextField();
-	private JTextField widthField = new JTextField();
-	private JTextField maxvidField = new JTextField();
-	private JTextField apikeyField = new JTextField();
-	private JLabel labelHeight = new JLabel("Window height: ");
-	private JLabel labelWidth = new JLabel("Window width: ");
-	private JLabel maxvidlabel = new JLabel("Number of videos to be displayed: ");
-	private JLabel apikeylabel = new JLabel("API key: ");
+	private JLabel yTImg;
+	
+	private JTextField heightField = new JTextField("Window height");
+	private JTextField widthField = new JTextField("Window width");
+	private JTextField maxvidField = new JTextField("Number of videos to be displayed");
+	private JTextField apikeyField = new JTextField("API key");
+
 	private JButton saveButton = new JButton("Save");
 	private JPanel settingsGrid = new JPanel();
 	
@@ -33,14 +39,9 @@ public class SettingsView extends AbstractView {
 		
 		this.setLayout(new BorderLayout());
 		
-		GridLayout layout = new GridLayout(5,2);
-		layout.setVgap(10);
+		BoxLayout layout = new BoxLayout(settingsGrid,BoxLayout.Y_AXIS);
 		settingsGrid.setLayout(layout);
-		/*GroupLayout layout = new GroupLayout(settingsGrid);
-		settingsGrid.setLayout(layout);
-		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);*/
-		//settingsGrid.setLayout(new BoxLayout(settingsGrid, BoxLayout.Y_AXIS));//(new FlowLayout());
+		settingsGrid.setBorder(new EmptyBorder(100, 20, 120, 20));
 		
 		maxvidField.setPreferredSize(new Dimension(300,25));
 		heightField.setPreferredSize(new Dimension(300,25));
@@ -54,89 +55,69 @@ public class SettingsView extends AbstractView {
             }
         });
 		
-		/*JPanel p1 = new JPanel();
-		p1.setLayout(new BorderLayout());
-		p1.add(labelHeight, BorderLayout.WEST);
-		p1.add(heightField, BorderLayout.EAST);
+		heightField.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
 		
-		JPanel p2 = new JPanel();
-		p2.setLayout(new BorderLayout());
-		p2.add(labelWidth, BorderLayout.WEST);
-		p2.add(widthField, BorderLayout.EAST);
+		widthField.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
 		
-		JPanel p3 = new JPanel();
-		p3.setLayout(new BorderLayout());
-		p3.add(maxvidlabel, BorderLayout.WEST);
-		p3.add(maxvidField, BorderLayout.EAST);
+		maxvidField.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
 		
-		JPanel p4 = new JPanel();
-		p4.setLayout(new BorderLayout());
-		p4.add(apikeylabel, BorderLayout.WEST);
-		p4.add(apikeyField, BorderLayout.EAST);
+		apikeyField.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
 		
-		p1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		settingsGrid.add(p1);
-		p2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		settingsGrid.add(p2);
-		p3.setAlignmentX(Component.CENTER_ALIGNMENT);
-		settingsGrid.add(p3);
-		p4.setAlignmentX(Component.CENTER_ALIGNMENT);
-		settingsGrid.add(p4);*/
 		
-		/*SequentialGroup hGroup = layout.createSequentialGroup();
+		JPanel heightPanel = new JPanel();
+		heightPanel.setLayout(new FlowLayout());
+		heightPanel.add(heightField);
+		settingsGrid.add(heightPanel);
 		
-		hGroup.addGroup(layout.createParallelGroup()
-				.addComponent(labelHeight)
-				.addComponent(labelWidth)
-				.addComponent(maxvidlabel)
-				.addComponent(apikeylabel));
+		JPanel widthPanel = new JPanel();
+		widthPanel.setLayout(new FlowLayout());
+		widthPanel.add(widthField);
+		settingsGrid.add(widthPanel);
 		
-		hGroup.addGroup(layout.createParallelGroup()
-				.addComponent(heightField)
-		        .addComponent(widthField)
-		        .addComponent(maxvidField)
-		        .addComponent(apikeyField));
+		JPanel maxvidPanel = new JPanel();
+		maxvidPanel.setLayout(new FlowLayout());
+		maxvidPanel.add(maxvidField);
+		settingsGrid.add(maxvidPanel);
 		
-		layout.setHorizontalGroup(hGroup);
+		JPanel apikeyPanel = new JPanel();
+		apikeyPanel.setLayout(new FlowLayout());
+		apikeyPanel.add(apikeyField);
+		settingsGrid.add(apikeyPanel);
+
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout());
+		buttonPanel.add(saveButton);
+		settingsGrid.add(buttonPanel);
 		
-		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		
-		vGroup.addGroup(layout.createParallelGroup()
-				.addComponent(labelHeight)
-				.addComponent(heightField));
-		
-		vGroup.addGroup(layout.createParallelGroup()
-		        .addComponent(labelWidth)
-		        .addComponent(widthField));
-		
-		vGroup.addGroup(layout.createParallelGroup()
-		        .addComponent(maxvidlabel)
-		        .addComponent(maxvidField));
-		
-		vGroup.addGroup(layout.createParallelGroup()
-		        .addComponent(apikeylabel)
-		        .addComponent(apikeyField));
-		
-		layout.setVerticalGroup(vGroup);*/
-		
-		settingsGrid.add(labelHeight);
-		settingsGrid.add(heightField);
-		
-		settingsGrid.add(labelWidth);
-		settingsGrid.add(widthField);
-		
-		settingsGrid.add(maxvidlabel);
-		settingsGrid.add(maxvidField);
-		
-		settingsGrid.add(apikeylabel);
-		settingsGrid.add(apikeyField);
-				
-		
+		JPanel north = new JPanel();
+		north.setLayout(new FlowLayout());
 		
 		this.add(mainMenu,BorderLayout.WEST);
 		this.add(settingsGrid, BorderLayout.CENTER);
-		this.add(saveButton, BorderLayout.SOUTH);
-		
+		try {
+			ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
+			yTImg = new JLabel(new ImageIcon(img.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
+			north.add(yTImg);
+			this.add(north,BorderLayout.NORTH);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

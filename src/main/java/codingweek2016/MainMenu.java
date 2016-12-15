@@ -28,6 +28,7 @@ import codingweek2016.model.Authentification;
 import codingweek2016.model.SearchRequest;
 import codingweek2016.view.SearchView;
 import codingweek2016.view.SettingsView;
+import codingweek2016.view.UploadView;
 
 @SuppressWarnings("serial")
 public class MainMenu extends JPanel {
@@ -40,11 +41,11 @@ public class MainMenu extends JPanel {
 	private static YouTube youtube;
 	
 	private JPanel logPanel = new JPanel();
-	private JButton searchButton = new JButton("Favorites");
+	private JButton searchButton = new JButton("Search");
 	private JButton suggestionButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
-	//private JButton abonnementButton = new JButton(new ImageIcon("src/main/resources/icons/ic_pages_black_36dp_1x.png"));
+	private JButton uploadButton = new JButton("Upload");
 	private JButton settingsButton = new JButton(new ImageIcon("src/main/resources/icons/ic_settings_black_36dp_1x.png"));
-	private JButton logButton = new JButton("Log in");
+	//private JButton logButton = new JButton("Log in");
 	private JLabel nameLabel = new JLabel("   You are logged in.");
 	private Dimension dim4Buttons = new Dimension(140,50);
 	private String usrName = "";
@@ -65,8 +66,8 @@ public class MainMenu extends JPanel {
 		layout.setVgap(10);
 		logPanel.setLayout(layout);
 		
-		logButton.setPreferredSize(dim4Buttons);
-		//abonnementButton.setPreferredSize(dim4Buttons);
+		//logButton.setPreferredSize(dim4Buttons);
+		uploadButton.setPreferredSize(dim4Buttons);
 		searchButton.setPreferredSize(dim4Buttons);
 		suggestionButton.setPreferredSize(dim4Buttons);
 		settingsButton.setPreferredSize(dim4Buttons);
@@ -76,16 +77,16 @@ public class MainMenu extends JPanel {
 		searchButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	//add(new View(new SearchRequest()));
+            	mainWindow.setMainView(new SearchView(mainWindow));
             }
         });
 		
-		/*abonnementButton.addActionListener(new ActionListener() {
+		uploadButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	//add(new View(new SearchRequest()));
+            	mainWindow.setMainView(new UploadView(mainWindow));
             }
-        });*/
+        });
 		
 		suggestionButton.addActionListener(new ActionListener() {
 			  
@@ -103,7 +104,7 @@ public class MainMenu extends JPanel {
 		
 		/*enterNameZone.setPreferredSize(new Dimension(50,20));*/
 		
-		logButton.addActionListener(new ActionListener() {
+		/*logButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
             	if (account == null) {
@@ -124,13 +125,13 @@ public class MainMenu extends JPanel {
 						/*
 						logPanel.add(enterName);
 						logPanel.add(enterNameZone);
-						logPanel.add(enterNameButton);*/
+						logPanel.add(enterNameButton);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
             	}
             }
-        });
+        });*/
 		/*
 		enterNameButton.addActionListener(new ActionListener() {
 			  
@@ -162,9 +163,9 @@ public class MainMenu extends JPanel {
 		
 		
 		this.setLayout(new FlowLayout());
-		if (account ==  null) {		
+		/*if (account ==  null) {		
 			logPanel.add(logButton);
-		} 
+		} */
 		
 		
 		recreateMenuPanel(false);
@@ -215,7 +216,7 @@ public class MainMenu extends JPanel {
 		if (account != null) {
 			logPanel.add(nameLabel);
 		}
-		//logPanel.add(abonnementButton);
+		logPanel.add(uploadButton);
 		logPanel.add(searchButton);
 		logPanel.add(suggestionButton);
 		logPanel.add(settingsButton);

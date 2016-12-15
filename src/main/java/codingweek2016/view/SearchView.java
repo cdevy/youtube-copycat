@@ -1,6 +1,7 @@
 package codingweek2016.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -40,7 +41,9 @@ public class SearchView extends AbstractView {
 	
 	public SearchView(MainWindow mW) {
 		mainWindow = mW;
+		
 		mainMenu = new MainMenu(mainWindow);
+		mainMenu.setBackground(Color.WHITE);
 		
 		request = new SearchRequest();
 		request.addObserver(this);
@@ -104,6 +107,14 @@ public class SearchView extends AbstractView {
 		searchField.setPreferredSize(new Dimension(300,25));
 		searchField.addActionListener(search);
 		
+		ImageIcon img;
+		try {
+			img = new ImageIcon(ImageIO.read(new File("src/main/resources/searchIcon.png")));
+			searchButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		searchButton.addMouseListener(new MouseListener() {
 
 			public void mouseClicked(MouseEvent arg0) {
@@ -133,7 +144,7 @@ public class SearchView extends AbstractView {
 		searchPanel.setLayout(new FlowLayout());
 		
 		try {
-			ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
+			img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
 			logo = new JLabel(new ImageIcon(img.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
 			searchPanel.add(logo);
 		} catch (IOException e) {
@@ -141,6 +152,8 @@ public class SearchView extends AbstractView {
 		}
 		searchPanel.add(searchField);
 		searchPanel.add(searchButton);
+		
+		searchPanel.setBackground(Color.WHITE);
 		
 		this.add(searchPanel, BorderLayout.NORTH);
 		this.add(resultGrid, BorderLayout.CENTER);

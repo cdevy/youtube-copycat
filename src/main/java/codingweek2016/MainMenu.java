@@ -1,11 +1,13 @@
 package codingweek2016;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,6 +16,7 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Properties;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -47,7 +50,7 @@ public class MainMenu extends JPanel {
 	private JButton settingsButton = new JButton(new ImageIcon("src/main/resources/icons/ic_settings_black_36dp_1x.png"));
 	//private JButton logButton = new JButton("Log in");
 	private JLabel nameLabel = new JLabel("   You are logged in.");
-	private Dimension dim4Buttons = new Dimension(140,50);
+	private Dimension dim4Buttons = new Dimension(140,30);
 	private String usrName = "";
 	private MainWindow mainWindow;
 	
@@ -71,6 +74,14 @@ public class MainMenu extends JPanel {
 		searchButton.setPreferredSize(dim4Buttons);
 		trendingButton.setPreferredSize(dim4Buttons);
 		settingsButton.setPreferredSize(dim4Buttons);
+		
+		ImageIcon img;
+		try {
+			img = new ImageIcon(ImageIO.read(new File("src/main/resources/searchIcon.png")));
+			searchButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		//settingsButton.setIcon(new ImageIcon("/resources/icons/ic_settings_black_36dp_1x.png")); 
 		
@@ -225,7 +236,7 @@ public class MainMenu extends JPanel {
 		logPanel.add(searchButton);
 		logPanel.add(trendingButton);
 		logPanel.add(settingsButton);
-		
+		logPanel.setBackground(Color.WHITE);
 	}
 
 }

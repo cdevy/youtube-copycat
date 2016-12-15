@@ -23,8 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-
-
+import codingweek2016.App;
 import codingweek2016.MainMenu;
 import codingweek2016.MainWindow;
 import codingweek2016.model.SearchRequest;
@@ -79,7 +78,7 @@ public class SearchView extends AbstractView {
 	            		if (!videos.iterator().hasNext()) {
 	            			head += "<p><center><b> There aren't any results for your query.<b/></center></p>";
 	            		} else {
-	            			head += "<p><center><b>First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + text + "\".<b/><br/><br/><br/><br/>";
+	            			head += "<p><center><b>First " + App.NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + text + "\".<b/><br/><br/><br/><br/>";
 	            		}
 	            		
 	            		head += "</body></html>";

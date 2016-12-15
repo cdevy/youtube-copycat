@@ -1,19 +1,7 @@
 package codingweek2016.model;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-/*
-import com.google.api.services.youtube.YouTube;
-import com.google.gdata.client.youtube.YouTubeService;
-import com.google.gdata.data.youtube.UserProfileEntry;
-<<<<<<< HEAD:src/main/java/codingweek2016/model/Account.java
-import com.google.gdata.util.ServiceException;*/
-=======
-import com.google.gdata.util.ServiceException; 
-
->>>>>>> 70618ca5689d35a559d9f5c661147011d0873292:src/main/java/codingweek2016/Account.java
 import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.Properties;
 
 import javax.swing.JPanel;
@@ -17,11 +16,7 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
-public class SearchRequest extends Observable {
-	
-	private static final String PROPERTIES_FILENAME = "youtube.properties";
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
-    private static YouTube youtube;
+public class SearchRequest extends Request {
     
     private List<Video> videos = new ArrayList<Video>();
 	

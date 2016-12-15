@@ -1,4 +1,4 @@
-package view;
+package codingweek2016.view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +12,9 @@ import codingweek2016.model.Video;
 @SuppressWarnings("serial")
 public abstract class AbstractView extends JPanel implements Observer {
 	
-	private List<Video> videos = new ArrayList<Video>();
+	protected List<Video> videos = new ArrayList<Video>();
 	
-	private static long NUMBER_OF_VIDEOS_RETURNED=25;
-
-	private int longueur;
-	private int largeur;
+	protected static long NUMBER_OF_VIDEOS_RETURNED=25;
 	
 	
 	@SuppressWarnings("unchecked")

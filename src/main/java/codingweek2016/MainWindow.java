@@ -5,7 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import view.SearchView;
+import codingweek2016.view.SearchView;
 
 import codingweek2016.model.SearchRequest;
 

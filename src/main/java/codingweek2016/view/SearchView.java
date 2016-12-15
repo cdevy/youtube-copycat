@@ -1,4 +1,4 @@
-package view;
+package codingweek2016.view;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -10,10 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,17 +23,13 @@ import javax.swing.JTextField;
 
 import codingweek2016.MainMenu;
 import codingweek2016.model.SearchRequest;
-import codingweek2016.model.Video;
 
 @SuppressWarnings("serial")
 public class SearchView extends AbstractView {
 	
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
-	
 	private JLabel logo;
 	
 	private SearchRequest request;
-	private List<Video> videos = new ArrayList<Video>();
 	
 	private JButton searchButton = new JButton("Search");
 	private JTextField searchField = new JTextField();
@@ -46,9 +38,9 @@ public class SearchView extends AbstractView {
 	private JPanel resultGrid = new JPanel();
 	private JPanel mainMenu = new MainMenu();
 	
-	public SearchView(SearchRequest r) {
+	public SearchView() {
 		
-		request = r;
+		request = new SearchRequest();
 		request.addObserver(this);
 		
 		this.setLayout(new BorderLayout());
@@ -86,7 +78,12 @@ public class SearchView extends AbstractView {
             	
             	if (text.length()>0) {
             		
-	            	request.loadVideos(request.searchKeyWord(text));
+	            	try {
+						request.loadVideos(request.searchKeyWord(text));
+					} catch (IOException e1) {
+						System.out.println(e1);
+						e1.printStackTrace();
+					}
 	
 	            	if (videos != null) {
 	            		

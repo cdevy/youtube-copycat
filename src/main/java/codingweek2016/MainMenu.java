@@ -9,10 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -22,18 +18,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
-
-import view.SettingsView;
 
 import codingweek2016.model.Account;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.services.youtube.YouTube;
-import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 
 import codingweek2016.model.Authentification;
@@ -46,10 +34,11 @@ public class MainMenu extends JPanel {
 	
 	private Account account = null;
 	
+	@SuppressWarnings("unused")
 	private static YouTube youtube;
 	
 	private JPanel logPanel = new JPanel();
-	private JButton searchButton = new JButton("Favoris");
+	private JButton searchButton = new JButton("Favorites");
 	private JButton suggestionButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
 	private JButton abonnementButton = new JButton(new ImageIcon("src/main/resources/icons/ic_pages_black_36dp_1x.png"));
 	private JButton settingsButton = new JButton(new ImageIcon("src/main/resources/icons/ic_settings_black_36dp_1x.png"));

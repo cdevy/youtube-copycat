@@ -129,7 +129,7 @@ public class Comment extends JPanel {
 			authorButton.setPreferredSize(new Dimension(200, 100));
 			authorButton.setText("<html><body><u>"+author+"</u></body><html/>");
 			
-			Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_person_black_24dp_2x.png"));
+			Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/icon.png"));
 			ImageIcon icon = new ImageIcon(img);
 			authorButton.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
 			

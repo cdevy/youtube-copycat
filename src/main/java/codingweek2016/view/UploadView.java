@@ -1,6 +1,8 @@
 package codingweek2016.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -11,9 +13,11 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.Arrays;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -45,6 +49,7 @@ public class UploadView extends AbstractView {
 	public UploadView(MainWindow mW) {
 		mainWindow = mW;
 		mainMenu = new MainMenu(mainWindow);
+		mainMenu.setBackground(Color.WHITE);
 		
 		pathField.setPreferredSize(new Dimension(300,25));
 		nameField.setPreferredSize(new Dimension(300,25));
@@ -167,6 +172,12 @@ public class UploadView extends AbstractView {
 			}
         });
 		
+		Image upload = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/uploadIcon.png"));
+		ImageIcon img = new ImageIcon(upload);
+		uploadButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		
+		uploadButton.setPreferredSize(new Dimension(120,30));
+		
 		uploadButton.addActionListener(new ActionListener() {
 			  
 	            public void actionPerformed(ActionEvent e) {
@@ -179,6 +190,33 @@ public class UploadView extends AbstractView {
 	            }
 	            	
 		});
+		
+		uploadButton.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				uploadButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				uploadButton.setBackground(Color.WHITE);
+				uploadButton.setBorder(BorderFactory.createMatteBorder(3,3,3,3,Color.red));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				uploadButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				uploadButton.setBackground(new JButton().getBackground());
+				uploadButton.setBorder(new JButton().getBorder());
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
 		
 		JPanel pathPanel = new JPanel();
 		pathPanel.add(pathField);
@@ -202,12 +240,16 @@ public class UploadView extends AbstractView {
 		
 		JPanel north = new JPanel();
 		north.setLayout(new FlowLayout());
+		north.setBackground(Color.WHITE);
+		
 		this.add(mainMenu, BorderLayout.WEST);
-		//ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
-		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("youtube.png"));
-		ImageIcon icon = new ImageIcon(img);
+		
+		Image img2 = Toolkit.getDefaultToolkit().createImage(jar.getResource("youtube.png"));
+		ImageIcon icon = new ImageIcon(img2);
+		
 		yTImg = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
 		north.add(yTImg);
+		
 		this.add(north,BorderLayout.NORTH);
 		this.add(mainPanel,BorderLayout.CENTER);
 	}

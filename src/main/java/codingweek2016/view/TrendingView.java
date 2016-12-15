@@ -1,6 +1,7 @@
 package codingweek2016.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -52,6 +53,7 @@ public class TrendingView extends AbstractView {
 	public TrendingView(MainWindow mW) throws IOException {
 		mainWindow = mW;
 		mainMenu = new MainMenu(mainWindow);
+		mainMenu.setBackground(Color.WHITE);
 		
 		this.setLayout(new BorderLayout());
 		    	
@@ -100,11 +102,14 @@ public class TrendingView extends AbstractView {
 		
 		this.add(mainMenu,BorderLayout.WEST);
 		this.add(resultGrid,BorderLayout.CENTER);
-		//ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
+		
 		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("youtube.png"));
 		ImageIcon icon = new ImageIcon(img);
+		
 		yTImg = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
+		
 		north.add(yTImg);
+		north.setBackground(Color.WHITE);
 		this.add(north,BorderLayout.NORTH);
 	}
 	

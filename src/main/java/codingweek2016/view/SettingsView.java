@@ -1,18 +1,21 @@
 package codingweek2016.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.MouseListener;
 
-import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,9 +26,12 @@ import javax.swing.border.EmptyBorder;
 
 import codingweek2016.MainMenu;
 import codingweek2016.MainWindow;
+import extraction.GetJarResources;
 
 @SuppressWarnings("serial")
 public class SettingsView extends AbstractView {
+	
+	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
 	
 	private JLabel yTImg;
 	
@@ -40,6 +46,7 @@ public class SettingsView extends AbstractView {
 	public SettingsView(MainWindow mW) {
 		mainWindow = mW;
 		mainMenu = new MainMenu(mainWindow);
+		mainMenu.setBackground(Color.WHITE);
 		
 		this.setLayout(new BorderLayout());
 		
@@ -52,11 +59,44 @@ public class SettingsView extends AbstractView {
 		widthField.setPreferredSize(new Dimension(300,25));
 		apikeyField.setPreferredSize(new Dimension(300,25));
 		
+		Image upload = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/saveIcon.png"));
+		ImageIcon img = new ImageIcon(upload);
+		saveButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		
+		saveButton.setPreferredSize(new Dimension(120,30));
+		
 		saveButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
             	mainWindow.setMainView(new SearchView(mainWindow));
             }
+        });
+		
+		saveButton.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				saveButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				saveButton.setBackground(Color.WHITE);
+				saveButton.setBorder(BorderFactory.createMatteBorder(3,3,3,3,Color.red));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				saveButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				saveButton.setBackground(new JButton().getBackground());
+				saveButton.setBorder(new JButton().getBorder());
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
         });
 		
 		heightField.addActionListener(new ActionListener() {
@@ -198,17 +238,17 @@ public class SettingsView extends AbstractView {
 		
 		JPanel north = new JPanel();
 		north.setLayout(new FlowLayout());
+		north.setBackground(Color.WHITE);
 		
 		this.add(mainMenu,BorderLayout.WEST);
 		this.add(settingsGrid, BorderLayout.CENTER);
-		try {
-			ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
-			yTImg = new JLabel(new ImageIcon(img.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
-			north.add(yTImg);
-			this.add(north,BorderLayout.NORTH);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		Image img2 = Toolkit.getDefaultToolkit().createImage(jar.getResource("youtube.png"));
+		ImageIcon icon = new ImageIcon(img2);
+		yTImg = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
+		north.add(yTImg);
+		
+		this.add(north,BorderLayout.NORTH);
 	}
 
 }

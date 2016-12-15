@@ -1,6 +1,8 @@
 package codingweek2016;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,10 +10,12 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,6 +35,7 @@ public class CommentsWindow extends JFrame {
 	private JPanel scrollComment = new JPanel();
 	private JPanel createComment = new JPanel();
 	private JScrollPane scroll;
+	private JButton publish;
 
 	public CommentsWindow(String title, final String id){
 		super("Comments on " + title);
@@ -42,6 +47,7 @@ public class CommentsWindow extends JFrame {
         createComment.setLayout(new BoxLayout(createComment, BoxLayout.X_AXIS));
         
         commentEntry = new JTextArea("Write your comment here"); 
+        commentEntry.setBorder(BorderFactory.createMatteBorder(10,10,10,10,new JButton().getBackground()));
         commentEntry.setEnabled(false);
         commentEntry.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent event) {
@@ -67,8 +73,36 @@ public class CommentsWindow extends JFrame {
         createComment.add(commentEntry);
        
         
-        JButton publish = new JButton("Publish");
-        publish.setPreferredSize(new Dimension(150,40));
+        publish = new JButton("Publish");
+        publish.setPreferredSize(new Dimension(130,80));
+        
+        publish.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				publish.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				publish.setBackground(Color.WHITE);
+				publish.setBorder(BorderFactory.createMatteBorder(3,3,3,3,Color.red));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				publish.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				publish.setBackground(new JButton().getBackground());
+				publish.setBorder(new JButton().getBorder());
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
+        
         createComment.add(publish);
         
                 

@@ -131,7 +131,7 @@ public class Video extends JPanel {
 
 		description.setOpaque(false);
 		
-		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_comment_black_24dp_1x.png"));
+		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/commentIcon.png"));
 		ImageIcon icon = new ImageIcon(img);
 		//ImageIcon img = new ImageIcon(ImageIO.read(new File(iconcommenturl.getPath())));
 		comments.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	

@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -110,12 +111,14 @@ public class SearchView extends AbstractView {
             }
         };
 		
-		searchField.setPreferredSize(new Dimension(300,25));
+		searchField.setPreferredSize(new Dimension(300,30));
 		searchField.addActionListener(search);
 		
-		Image img1 = Toolkit.getDefaultToolkit().createImage(jar.getResource("searchIcon.png"));
+		Image img1 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/searchIcon.png"));
 		ImageIcon icon = new ImageIcon(img1);
 		searchButton.setIcon(new ImageIcon(icon.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		
+		searchButton.setPreferredSize(new Dimension(120,30));
 		
 		searchButton.addMouseListener(new MouseListener() {
 
@@ -125,10 +128,14 @@ public class SearchView extends AbstractView {
 
 			public void mouseEntered(MouseEvent arg0) {
 				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				searchButton.setBackground(Color.WHITE);
+				searchButton.setBorder(BorderFactory.createMatteBorder(3,3,3,3,Color.red));
 			}
 
 			public void mouseExited(MouseEvent arg0) {
 				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				searchButton.setBackground(new JButton().getBackground());
+				searchButton.setBorder(new JButton().getBorder());
 			}
 
 			public void mousePressed(MouseEvent arg0) {

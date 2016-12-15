@@ -1,6 +1,7 @@
 package codingweek2016;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -8,8 +9,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,10 +20,9 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Properties;
 
-import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-//import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import codingweek2016.model.Account;
@@ -47,32 +48,19 @@ public class MainMenu extends JPanel {
 	
 	@SuppressWarnings("unused")
 	private static YouTube youtube;
-	
-	Image icon1 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_whatshot_black_36dp_1x.png"));
-	ImageIcon iconhot = new ImageIcon(icon1);
-	Image icon2 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_settings_black_36dp_1x.png"));
-	ImageIcon iconsettings = new ImageIcon(icon2);
-	Image icon3 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_search_black_24dp_2x.png"));
-	ImageIcon iconsearch = new ImageIcon(icon3);
-	Image icon6 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_file_upload_black_24dp_2x.png"));
-	ImageIcon iconupload = new ImageIcon(icon6);
-	//Image icon4 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_subdirectory_arrow_right_black_24dp_1x.png"));
-	//ImageIcon iconlog = new ImageIcon(icon4);
-	//Image icon5 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_check_black_24dp_1x.png"));
-	//ImageIcon iconlogged = new ImageIcon(icon5);
 		
 	private JPanel logPanel = new JPanel();
 
-	private JButton searchButton = new JButton(new ImageIcon(iconsearch.getImage()));
-	private JButton trendingButton = new JButton(new ImageIcon(iconhot.getImage()));
-	private JButton settingsButton = new JButton(new ImageIcon(iconsettings.getImage()));
-	private JButton uploadButton = new JButton(new ImageIcon(iconupload.getImage()));
+	private JButton uploadButton = new JButton();
+	private JButton searchButton = new JButton();
+	private JButton trendingButton = new JButton();
+	private JButton settingsButton = new JButton();
 
 	//private JButton logButton = new JButton(new ImageIcon(iconlog.getImage()));
 	
 	//private JLabel nameLabel = new JLabel(new ImageIcon(iconlogged.getImage()));
 	
-	private Dimension dim4Buttons = new Dimension(140,50);
+	private Dimension dim4Buttons = new Dimension(120,30);
 
 	private String usrName = "";
 	private MainWindow mainWindow;
@@ -98,13 +86,24 @@ public class MainMenu extends JPanel {
 		trendingButton.setPreferredSize(dim4Buttons);
 		settingsButton.setPreferredSize(dim4Buttons);
 		
+		Image trends = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/trendsIcon.png"));
+		Image settings = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/settingsIcon.png"));
+		Image search = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/searchIcon.png"));
+		Image upload = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/uploadIcon.png"));
+		
 		ImageIcon img;
-		try {
-			img = new ImageIcon(ImageIO.read(new File("src/main/resources/searchIcon.png")));
-			searchButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		
+		img = new ImageIcon(upload);
+		uploadButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		
+		img = new ImageIcon(search);
+		searchButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		
+		img = new ImageIcon(trends);
+		trendingButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		
+		img = new ImageIcon(settings);
+		settingsButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
 		
 		//settingsButton.setIcon(new ImageIcon("/resources/icons/ic_settings_black_36dp_1x.png")); 
 		
@@ -115,12 +114,66 @@ public class MainMenu extends JPanel {
             }
         });
 		
+		searchButton.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				searchButton.setBackground(Color.WHITE);
+				searchButton.setBorder(BorderFactory.createMatteBorder(3,3,3,3,Color.red));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				searchButton.setBackground(new JButton().getBackground());
+				searchButton.setBorder(new JButton().getBorder());
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
+		
 
 		uploadButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
             	mainWindow.setMainView(new UploadView(mainWindow));
             }
+        });
+		
+		uploadButton.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				uploadButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				uploadButton.setBackground(Color.WHITE);
+				uploadButton.setBorder(BorderFactory.createMatteBorder(3,3,3,3,Color.red));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				uploadButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				uploadButton.setBackground(new JButton().getBackground());
+				uploadButton.setBorder(new JButton().getBorder());
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
         });
 		
 		trendingButton.addActionListener(new ActionListener() {
@@ -135,11 +188,65 @@ public class MainMenu extends JPanel {
             }
         });
 		
+		trendingButton.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				trendingButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				trendingButton.setBackground(Color.WHITE);
+				trendingButton.setBorder(BorderFactory.createMatteBorder(3,3,3,3,Color.red));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				trendingButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				trendingButton.setBackground(new JButton().getBackground());
+				trendingButton.setBorder(new JButton().getBorder());
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
+		
 		settingsButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
             	mainWindow.setMainView(new SettingsView(mainWindow));
             }
+        });
+		
+		settingsButton.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				settingsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				settingsButton.setBackground(Color.WHITE);
+				settingsButton.setBorder(BorderFactory.createMatteBorder(3,3,3,3,Color.red));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				settingsButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				settingsButton.setBackground(new JButton().getBackground());
+				settingsButton.setBorder(new JButton().getBorder());
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
         });
 		
 		/*enterNameZone.setPreferredSize(new Dimension(50,20));*/

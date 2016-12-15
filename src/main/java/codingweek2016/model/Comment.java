@@ -4,20 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -33,10 +32,16 @@ import com.google.api.services.youtube.model.CommentThreadListResponse;
 import com.google.api.services.youtube.model.CommentThreadSnippet;
 import com.google.common.collect.Lists;
 
+import extraction.GetJarResources;
+
 @SuppressWarnings("serial")
 public class Comment extends JPanel {
 	
     private static YouTube youtube;
+    
+    //private URL iconpersonurl = getClass().getResource("/icons/ic_person_black_24dp_2x.png");
+	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
+
     
 	private String videoId;
     
@@ -97,6 +102,7 @@ public class Comment extends JPanel {
         // Call the YouTube Data API's commentThreads.insert method to
         // create a comment.
         try {
+			@SuppressWarnings("unused")
 			CommentThread videoCommentInsertResponse = youtube.commentThreads().insert("snippet", commentThread).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -115,18 +121,19 @@ public class Comment extends JPanel {
 			comment.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			
 			CommentSnippet snippet = videoComment.getSnippet().getTopLevelComment().getSnippet();
+		
 
 			final String author = snippet.getAuthorDisplayName();
 			final String channelUrl = snippet.getAuthorChannelUrl();
-			final JButton authorButton = new JButton(author);
+			final JButton authorButton = new JButton(snippet.getAuthorDisplayName());
 			authorButton.setPreferredSize(new Dimension(200, 100));
 			authorButton.setText("<html><body><u>"+author+"</u></body><html/>");
-			try {
-				ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/icon.png")));
-				authorButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}	
+			
+			Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_person_black_24dp_2x.png"));
+			ImageIcon icon = new ImageIcon(img);
+			authorButton.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
+			
+			
 			authorButton.setOpaque(false);
 			authorButton.setContentAreaFilled(false);
 			authorButton.setBorderPainted(false);

@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Observable;
 import java.util.Properties;
 
-import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.services.youtube.YouTube;
 

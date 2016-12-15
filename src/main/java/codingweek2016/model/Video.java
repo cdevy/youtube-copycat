@@ -3,7 +3,8 @@ package codingweek2016.model;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -24,6 +25,7 @@ import com.google.api.services.youtube.model.SearchResult;
 
 import codingweek2016.CommentsWindow;
 import codingweek2016.VideoViewer;
+import extraction.GetJarResources;
 
 @SuppressWarnings("serial")
 public class Video extends JPanel {
@@ -34,7 +36,9 @@ public class Video extends JPanel {
 	private JTextArea description = new JTextArea();
 	private String id;
 	
-    private URL iconcommenturl = getClass().getResource("/icons/ic_comment_black_24dp_1x.png");
+    //private URL iconcommenturl = getClass().getResource("/icons/ic_comment_black_24dp_1x.png");
+	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
+
 	
 	public Video(SearchResult result) {
 		super();
@@ -129,12 +133,11 @@ public class Video extends JPanel {
 
 		description.setOpaque(false);
 		
-		try {
-			ImageIcon img = new ImageIcon(ImageIO.read(new File(iconcommenturl.getPath())));
-			comments.setIcon(new ImageIcon(img.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
+		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_comment_black_24dp_1x.png"));
+		ImageIcon icon = new ImageIcon(img);
+		//ImageIcon img = new ImageIcon(ImageIO.read(new File(iconcommenturl.getPath())));
+		comments.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
+		
 		comments.setOpaque(false);
 		comments.setContentAreaFilled(false);
 		comments.setBorderPainted(false);

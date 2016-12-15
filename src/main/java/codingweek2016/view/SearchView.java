@@ -4,17 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 
 import javax.imageio.ImageIO;
@@ -26,16 +25,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import org.mortbay.resource.JarResource;
+
 
 import codingweek2016.MainMenu;
 import codingweek2016.MainWindow;
 import codingweek2016.model.SearchRequest;
+import extraction.GetJarResources;
 
 @SuppressWarnings("serial")
 public class SearchView extends AbstractView {
 	
 	private JLabel logo;
-	private URL youtubeiconurl = getClass().getResource("/youtube.png");
+	//private URL youtubeiconurl = getClass().getResource("./youtube.png");
+
+	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
 	
 	private SearchRequest request;
 	
@@ -129,13 +133,13 @@ public class SearchView extends AbstractView {
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(new FlowLayout());
 		
-		try {
-			ImageIcon img = new ImageIcon(ImageIO.read(new File(youtubeiconurl.getPath())));
-			logo = new JLabel(new ImageIcon(img.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
-			searchPanel.add(logo);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		//ImageIcon img = new ImageIcon(ImageIO.read(new File(youtubeiconurl.getPath())));
+		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("youtube.png"));
+		ImageIcon icon = new ImageIcon(img);
+		logo = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
+		searchPanel.add(logo);
+		
+		
 		searchPanel.add(searchField);
 		searchPanel.add(searchButton);
 		

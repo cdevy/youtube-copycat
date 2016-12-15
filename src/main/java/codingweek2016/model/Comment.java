@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -29,12 +31,16 @@ import com.google.api.services.youtube.model.CommentThread;
 import com.google.api.services.youtube.model.CommentThreadListResponse;
 import com.google.common.collect.Lists;
 
+import extraction.GetJarResources;
+
 @SuppressWarnings("serial")
 public class Comment extends JPanel {
 	
     private static YouTube youtube;
     
-    private URL iconpersonurl = getClass().getResource("/icons/ic_person_black_24dp_2x.png");
+    //private URL iconpersonurl = getClass().getResource("/icons/ic_person_black_24dp_2x.png");
+	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
+
     
 	private String videoId;
     
@@ -92,12 +98,13 @@ public class Comment extends JPanel {
 			final JButton author = new JButton(snippet.getAuthorDisplayName());
 			author.setPreferredSize(new Dimension(200, 100));
 			author.setText("<html><body><u>"+author.getText()+"</u></body><html/>");
-			try {
-				ImageIcon img = new ImageIcon(ImageIO.read(new File(iconpersonurl.getPath())));
-				author.setIcon(new ImageIcon(img.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}	
+			
+			Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_person_black_24dp_2x.png"));
+			ImageIcon icon = new ImageIcon(img);
+			//ImageIcon img = new ImageIcon(ImageIO.read(new File(iconpersonurl.getPath())));
+			author.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
+			
+			
 			author.setOpaque(false);
 			author.setContentAreaFilled(false);
 			author.setBorderPainted(false);

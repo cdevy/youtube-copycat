@@ -3,6 +3,8 @@ package codingweek2016;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -26,34 +28,47 @@ import com.jayway.jsonpath.JsonPath;
 
 import codingweek2016.model.Authentification;
 import codingweek2016.model.SearchRequest;
-import codingweek2016.view.SearchView;
 import codingweek2016.view.SettingsView;
+import extraction.GetJarResources;
 
 @SuppressWarnings("serial")
 public class MainMenu extends JPanel {
 	
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
 	
+	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
+	
 	private Account account = null;
 	
 	@SuppressWarnings("unused")
 	private static YouTube youtube;
-	
+	/*
 	private URL iconhoturl = getClass().getResource("/icons/ic_whatshot_black_36dp_1x.png");
 	private URL iconsettingsurl = getClass().getResource("/icons/ic_settings_black_36dp_1x.png");
 	private URL iconfavoriteurl = getClass().getResource("/icons/ic_favorite_black_36dp_1x.png");
 	private URL iconlogurl = getClass().getResource("/icons/ic_subdirectory_arrow_right_black_24dp_1x.png");
 	private URL iconloggedinurl = getClass().getResource("/icons/ic_check_black_24dp_1x.png");
-
+	*/
+	
+	Image icon1 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_whatshot_black_36dp_1x.png"));
+	ImageIcon iconhot = new ImageIcon(icon1);
+	Image icon2 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_settings_black_36dp_1x.png"));
+	ImageIcon iconsettings = new ImageIcon(icon2);
+	Image icon3 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_favorite_black_36dp_1x.png"));
+	ImageIcon iconfavorite = new ImageIcon(icon3);
+	Image icon4 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_subdirectory_arrow_right_black_24dp_1x.png"));
+	ImageIcon iconlog = new ImageIcon(icon4);
+	Image icon5 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_check_black_24dp_1x.png"));
+	ImageIcon iconlogged = new ImageIcon(icon5);
 		
 	private JPanel logPanel = new JPanel();
 
-	private JButton searchButton = new JButton(new ImageIcon(iconfavoriteurl.getPath()));
-	private JButton suggestionButton = new JButton(new ImageIcon(iconhoturl.getPath()));
-	private JButton settingsButton = new JButton(new ImageIcon(iconsettingsurl.getPath()));
-	private JButton logButton = new JButton(new ImageIcon(iconlogurl.getPath()));
+	private JButton searchButton = new JButton(new ImageIcon(iconfavorite.getImage()));
+	private JButton suggestionButton = new JButton(new ImageIcon(iconhot.getImage()));
+	private JButton settingsButton = new JButton(new ImageIcon(iconsettings.getImage()));
+	private JButton logButton = new JButton(new ImageIcon(iconlog.getImage()));
 	
-	private JLabel nameLabel = new JLabel(new ImageIcon(iconloggedinurl.getPath()));
+	private JLabel nameLabel = new JLabel(new ImageIcon(iconlogged.getImage()));
 	
 	private Dimension dim4Buttons = new Dimension(140,50);
 	private String usrName = "";

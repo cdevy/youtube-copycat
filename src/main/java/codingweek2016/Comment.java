@@ -1,12 +1,16 @@
 package codingweek2016;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -42,7 +46,7 @@ public class Comment extends JPanel {
     }
    
 	
-	/*public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		 List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.force-ssl");
 		 
 		 
@@ -53,11 +57,11 @@ public class Comment extends JPanel {
 
 	            // This object is used to make YouTube Data API requests.
 	            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
-	                    .setApplicationName("youtube-cmdline-commentthreads-sample").build();
+	                .setApplicationName("youtube-cmdline-commentthreads-sample").build();
 	            
 	           // YouTube.Search.List search = youtube.search().list("id,snippet");
 
-				YouTube.CommentThreads.List request = youtube.commentThreads().list("");
+				//YouTube.CommentThreads.List request = youtube.commentThreads().list("");
 				CommentThreadListResponse videoCommentsListResponse = youtube.commentThreads().list("snippet").setVideoId("xcv0EN3TMZ0").setTextFormat("plainText").execute();
 			    List<CommentThread> videoComments = videoCommentsListResponse.getItems();
 			    
@@ -93,7 +97,7 @@ public class Comment extends JPanel {
 	            System.err.println("Throwable: " + t.getMessage());
 	            t.printStackTrace();
 	        }
-	}*/
+	}
 	
 	public List<CommentThread> getComments() throws IOException {
 		CommentThreadListResponse videoCommentsListResponse = youtube.commentThreads().list("snippet").setVideoId(this.videoId).setTextFormat("plainText").execute();
@@ -103,10 +107,9 @@ public class Comment extends JPanel {
 	}
 	
 	public JPanel display( List<CommentThread> videoComments){
-		JPanel panel = new JPanel();
-		GridLayout grid = new GridLayout(25,1);
-		grid.setVgap(10);
-		panel.setLayout(grid);
+		JPanel commentlist = new JPanel();
+		
+		//panel.setLayout(new GridLayout());
 		
 		/*if (videoComments.isEmpty()) {
              System.out.println("Can't get video comments.");
@@ -120,14 +123,21 @@ public class Comment extends JPanel {
                  System.out.println("\n-------------------------------------------------------------\n");
              }
          }*/
+		
 		for (CommentThread videoComment : videoComments) {
+			GridLayout grid = new GridLayout(25,1);
+			grid.setVgap(10);
+			commentlist.setLayout(grid);
 			CommentSnippet snippet = videoComment.getSnippet().getTopLevelComment().getSnippet();
 			String author = snippet.getAuthorDisplayName();
 			String comment = snippet.getTextDisplay();
-			panel.add(new JLabel(author));
-			panel.add(new JLabel(comment));
+			JPanel commentaire = new JPanel();
+			commentaire.setLayout(new FlowLayout());
+			commentaire.add(new JLabel(author));
+			commentaire.add(new JLabel(comment));
+			commentlist.add(commentaire);
 		}
-		return panel;
+		return commentlist;
 		
 	}
 	

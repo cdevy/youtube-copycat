@@ -48,11 +48,14 @@ public class MainMenu extends JPanel {
 	
 	private static YouTube youtube;
 	
+	private URL iconhoturl = getClass().getResource("/icons/ic_whatshot_black_36dp_1x.png");
+	private URL iconsettingsurl = getClass().getResource("/icons/ic_settings_black_36dp_1x.png");
+	private URL iconfavoriteurl = getClass().getResource("/icons/ic_favorite_black_36dp_1x.png");
+	
 	private JPanel logPanel = new JPanel();
-	private JButton searchButton = new JButton("Favoris");
-	private JButton suggestionButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
-	private JButton abonnementButton = new JButton(new ImageIcon("src/main/resources/icons/ic_pages_black_36dp_1x.png"));
-	private JButton settingsButton = new JButton(new ImageIcon("src/main/resources/icons/ic_settings_black_36dp_1x.png"));
+	private JButton searchButton = new JButton(new ImageIcon(iconfavoriteurl.getPath()));
+	private JButton suggestionButton = new JButton(new ImageIcon(iconhoturl.getPath()));
+	private JButton settingsButton = new JButton(new ImageIcon(iconsettingsurl.getPath()));
 	private JButton logButton = new JButton("Log in");
 	private JLabel nameLabel = new JLabel("   You are logged in.");
 	private Dimension dim4Buttons = new Dimension(100,50);
@@ -74,7 +77,6 @@ public class MainMenu extends JPanel {
 		logPanel.setLayout(layout);
 		
 		logButton.setPreferredSize(dim4Buttons);
-		abonnementButton.setPreferredSize(dim4Buttons);
 		searchButton.setPreferredSize(dim4Buttons);
 		suggestionButton.setPreferredSize(dim4Buttons);
 		settingsButton.setPreferredSize(dim4Buttons);
@@ -82,13 +84,6 @@ public class MainMenu extends JPanel {
 		//settingsButton.setIcon(new ImageIcon("/resources/icons/ic_settings_black_36dp_1x.png")); 
 		
 		searchButton.addActionListener(new ActionListener() {
-			  
-            public void actionPerformed(ActionEvent e) {
-            	//add(new View(new SearchRequest()));
-            }
-        });
-		
-		abonnementButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
             	//add(new View(new SearchRequest()));
@@ -124,7 +119,6 @@ public class MainMenu extends JPanel {
 						logPanel.revalidate();
 						logPanel.repaint();
 						logPanel.add(nameLabel);
-						logPanel.add(abonnementButton);
 						logPanel.add(searchButton);
 						logPanel.add(suggestionButton);
 						logPanel.add(settingsButton);
@@ -182,7 +176,6 @@ public class MainMenu extends JPanel {
 		} 
 		
 		logPanel.add(logButton);
-		logPanel.add(abonnementButton);
 		logPanel.add(searchButton);
 		logPanel.add(suggestionButton);
 		logPanel.add(settingsButton);

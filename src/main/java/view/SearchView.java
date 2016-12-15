@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -35,6 +36,7 @@ public class SearchView extends AbstractView {
 	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
 	
 	private JLabel logo;
+	private URL youtubeiconurl = getClass().getResource("/youtube.png");
 	
 	private SearchRequest request;
 	private List<Video> videos = new ArrayList<Video>();
@@ -124,7 +126,8 @@ public class SearchView extends AbstractView {
 		searchPanel.setLayout(new FlowLayout());
 		
 		try {
-			ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
+			System.out.println(youtubeiconurl.getPath());
+			ImageIcon img = new ImageIcon(ImageIO.read(new File(youtubeiconurl.getPath())));
 			logo = new JLabel(new ImageIcon(img.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
 			searchPanel.add(logo);
 		} catch (IOException e) {

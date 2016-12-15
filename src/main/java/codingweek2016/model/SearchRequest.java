@@ -3,6 +3,7 @@ package codingweek2016.model;
 import java.awt.GridLayout;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -22,6 +23,7 @@ public class SearchRequest extends Observable {
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
     private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
     private static YouTube youtube;
+    //private URL propertiesurl = getClass().getResource("/youtube.properties");
     
     private List<Video> videos = new ArrayList<Video>();
 	

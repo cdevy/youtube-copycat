@@ -6,9 +6,12 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import codingweek2016.view.SearchView;
+import codingweek2016.view.AbstractView;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
+	
+	private AbstractView currentView = new SearchView(this);;
 	
 	public MainWindow() {
 		super("Youtube Copycat");
@@ -16,13 +19,22 @@ public class MainWindow extends JFrame {
 				
 		setLayout(new BorderLayout());
 		
-		SearchView v = new SearchView();
+		this.setMainView(new SearchView(this));
+		//SearchView v = new SearchView();
 		
-		this.add(v);
+		//this.add(v);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
+	}
+	
+	public void setMainView(AbstractView view) {
+		this.remove(currentView);
+		this.add(view);
+		currentView = view;
+		revalidate();
+		repaint();
 	}
 
 }

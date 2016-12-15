@@ -75,6 +75,8 @@ Execute
 
 * A ce jour 5 branches coexistent sur le git (master, dev, video, account, comment) et seule la branche dev est à jour avec master après la Release_day_3
 
+* Nous avons tenté de créer un .jar éxecutable de cette release mais il ne se lance pas : il faudrait trouver un moyen de lui lier l'API google... A voir Jeudi.
+
 ### Jeudi
 
 * Résolution des problèmes de mercredi si possible : Possibilité d'afficher au moins une fenêtre de commentaires et éventuellement d'intéragir avec, upload de vidéos,

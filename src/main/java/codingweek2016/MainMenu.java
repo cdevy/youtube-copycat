@@ -369,9 +369,9 @@ public class MainMenu extends JPanel {
 			//logPanel.add(nameLabel);
 		}
 
-		logPanel.add(uploadButton);
 		logPanel.add(searchButton);
 		logPanel.add(trendingButton);
+		logPanel.add(uploadButton);
 		logPanel.add(settingsButton);
 		logPanel.setBackground(Color.WHITE);
 	}

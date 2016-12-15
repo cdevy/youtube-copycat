@@ -49,11 +49,15 @@ public class CommentsWindow extends JFrame {
         });
         commentEntry.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
-				commentEntry.setText("");
+				if (commentEntry.getText().equals("Write your comment here")) {
+					commentEntry.setText("");
+				}
 			}
 
 			public void focusLost(FocusEvent e) {
-				commentEntry.setText("Write your comment here");
+				if (commentEntry.getText().equals("")) {
+					commentEntry.setText("Write your comment here");
+				}
 			}
         	
         });

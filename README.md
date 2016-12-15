@@ -15,7 +15,7 @@ Dépendances
 
 Execute
 
-	javac -jar pcd2016.jar
+	java -jar youtubeCopycat.jar
 
 ## Roadmap
 

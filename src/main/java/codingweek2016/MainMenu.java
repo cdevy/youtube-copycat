@@ -91,7 +91,12 @@ public class MainMenu extends JPanel {
 		trendingButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	mainWindow.setMainView(new TrendingView(mainWindow));
+            	try {
+					mainWindow.setMainView(new TrendingView(mainWindow));
+				} catch (IOException e1) {
+					System.out.println(e1);
+					e1.printStackTrace();
+				}
             }
         });
 		

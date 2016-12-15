@@ -25,9 +25,11 @@ import codingweek2016.UserProfile;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.youtube.YouTube;
+//import com.google.api.services.youtube.model.Comment;
 import com.google.api.services.youtube.model.CommentSnippet;
 import com.google.api.services.youtube.model.CommentThread;
 import com.google.api.services.youtube.model.CommentThreadListResponse;
+import com.google.api.services.youtube.model.CommentThreadSnippet;
 import com.google.common.collect.Lists;
 
 @SuppressWarnings("serial")
@@ -76,6 +78,31 @@ public class Comment extends JPanel {
             t.printStackTrace();
         }
 		return null;
+	}
+	
+	public void postcomment(String text){
+		CommentSnippet commentSnippet = new CommentSnippet();
+        commentSnippet.setTextOriginal(text);
+        
+        // Create a top-level comment with snippet.
+        com.google.api.services.youtube.model.Comment topLevelComment = new com.google.api.services.youtube.model.Comment();
+        topLevelComment.setSnippet(commentSnippet);
+        
+        CommentThreadSnippet commentThreadSnippet = new CommentThreadSnippet();
+		commentThreadSnippet.setVideoId(videoId);
+		commentThreadSnippet.setTopLevelComment(topLevelComment);
+		
+		CommentThread commentThread = new CommentThread();
+        commentThread.setSnippet(commentThreadSnippet);
+        
+        // Call the YouTube Data API's commentThreads.insert method to
+        // create a comment.
+        try {
+			CommentThread videoCommentInsertResponse = youtube.commentThreads().insert("snippet", commentThread).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public JPanel display( List<CommentThread> videoComments){

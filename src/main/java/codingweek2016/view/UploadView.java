@@ -3,17 +3,17 @@ package codingweek2016.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,6 +26,7 @@ import javax.swing.border.EmptyBorder;
 import codingweek2016.MainMenu;
 import codingweek2016.MainWindow;
 import codingweek2016.model.UploadVideo;
+import extraction.GetJarResources;
 
 @SuppressWarnings("serial")
 public class UploadView extends AbstractView {
@@ -38,6 +39,8 @@ public class UploadView extends AbstractView {
 	private JTextArea description = new JTextArea("Description");
 	private JTextArea tags = new JTextArea("Tags, separated with commas");
 	private JButton uploadButton = new JButton("Upload");
+	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
+
 	
 	public UploadView(MainWindow mW) {
 		mainWindow = mW;
@@ -200,14 +203,12 @@ public class UploadView extends AbstractView {
 		JPanel north = new JPanel();
 		north.setLayout(new FlowLayout());
 		this.add(mainMenu, BorderLayout.WEST);
-		try {
-			ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
-			yTImg = new JLabel(new ImageIcon(img.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
-			north.add(yTImg);
-			this.add(north,BorderLayout.NORTH);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		//ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
+		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("youtube.png"));
+		ImageIcon icon = new ImageIcon(img);
+		yTImg = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
+		north.add(yTImg);
+		this.add(north,BorderLayout.NORTH);
 		this.add(mainPanel,BorderLayout.CENTER);
 	}
 

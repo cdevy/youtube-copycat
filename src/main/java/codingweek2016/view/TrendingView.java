@@ -3,8 +3,9 @@ package codingweek2016.view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
@@ -32,6 +32,7 @@ import codingweek2016.MainWindow;
 import codingweek2016.model.Authentification;
 import codingweek2016.model.SearchRequest;
 import codingweek2016.model.Video;
+import extraction.GetJarResources;
 
 @SuppressWarnings("serial")
 public class TrendingView extends AbstractView {
@@ -40,6 +41,8 @@ public class TrendingView extends AbstractView {
     private static HttpRequestInitializer httpRequest = new HttpRequestInitializer() {public void initialize(HttpRequest request) throws IOException {}};
 	
 	private JLabel yTImg;
+	
+	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
 	
 	private static YouTube youtube;
 	
@@ -97,14 +100,12 @@ public class TrendingView extends AbstractView {
 		
 		this.add(mainMenu,BorderLayout.WEST);
 		this.add(resultGrid,BorderLayout.CENTER);
-		try {
-			ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
-			yTImg = new JLabel(new ImageIcon(img.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
-			north.add(yTImg);
-			this.add(north,BorderLayout.NORTH);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		//ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/youtube.png")));
+		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("youtube.png"));
+		ImageIcon icon = new ImageIcon(img);
+		yTImg = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
+		north.add(yTImg);
+		this.add(north,BorderLayout.NORTH);
 	}
 	
 	public List<SearchResult> getPopular() throws IOException {

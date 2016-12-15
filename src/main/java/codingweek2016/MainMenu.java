@@ -1,76 +1,215 @@
 package codingweek2016;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
+import java.util.Properties;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.services.samples.youtube.cmdline.Auth;
+import codingweek2016.model.Account;
+
 import com.google.api.services.youtube.YouTube;
+import com.jayway.jsonpath.JsonPath;
+
+import codingweek2016.model.Authentification;
+import codingweek2016.model.SearchRequest;
 
 @SuppressWarnings("serial")
 public class MainMenu extends JPanel {
 	
+	private static final String PROPERTIES_FILENAME = "youtube.properties";
+	
 	private Account account = null;
 	
+	@SuppressWarnings("unused")
 	private static YouTube youtube;
 	
 	private JPanel logPanel = new JPanel();
-	private JPanel subscriptionsPanel = new JPanel();
+	private JButton searchButton = new JButton("Favorites");
+	private JButton suggestionButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
+	private JButton abonnementButton = new JButton(new ImageIcon("src/main/resources/icons/ic_pages_black_36dp_1x.png"));
+	private JButton settingsButton = new JButton(new ImageIcon("src/main/resources/icons/ic_settings_black_36dp_1x.png"));
 	private JButton logButton = new JButton("Log in");
+	private JLabel nameLabel = new JLabel("   You are logged in.");
+	private Dimension dim4Buttons = new Dimension(100,50);
+	private String usrName = "";
+	
+	/*private JPanel subscriptionsPanel = new JPanel();
+	private JButton logButton = new JButton("Log in");
+	private JLabel nameLabel = new JLabel("");
+	private JLabel enterName = new JLabel("Enter your name: ");
+	private JTextField enterNameZone = new JTextField();
+	private JButton enterNameButton = new JButton("Confirm");*/
+
 	
 	public MainMenu() {
 		
 		
+		GridLayout layout = new GridLayout(5,1);
+		layout.setVgap(10);
+		logPanel.setLayout(layout);
+		
+		logButton.setPreferredSize(dim4Buttons);
+		abonnementButton.setPreferredSize(dim4Buttons);
+		searchButton.setPreferredSize(dim4Buttons);
+		suggestionButton.setPreferredSize(dim4Buttons);
+		settingsButton.setPreferredSize(dim4Buttons);
+		
+		//settingsButton.setIcon(new ImageIcon("/resources/icons/ic_settings_black_36dp_1x.png")); 
+		
+		searchButton.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	//add(new View(new SearchRequest()));
+            }
+        });
+		
+		abonnementButton.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	//add(new View(new SearchRequest()));
+            }
+        });
+		
+		suggestionButton.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	
+            }
+        });
+		
+		settingsButton.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	//add(new SettingsView());
+            }
+        });
+		
+		/*enterNameZone.setPreferredSize(new Dimension(50,20));*/
 		
 		logButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	new GoogleClientSecrets();
             	if (account == null) {
 	            	try {
 						account = new Account();
-						youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, account.getCredential())
+						youtube = new YouTube.Builder(Authentification.HTTP_TRANSPORT, Authentification.JSON_FACTORY, account.getCredential())
 				                .setApplicationName("youtube-cmdline-localizations-sample").build();
 						
-						logPanel.remove(logButton);
+						logPanel.removeAll();
 						logPanel.revalidate();
 						logPanel.repaint();
-						logPanel.add(new JLabel("Logged in"));
-						
-						//addSubscribtions();
-						//Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/client_secrets.json"));
-				       // GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(Auth.JSON_FACTORY, clientSecretReader);
+						logPanel.add(nameLabel);
+						logPanel.add(abonnementButton);
+						logPanel.add(searchButton);
+						logPanel.add(suggestionButton);
+						logPanel.add(settingsButton);
 
-				        // Checks that the defaults have been replaced (Default = "Enter X here").
+						
 				        
-						//URL webSite = new URL("https://www.googleapis.com/youtube/v3/channels?part=id%2Csnippet%2Cstatistics%2CcontentDetails%2CtopicDetails&forUsername=KarlWolfVEVO&key="+clientSecrets.getDetails().getClientSecret());
-				        //URLConnection connection = webSite.openConnection();
-				        //BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-						System.out.println("You are logged in under: "+youtube.channels().list("snippet.title"));//youtube.channels().list("snippets.title").execute());
+				        //JsonFactory jsonfactory = new JsonFactory();
+				        //Writer writer = new StringWriter();
+						//JsonGenerator jsonGenerator = jsonfactory.createJsonGenerator(writer);
+						//System.out.println(account.getCredential().getJsonFactory().toPrettyString(jsonGenerator));
+						//System.out.println(youtube.channels().list("snippet").getJsonContent());
+						/*
+						logPanel.add(enterName);
+						logPanel.add(enterNameZone);
+						logPanel.add(enterNameButton);*/
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
             	}
             }
         });
+		/*
+		enterNameButton.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	usrName = enterNameZone.getText();
+            	URL user;
+            	int responseCode = 0;
+				try {
+					user = new URL("http://www.youtube.com/user/" + usrName);
+					HttpURLConnection huc = (HttpURLConnection) user.openConnection();
+					responseCode = huc.getResponseCode();
+				} catch (MalformedURLException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				System.out.println(responseCode);
+            	if (responseCode != 404) {
+	            	logPanel.removeAll();
+	            	logPanel.revalidate();
+					logPanel.repaint();
+					nameLabel.setText("Bienvenue "+ usrName + " !");
+	            	logPanel.add(nameLabel);
+            	}
+            }
+            	
+        });*/
+		
+		
+		
 		this.setLayout(new FlowLayout());
 		if (account ==  null) {		
 			logPanel.add(logButton);
 		} 
 		
+		logPanel.add(logButton);
+		logPanel.add(abonnementButton);
+		logPanel.add(searchButton);
+		logPanel.add(suggestionButton);
+		logPanel.add(settingsButton);
+
+		this.setLayout(new FlowLayout()); 
 		this.add(logPanel);
-		this.add(subscriptionsPanel);
+		//this.add(subscriptionsPanel);
+	}
+	
+	public void connect() throws IOException {
+		Properties properties = new Properties();
+		try {
+            InputStream in = SearchRequest.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
+            properties.load(in);
+
+        } catch (IOException e1) {
+            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e1.getCause()
+                    + " : " + e1.getMessage());
+            System.exit(1);
+        }
+		String apiKey = properties.getProperty("youtube.apikey");
+		
+		URL webSite = new URL("https://www.googleapis.com/youtube/v3/channels?part=id%2Csnippet%2Cstatistics%2CcontentDetails%2CtopicDetails&forUsername="+usrName+"&key="+apiKey);
+		
+        URLConnection connection = null;
+		connection = webSite.openConnection();
+		
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        
+        String str = "";
+        String line = "";
+        while((line = in.readLine()) != null){
+        	str += line;
+        } 
+        				        
+        List<String> title = JsonPath.read(str,"$.items..snippet.title");
+
+		System.out.println("You are logged in under: "+title.get(0));
 	}
 	
 	public void addSubscribtions() {

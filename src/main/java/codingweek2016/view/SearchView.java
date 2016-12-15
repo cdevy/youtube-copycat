@@ -1,4 +1,4 @@
-package codingweek2016;
+package codingweek2016.view;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -10,10 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,18 +20,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+
+import codingweek2016.MainMenu;
 import codingweek2016.model.SearchRequest;
-import codingweek2016.model.Video;
 
 @SuppressWarnings("serial")
-public class View extends JPanel implements Observer {
-	
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
+public class SearchView extends AbstractView {
 	
 	private JLabel logo;
 	
 	private SearchRequest request;
-	private List<Video> videos = new ArrayList<Video>();
 	
 	private JButton searchButton = new JButton("Search");
 	private JTextField searchField = new JTextField();
@@ -44,7 +38,7 @@ public class View extends JPanel implements Observer {
 	private JPanel resultGrid = new JPanel();
 	private JPanel mainMenu = new MainMenu();
 	
-	public View(SearchRequest r) {
+	public SearchView(SearchRequest r) {
 		
 		request = r;
 		request.addObserver(this);
@@ -134,13 +128,6 @@ public class View extends JPanel implements Observer {
 		this.add(searchPanel, BorderLayout.NORTH);
 		this.add(resultGrid, BorderLayout.CENTER);
 		this.add(mainMenu,BorderLayout.WEST);
-	}
-
-	@SuppressWarnings("unchecked")
-	public void update(Observable observable, Object videos) {
-		if (videos instanceof List<?>) {
-			this.videos = (List<Video>) videos;
-		}
 	}
 
 }

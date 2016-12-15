@@ -35,7 +35,7 @@ public class CommentsWindow extends JFrame {
 
 	public CommentsWindow(String title, final String id){
 		super("Comments on " + title);
-		this.setPreferredSize(new Dimension(1200,1000));
+		this.setPreferredSize(new Dimension(500,800));
 		
 		this.setLayout(new BorderLayout(30, 30));
 		
@@ -60,6 +60,7 @@ public class CommentsWindow extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if (commentEntry.getText().equals("")) {
 					commentEntry.setText("Write your comment here");
+					commentEntry.setEnabled(false);
 				}
 			}
         	

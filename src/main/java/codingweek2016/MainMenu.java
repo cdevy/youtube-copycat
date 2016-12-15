@@ -9,10 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -22,22 +18,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
-
-import view.SettingsView;
 
 import codingweek2016.model.Account;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.services.youtube.YouTube;
-import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 
 import codingweek2016.model.Authentification;
 import codingweek2016.model.SearchRequest;
+import codingweek2016.view.SearchView;
+import codingweek2016.view.SettingsView;
 
 @SuppressWarnings("serial")
 public class MainMenu extends JPanel {
@@ -46,20 +36,28 @@ public class MainMenu extends JPanel {
 	
 	private Account account = null;
 	
+	@SuppressWarnings("unused")
 	private static YouTube youtube;
 	
 	private URL iconhoturl = getClass().getResource("/icons/ic_whatshot_black_36dp_1x.png");
 	private URL iconsettingsurl = getClass().getResource("/icons/ic_settings_black_36dp_1x.png");
 	private URL iconfavoriteurl = getClass().getResource("/icons/ic_favorite_black_36dp_1x.png");
-	
+	private URL iconlogurl = getClass().getResource("/icons/ic_subdirectory_arrow_right_black_24dp_1x.png");
+	private URL iconloggedinurl = getClass().getResource("/icons/ic_check_black_24dp_1x.png");
+
+		
 	private JPanel logPanel = new JPanel();
+
 	private JButton searchButton = new JButton(new ImageIcon(iconfavoriteurl.getPath()));
 	private JButton suggestionButton = new JButton(new ImageIcon(iconhoturl.getPath()));
 	private JButton settingsButton = new JButton(new ImageIcon(iconsettingsurl.getPath()));
-	private JButton logButton = new JButton("Log in");
-	private JLabel nameLabel = new JLabel("   You are logged in.");
-	private Dimension dim4Buttons = new Dimension(100,50);
+	private JButton logButton = new JButton(new ImageIcon(iconlogurl.getPath()));
+	
+	private JLabel nameLabel = new JLabel(new ImageIcon(iconloggedinurl.getPath()));
+	
+	private Dimension dim4Buttons = new Dimension(140,50);
 	private String usrName = "";
+	private MainWindow mainWindow;
 	
 	/*private JPanel subscriptionsPanel = new JPanel();
 	private JButton logButton = new JButton("Log in");
@@ -69,8 +67,8 @@ public class MainMenu extends JPanel {
 	private JButton enterNameButton = new JButton("Confirm");*/
 
 	
-	public MainMenu() {
-		
+	public MainMenu(MainWindow mW) {
+		mainWindow = mW;
 		
 		GridLayout layout = new GridLayout(5,1);
 		layout.setVgap(10);
@@ -100,7 +98,7 @@ public class MainMenu extends JPanel {
 		settingsButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	//add(new SettingsView());
+            	mainWindow.setMainView(new SettingsView(mainWindow));
             }
         });
 		
@@ -115,14 +113,7 @@ public class MainMenu extends JPanel {
 						youtube = new YouTube.Builder(Authentification.HTTP_TRANSPORT, Authentification.JSON_FACTORY, account.getCredential())
 				                .setApplicationName("youtube-cmdline-localizations-sample").build();
 						
-						logPanel.removeAll();
-						logPanel.revalidate();
-						logPanel.repaint();
-						logPanel.add(nameLabel);
-						logPanel.add(searchButton);
-						logPanel.add(suggestionButton);
-						logPanel.add(settingsButton);
-
+						recreateMenuPanel(true);
 						
 				        
 				        //JsonFactory jsonfactory = new JsonFactory();
@@ -175,10 +166,7 @@ public class MainMenu extends JPanel {
 			logPanel.add(logButton);
 		} 
 		
-		logPanel.add(logButton);
-		logPanel.add(searchButton);
-		logPanel.add(suggestionButton);
-		logPanel.add(settingsButton);
+		recreateMenuPanel(false);
 
 		this.setLayout(new FlowLayout()); 
 		this.add(logPanel);
@@ -216,8 +204,24 @@ public class MainMenu extends JPanel {
 		System.out.println("You are logged in under: "+title.get(0));
 	}
 	
-	public void addSubscribtions() {
-		
+	public void recreateMenuPanel(boolean recreate) {
+		if (recreate) {
+			logPanel.removeAll();
+			logPanel.revalidate();
+			logPanel.repaint();
+		}
+		logButton.setText("Log in");
+		suggestionButton.setText("Trends");
+		searchButton.setText("Favorites");
+		settingsButton.setText("Settings");
+
+		if (account != null) {
+			nameLabel.setText("Logged in");
+			logPanel.add(nameLabel);
+		}
+		logPanel.add(searchButton);
+		logPanel.add(suggestionButton);
+		logPanel.add(settingsButton);
 		
 	}
 

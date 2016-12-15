@@ -1,4 +1,4 @@
-package view;
+package codingweek2016.view;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,30 +28,28 @@ import javax.swing.JTextField;
 
 
 import codingweek2016.MainMenu;
+import codingweek2016.MainWindow;
 import codingweek2016.model.SearchRequest;
-import codingweek2016.model.Video;
 
 @SuppressWarnings("serial")
 public class SearchView extends AbstractView {
-	
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
 	
 	private JLabel logo;
 	private URL youtubeiconurl = getClass().getResource("/youtube.png");
 	
 	private SearchRequest request;
-	private List<Video> videos = new ArrayList<Video>();
 	
 	private JButton searchButton = new JButton("Search");
 	private JTextField searchField = new JTextField();
 
 	private JEditorPane resultHead = new JEditorPane();
 	private JPanel resultGrid = new JPanel();
-	private JPanel mainMenu = new MainMenu();
 	
-	public SearchView(SearchRequest r) {
+	public SearchView(MainWindow mW) {
+		mainWindow = mW;
+		mainMenu = new MainMenu(mainWindow);
 		
-		request = r;
+		request = new SearchRequest();
 		request.addObserver(this);
 		
 		this.setLayout(new BorderLayout());
@@ -88,7 +87,12 @@ public class SearchView extends AbstractView {
             	
             	if (text.length()>0) {
             		
-	            	request.loadVideos(request.searchKeyWord(text));
+	            	try {
+						request.loadVideos(request.searchKeyWord(text));
+					} catch (IOException e1) {
+						System.out.println(e1);
+						e1.printStackTrace();
+					}
 	
 	            	if (videos != null) {
 	            		
@@ -126,7 +130,6 @@ public class SearchView extends AbstractView {
 		searchPanel.setLayout(new FlowLayout());
 		
 		try {
-			System.out.println(youtubeiconurl.getPath());
 			ImageIcon img = new ImageIcon(ImageIO.read(new File(youtubeiconurl.getPath())));
 			logo = new JLabel(new ImageIcon(img.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));
 			searchPanel.add(logo);

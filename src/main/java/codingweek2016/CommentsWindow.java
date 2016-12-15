@@ -29,6 +29,9 @@ import codingweek2016.model.Comment;
 public class CommentsWindow extends JFrame {
 	
 	private JTextArea commentEntry;
+	
+	private JScrollPane scrollComment;
+	private JPanel createComment = new JPanel();
 
 	public CommentsWindow(String title, final String id){
 		super("Comments on " + title);
@@ -36,7 +39,7 @@ public class CommentsWindow extends JFrame {
 		
 		this.setLayout(new BorderLayout(30, 30));
 		
-		JPanel createComment = new JPanel();
+		
         createComment.setLayout(new BoxLayout(createComment, BoxLayout.X_AXIS));
         
         commentEntry = new JTextArea("Write your comment here"); 
@@ -70,41 +73,7 @@ public class CommentsWindow extends JFrame {
         createComment.add(publish);
         
                 
-        /* Action when clicking on the button publish */
-        publish.addActionListener(new ActionListener() {
-			  
-            public void actionPerformed(ActionEvent e) {
-            	String text = commentEntry.getText();
-            	Comment com = new Comment(id);
-            	com.postcomment(text);
-            }
-        });
-        
-        /*publish.addMouseListener(new MouseListener() {
-
-			public void mouseClicked(MouseEvent arg0) {
-				// Do nothing
-			}
-
-			public void mouseEntered(MouseEvent arg0) {
-				publish.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-
-			public void mouseExited(MouseEvent arg0) {
-				publish.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			public void mousePressed(MouseEvent arg0) {
-				// Do nothing
-			}
-
-			public void mouseReleased(MouseEvent arg0) {
-				// Do nothing
-			}
-        });*/
-        
-        this.add(createComment, BorderLayout.NORTH);
-        
+         
         Comment com = new Comment(id);
         List<CommentThread> videoComments = new ArrayList<CommentThread>();
         
@@ -115,10 +84,48 @@ public class CommentsWindow extends JFrame {
 		}
         
         
-        JScrollPane scrollComment = new JScrollPane(com.display(videoComments));
+        scrollComment = new JScrollPane(com.display(videoComments));
 		scrollComment.setBorder(null);
-		this.add(scrollComment, BorderLayout.CENTER);
+		
+		
+		/* Action when clicking on the button publish */
+        publish.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	String text = commentEntry.getText();
+            	Comment com = new Comment(id);
+            	com.postcomment(text);
+            	
+            	/*scrollComment.removeAll();
+            	scrollComment.revalidate();
+            	scrollComment.repaint();
+            	
+            	try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            	
+            	List<CommentThread> videoComments = new ArrayList<CommentThread>();
+            	try {
+        			videoComments = com.getComments();
+        			System.out.println("Dans le try");
+        		} catch (IOException ex) {
+        			ex.printStackTrace();
+        		}
+            	System.out.println(videoComments.size());
+            	scrollComment = new JScrollPane(com.display(videoComments));
+            	scrollComment.setBorder(null);
+            	scrollComment.revalidate();
+            	scrollComment.repaint();
+            	System.out.println("Mise à jour");*/
+            	            	
+            }
+        });
         
+        this.add(createComment, BorderLayout.NORTH);
+        this.add(scrollComment, BorderLayout.CENTER);
 		pack();
 		setVisible(true);
 	}

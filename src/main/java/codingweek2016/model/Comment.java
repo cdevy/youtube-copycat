@@ -1,10 +1,22 @@
 package codingweek2016.model;
 
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -21,7 +33,6 @@ public class Comment extends JPanel {
 	
     private static YouTube youtube;
     
-    @SuppressWarnings("unused")
 	private String videoId;
     
     public Comment (String id){
@@ -42,24 +53,8 @@ public class Comment extends JPanel {
            // YouTube.Search.List search = youtube.search().list("id,snippet");
 
 			//YouTube.CommentThreads.List request = youtube.commentThreads().list("");
-			CommentThreadListResponse videoCommentsListResponse = youtube.commentThreads().list("snippet").setVideoId("xcv0EN3TMZ0").setTextFormat("plainText").execute();
+			CommentThreadListResponse videoCommentsListResponse = youtube.commentThreads().list("snippet").setVideoId(videoId).setTextFormat("plainText").execute();
 		    List<CommentThread> videoComments = videoCommentsListResponse.getItems();
-		    
-		    /*
-		    if (videoComments.isEmpty()) {
-                System.out.println("Can't get video comments.");
-            } else {
-                // Print information from the API response.
-                System.out
-                        .println("\n================== Returned Video Comments ==================\n");
-                for (CommentThread videoComment : videoComments) {
-                    CommentSnippet snippet = videoComment.getSnippet().getTopLevelComment().getSnippet();
-                    System.out.println("  - Author: " + snippet.getAuthorDisplayName());
-                    System.out.println("  - Comment: " + snippet.getTextDisplay());
-                    System.out
-                            .println("\n-------------------------------------------------------------\n");
-                }
-            }*/
             
 		    return videoComments;
 		    
@@ -80,20 +75,64 @@ public class Comment extends JPanel {
 	}
 	
 	public JPanel display( List<CommentThread> videoComments){
+		
 		JPanel commentlist = new JPanel();
+		commentlist.setLayout(new BoxLayout(commentlist, BoxLayout.Y_AXIS));
 		
 		for (CommentThread videoComment : videoComments) {
-			GridLayout grid = new GridLayout(25,1);
-			grid.setVgap(10);
-			commentlist.setLayout(grid);
+			JPanel comment = new JPanel();
+			comment.setLayout(new BorderLayout());
+			comment.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			
 			CommentSnippet snippet = videoComment.getSnippet().getTopLevelComment().getSnippet();
-			String author = snippet.getAuthorDisplayName();
-			String comment = snippet.getTextDisplay();
-			JPanel commentaire = new JPanel();
-			commentaire.setLayout(new FlowLayout());
-			commentaire.add(new JLabel(author));
-			commentaire.add(new JLabel(comment));
-			commentlist.add(commentaire);
+
+			final JButton author = new JButton(snippet.getAuthorDisplayName());
+			author.setPreferredSize(new Dimension(200, 100));
+			author.setText("<html><body><u>"+author.getText()+"</u></body><html/>");
+			try {
+				ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/icon.png")));
+				author.setIcon(new ImageIcon(img.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
+			author.setOpaque(false);
+			author.setContentAreaFilled(false);
+			author.setBorderPainted(false);
+			author.addMouseListener(new MouseListener() {
+
+				public void mouseClicked(MouseEvent arg0) {
+					// Do nothing
+				}
+
+				public void mouseEntered(MouseEvent arg0) {
+					author.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				}
+
+				public void mouseExited(MouseEvent arg0) {
+					author.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				}
+
+				public void mousePressed(MouseEvent arg0) {
+					// Do nothing
+				}
+
+				public void mouseReleased(MouseEvent arg0) {
+					// Do nothing
+				}
+	        });
+			author.addActionListener(new ActionListener() {
+				  
+	            public void actionPerformed(ActionEvent e) {
+	            	System.out.println("author");
+	            }
+	        });
+			
+			JLabel text = new JLabel(snippet.getTextDisplay());
+			
+			comment.add(author, BorderLayout.NORTH);
+			comment.add(text, BorderLayout.CENTER);
+			
+			commentlist.add(comment);
 		}
 		return commentlist;	
 	}

@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 
 
 import codingweek2016.MainMenu;
+import codingweek2016.MainWindow;
 import codingweek2016.model.SearchRequest;
 
 @SuppressWarnings("serial")
@@ -36,11 +37,12 @@ public class SearchView extends AbstractView {
 
 	private JEditorPane resultHead = new JEditorPane();
 	private JPanel resultGrid = new JPanel();
-	private JPanel mainMenu = new MainMenu();
 	
-	public SearchView(SearchRequest r) {
+	public SearchView(MainWindow mW) {
+		mainWindow = mW;
+		mainMenu = new MainMenu(mainWindow);
 		
-		request = r;
+		request = new SearchRequest();
 		request.addObserver(this);
 		
 		this.setLayout(new BorderLayout());
@@ -78,7 +80,12 @@ public class SearchView extends AbstractView {
             	
             	if (text.length()>0) {
             		
-	            	request.loadVideos(request.searchKeyWord(text));
+	            	try {
+						request.loadVideos(request.searchKeyWord(text));
+					} catch (IOException e1) {
+						System.out.println(e1);
+						e1.printStackTrace();
+					}
 	
 	            	if (videos != null) {
 	            		

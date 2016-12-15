@@ -26,6 +26,8 @@ import com.jayway.jsonpath.JsonPath;
 
 import codingweek2016.model.Authentification;
 import codingweek2016.model.SearchRequest;
+import codingweek2016.view.SearchView;
+import codingweek2016.view.SettingsView;
 
 @SuppressWarnings("serial")
 public class MainMenu extends JPanel {
@@ -40,12 +42,13 @@ public class MainMenu extends JPanel {
 	private JPanel logPanel = new JPanel();
 	private JButton searchButton = new JButton("Favorites");
 	private JButton suggestionButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
-	private JButton abonnementButton = new JButton(new ImageIcon("src/main/resources/icons/ic_pages_black_36dp_1x.png"));
+	//private JButton abonnementButton = new JButton(new ImageIcon("src/main/resources/icons/ic_pages_black_36dp_1x.png"));
 	private JButton settingsButton = new JButton(new ImageIcon("src/main/resources/icons/ic_settings_black_36dp_1x.png"));
 	private JButton logButton = new JButton("Log in");
 	private JLabel nameLabel = new JLabel("   You are logged in.");
-	private Dimension dim4Buttons = new Dimension(100,50);
+	private Dimension dim4Buttons = new Dimension(140,50);
 	private String usrName = "";
+	private MainWindow mainWindow;
 	
 	/*private JPanel subscriptionsPanel = new JPanel();
 	private JButton logButton = new JButton("Log in");
@@ -55,15 +58,15 @@ public class MainMenu extends JPanel {
 	private JButton enterNameButton = new JButton("Confirm");*/
 
 	
-	public MainMenu() {
-		
+	public MainMenu(MainWindow mW) {
+		mainWindow = mW;
 		
 		GridLayout layout = new GridLayout(5,1);
 		layout.setVgap(10);
 		logPanel.setLayout(layout);
 		
 		logButton.setPreferredSize(dim4Buttons);
-		abonnementButton.setPreferredSize(dim4Buttons);
+		//abonnementButton.setPreferredSize(dim4Buttons);
 		searchButton.setPreferredSize(dim4Buttons);
 		suggestionButton.setPreferredSize(dim4Buttons);
 		settingsButton.setPreferredSize(dim4Buttons);
@@ -77,12 +80,12 @@ public class MainMenu extends JPanel {
             }
         });
 		
-		abonnementButton.addActionListener(new ActionListener() {
+		/*abonnementButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
             	//add(new View(new SearchRequest()));
             }
-        });
+        });*/
 		
 		suggestionButton.addActionListener(new ActionListener() {
 			  
@@ -94,7 +97,7 @@ public class MainMenu extends JPanel {
 		settingsButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	//add(new SettingsView());
+            	mainWindow.setMainView(new SettingsView(mainWindow));
             }
         });
 		
@@ -109,14 +112,7 @@ public class MainMenu extends JPanel {
 						youtube = new YouTube.Builder(Authentification.HTTP_TRANSPORT, Authentification.JSON_FACTORY, account.getCredential())
 				                .setApplicationName("youtube-cmdline-localizations-sample").build();
 						
-						logPanel.removeAll();
-						logPanel.revalidate();
-						logPanel.repaint();
-						logPanel.add(nameLabel);
-						logPanel.add(abonnementButton);
-						logPanel.add(searchButton);
-						logPanel.add(suggestionButton);
-						logPanel.add(settingsButton);
+						recreateMenuPanel(true);
 
 						
 				        
@@ -170,11 +166,8 @@ public class MainMenu extends JPanel {
 			logPanel.add(logButton);
 		} 
 		
-		logPanel.add(logButton);
-		logPanel.add(abonnementButton);
-		logPanel.add(searchButton);
-		logPanel.add(suggestionButton);
-		logPanel.add(settingsButton);
+		
+		recreateMenuPanel(false);
 
 		this.setLayout(new FlowLayout()); 
 		this.add(logPanel);
@@ -212,8 +205,20 @@ public class MainMenu extends JPanel {
 		System.out.println("You are logged in under: "+title.get(0));
 	}
 	
-	public void addSubscribtions() {
-		
+	public void recreateMenuPanel(boolean recreate) {
+		if (recreate) {
+			logPanel.removeAll();
+			logPanel.revalidate();
+			logPanel.repaint();
+		}
+		suggestionButton.setText("Trends");
+		if (account != null) {
+			logPanel.add(nameLabel);
+		}
+		//logPanel.add(abonnementButton);
+		logPanel.add(searchButton);
+		logPanel.add(suggestionButton);
+		logPanel.add(settingsButton);
 		
 	}
 

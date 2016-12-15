@@ -7,10 +7,13 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import codingweek2016.MainWindow;
 import codingweek2016.model.Video;
 
 @SuppressWarnings("serial")
 public abstract class AbstractView extends JPanel implements Observer {
+	protected MainWindow mainWindow;
+	protected JPanel mainMenu;
 	
 	protected List<Video> videos = new ArrayList<Video>();
 	

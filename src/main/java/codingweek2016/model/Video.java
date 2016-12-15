@@ -8,8 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -19,6 +22,7 @@ import javax.swing.JTextArea;
 
 import com.google.api.services.youtube.model.SearchResult;
 
+import codingweek2016.CommentsWindow;
 import codingweek2016.VideoViewer;
 
 @SuppressWarnings("serial")
@@ -26,6 +30,7 @@ public class Video extends JPanel {
 	
 	private JButton thumbnail = new JButton();
 	private JButton title = new JButton();
+	private JButton comments = new JButton("<html><body><u>Comments</u></body><html/>");
 	private JTextArea description = new JTextArea();
 	private String id;
 	
@@ -122,8 +127,48 @@ public class Video extends JPanel {
 
 		description.setOpaque(false);
 		
+		try {
+			ImageIcon img = new ImageIcon(ImageIO.read(new File("src/main/resources/commentIcon.png")));
+			comments.setIcon(new ImageIcon(img.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+		comments.setOpaque(false);
+		comments.setContentAreaFilled(false);
+		comments.setBorderPainted(false);
+		comments.setPreferredSize(new Dimension(200,80));
+		comments.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				comments.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				comments.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
+		comments.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	new CommentsWindow(title.getText(), id);
+            }
+        });
+		
 		panel.add(title, BorderLayout.NORTH);
 		panel.add(description, BorderLayout.CENTER);
+		panel.add(comments, BorderLayout.SOUTH);
 		
 		this.add(Box.createHorizontalStrut(10));
 		

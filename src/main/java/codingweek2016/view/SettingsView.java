@@ -55,7 +55,15 @@ public class SettingsView extends AbstractView {
 		saveButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
+            	String width = widthField.getText();
+            	
+            	Integer height = Integer.parseInt(heightField.getText());
+            	 
+            	//mainWindow.setPreferredSize(new Dimension(,));
+            	mainWindow.pack();
+            	mainWindow.setVisible(true);
             	mainWindow.setMainView(new SearchView(mainWindow));
+            	
             }
         });
 		

@@ -5,6 +5,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -79,6 +83,93 @@ public class SettingsView extends AbstractView {
             }
         });
 		
+		heightField.setEnabled(false);
+		heightField.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent event) {
+        		heightField.setEnabled(true);
+        		heightField.requestFocus();
+            }
+        });
+		heightField.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (heightField.getText().equals("Window height")){
+					heightField.setText("");
+				}
+			}
+
+			public void focusLost(FocusEvent e) {
+				if (heightField.getText().equals("")){
+					heightField.setText("Window height");
+					heightField.setEnabled(false);
+				}
+			}
+        });
+		
+		widthField.setEnabled(false);
+		widthField.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent event) {
+        		widthField.setEnabled(true);
+        		widthField.requestFocus();
+            }
+        });
+		widthField.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (widthField.getText().equals("Window width")){
+					widthField.setText("");
+				}
+			}
+
+			public void focusLost(FocusEvent e) {
+				if (widthField.getText().equals("")){
+					widthField.setText("Window width");
+					widthField.setEnabled(false);
+				}
+			}
+        });
+		
+		maxvidField.setEnabled(false);
+		maxvidField.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent event) {
+        		maxvidField.setEnabled(true);
+        		maxvidField.requestFocus();
+            }
+        });
+		maxvidField.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (maxvidField.getText().equals("Number of videos to be displayed")){
+					maxvidField.setText("");
+				}
+			}
+
+			public void focusLost(FocusEvent e) {
+				if (maxvidField.getText().equals("")){
+					maxvidField.setText("Number of videos to be displayed");
+					maxvidField.setEnabled(false);
+				}
+			}
+        });
+		
+		apikeyField.setEnabled(false);
+		apikeyField.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent event) {
+        		apikeyField.setEnabled(true);
+        		apikeyField.requestFocus();
+            }
+        });
+		apikeyField.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (apikeyField.getText().equals("API key")){
+					apikeyField.setText("");
+				}
+			}
+
+			public void focusLost(FocusEvent e) {
+				if (apikeyField.getText().equals("")){
+					apikeyField.setText("API key");
+					apikeyField.setEnabled(false);
+				}
+			}
+        });
 		
 		JPanel heightPanel = new JPanel();
 		heightPanel.setLayout(new FlowLayout());

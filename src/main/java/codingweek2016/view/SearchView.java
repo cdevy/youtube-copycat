@@ -82,8 +82,14 @@ public class SearchView extends AbstractView {
 	            		resultGrid.removeAll();
 	            		resultGrid.setLayout(grid);
 	            		
-	            		JScrollPane scrollBar = new JScrollPane(request.display());
+	            		final JScrollPane scrollBar = new JScrollPane(request.display());
 	            		scrollBar.setBorder(null);
+	            		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+	              		   public void run() { 
+	              			   scrollBar.getVerticalScrollBar().setValue(0);
+	              			  scrollBar.getHorizontalScrollBar().setValue(0);
+	              		   }
+	              		});
 	            		
 	            		resultGrid.add(resultHead, BorderLayout.NORTH);
 	            		resultGrid.add(scrollBar, BorderLayout.CENTER);

@@ -24,10 +24,10 @@ import codingweek2016.model.Account;
 import com.google.api.services.youtube.YouTube;
 import com.jayway.jsonpath.JsonPath;
 
-import codingweek2016.model.Authentification;
 import codingweek2016.model.SearchRequest;
 import codingweek2016.view.SearchView;
 import codingweek2016.view.SettingsView;
+import codingweek2016.view.TrendingView;
 import codingweek2016.view.UploadView;
 
 @SuppressWarnings("serial")
@@ -42,7 +42,7 @@ public class MainMenu extends JPanel {
 	
 	private JPanel logPanel = new JPanel();
 	private JButton searchButton = new JButton("Search");
-	private JButton suggestionButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
+	private JButton trendingButton = new JButton(new ImageIcon("src/main/resources/icons/ic_whatshot_black_36dp_1x.png"));
 	private JButton uploadButton = new JButton("Upload");
 	private JButton settingsButton = new JButton(new ImageIcon("src/main/resources/icons/ic_settings_black_36dp_1x.png"));
 	//private JButton logButton = new JButton("Log in");
@@ -69,7 +69,7 @@ public class MainMenu extends JPanel {
 		//logButton.setPreferredSize(dim4Buttons);
 		uploadButton.setPreferredSize(dim4Buttons);
 		searchButton.setPreferredSize(dim4Buttons);
-		suggestionButton.setPreferredSize(dim4Buttons);
+		trendingButton.setPreferredSize(dim4Buttons);
 		settingsButton.setPreferredSize(dim4Buttons);
 		
 		//settingsButton.setIcon(new ImageIcon("/resources/icons/ic_settings_black_36dp_1x.png")); 
@@ -88,10 +88,15 @@ public class MainMenu extends JPanel {
             }
         });
 		
-		suggestionButton.addActionListener(new ActionListener() {
+		trendingButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	
+            	try {
+					mainWindow.setMainView(new TrendingView(mainWindow));
+				} catch (IOException e1) {
+					System.out.println(e1);
+					e1.printStackTrace();
+				}
             }
         });
 		
@@ -212,13 +217,13 @@ public class MainMenu extends JPanel {
 			logPanel.revalidate();
 			logPanel.repaint();
 		}
-		suggestionButton.setText("Trends");
+		trendingButton.setText("Trends");
 		if (account != null) {
 			logPanel.add(nameLabel);
 		}
 		logPanel.add(uploadButton);
 		logPanel.add(searchButton);
-		logPanel.add(suggestionButton);
+		logPanel.add(trendingButton);
 		logPanel.add(settingsButton);
 		
 	}

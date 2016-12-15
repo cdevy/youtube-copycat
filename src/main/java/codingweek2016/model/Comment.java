@@ -10,25 +10,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+import codingweek2016.UserProfile;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.youtube.YouTube;
+//import com.google.api.services.youtube.model.Comment;
 import com.google.api.services.youtube.model.CommentSnippet;
 import com.google.api.services.youtube.model.CommentThread;
 import com.google.api.services.youtube.model.CommentThreadListResponse;
+import com.google.api.services.youtube.model.CommentThreadSnippet;
 import com.google.common.collect.Lists;
 
 import extraction.GetJarResources;
@@ -57,7 +58,7 @@ public class Comment extends JPanel {
             Credential credential = Authentification.authorize(scopes, "commentthreads");
 
             // This object is used to make YouTube Data API requests.
-            youtube = new YouTube.Builder(Authentification.HTTP_TRANSPORT, Authentification.JSON_FACTORY, credential).setApplicationName("youtube-cmdline-commentthreads-sample").build();
+            youtube = new YouTube.Builder(Authentification.HTTP_TRANSPORT, Authentification.JSON_FACTORY, credential).setApplicationName("youtube-commentthreads").build();
             
            // YouTube.Search.List search = youtube.search().list("id,snippet");
 
@@ -83,6 +84,32 @@ public class Comment extends JPanel {
 		return null;
 	}
 	
+	public void postcomment(String text){
+		CommentSnippet commentSnippet = new CommentSnippet();
+        commentSnippet.setTextOriginal(text);
+        
+        // Create a top-level comment with snippet.
+        com.google.api.services.youtube.model.Comment topLevelComment = new com.google.api.services.youtube.model.Comment();
+        topLevelComment.setSnippet(commentSnippet);
+        
+        CommentThreadSnippet commentThreadSnippet = new CommentThreadSnippet();
+		commentThreadSnippet.setVideoId(videoId);
+		commentThreadSnippet.setTopLevelComment(topLevelComment);
+		
+		CommentThread commentThread = new CommentThread();
+        commentThread.setSnippet(commentThreadSnippet);
+        
+        // Call the YouTube Data API's commentThreads.insert method to
+        // create a comment.
+        try {
+			@SuppressWarnings("unused")
+			CommentThread videoCommentInsertResponse = youtube.commentThreads().insert("snippet", commentThread).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public JPanel display( List<CommentThread> videoComments){
 		
 		JPanel commentlist = new JPanel();
@@ -94,32 +121,34 @@ public class Comment extends JPanel {
 			comment.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			
 			CommentSnippet snippet = videoComment.getSnippet().getTopLevelComment().getSnippet();
+		
 
-			final JButton author = new JButton(snippet.getAuthorDisplayName());
-			author.setPreferredSize(new Dimension(200, 100));
-			author.setText("<html><body><u>"+author.getText()+"</u></body><html/>");
+			final String author = snippet.getAuthorDisplayName();
+			final String channelUrl = snippet.getAuthorChannelUrl();
+			final JButton authorButton = new JButton(snippet.getAuthorDisplayName());
+			authorButton.setPreferredSize(new Dimension(200, 100));
+			authorButton.setText("<html><body><u>"+author+"</u></body><html/>");
 			
 			Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_person_black_24dp_2x.png"));
 			ImageIcon icon = new ImageIcon(img);
-			//ImageIcon img = new ImageIcon(ImageIO.read(new File(iconpersonurl.getPath())));
-			author.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
+			authorButton.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
 			
 			
-			author.setOpaque(false);
-			author.setContentAreaFilled(false);
-			author.setBorderPainted(false);
-			author.addMouseListener(new MouseListener() {
+			authorButton.setOpaque(false);
+			authorButton.setContentAreaFilled(false);
+			authorButton.setBorderPainted(false);
+			authorButton.addMouseListener(new MouseListener() {
 
 				public void mouseClicked(MouseEvent arg0) {
 					// Do nothing
 				}
 
 				public void mouseEntered(MouseEvent arg0) {
-					author.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+					authorButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				}
 
 				public void mouseExited(MouseEvent arg0) {
-					author.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+					authorButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 				}
 
 				public void mousePressed(MouseEvent arg0) {
@@ -130,16 +159,20 @@ public class Comment extends JPanel {
 					// Do nothing
 				}
 	        });
-			author.addActionListener(new ActionListener() {
+			authorButton.addActionListener(new ActionListener() {
 				  
 	            public void actionPerformed(ActionEvent e) {
-	            	System.out.println("author");
+	            	new UserProfile(author, channelUrl);
 	            }
 	        });
 			
-			JLabel text = new JLabel(snippet.getTextDisplay());
+			JTextArea text = new JTextArea(snippet.getTextDisplay());
+			text.setLineWrap(true);
+			text.setWrapStyleWord(true); 
+			text.setEditable(false);
+			text.setOpaque(false);
 			
-			comment.add(author, BorderLayout.NORTH);
+			comment.add(authorButton, BorderLayout.NORTH);
 			comment.add(text, BorderLayout.CENTER);
 			
 			commentlist.add(comment);

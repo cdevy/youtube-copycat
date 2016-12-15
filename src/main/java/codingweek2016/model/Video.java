@@ -3,17 +3,16 @@ package codingweek2016.model;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
+
 import java.awt.Image;
 import java.awt.Toolkit;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -36,7 +35,6 @@ public class Video extends JPanel {
 	private JTextArea description = new JTextArea();
 	private String id;
 	
-    //private URL iconcommenturl = getClass().getResource("/icons/ic_comment_black_24dp_1x.png");
 	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
 
 	

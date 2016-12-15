@@ -10,13 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -25,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import org.mortbay.resource.JarResource;
 
 
 import codingweek2016.MainMenu;
@@ -58,32 +53,7 @@ public class SearchView extends AbstractView {
 		
 		this.setLayout(new BorderLayout());
 		
-		searchField.setPreferredSize(new Dimension(300,25));
-		
-		searchButton.addMouseListener(new MouseListener() {
-
-			public void mouseClicked(MouseEvent arg0) {
-				// Do nothing
-			}
-
-			public void mouseEntered(MouseEvent arg0) {
-				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-
-			public void mouseExited(MouseEvent arg0) {
-				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			public void mousePressed(MouseEvent arg0) {
-				// Do nothing
-			}
-
-			public void mouseReleased(MouseEvent arg0) {
-				// Do nothing
-			}
-        });
-		
-		searchButton.addActionListener(new ActionListener() {
+		ActionListener search = new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
             	
@@ -118,8 +88,14 @@ public class SearchView extends AbstractView {
 	            		resultGrid.removeAll();
 	            		resultGrid.setLayout(grid);
 	            		
-	            		JScrollPane scrollBar = new JScrollPane(request.display());
+	            		final JScrollPane scrollBar = new JScrollPane(request.display());
 	            		scrollBar.setBorder(null);
+	            		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+	              		   public void run() { 
+	              			   scrollBar.getVerticalScrollBar().setValue(0);
+	              			  scrollBar.getHorizontalScrollBar().setValue(0);
+	              		   }
+	              		});
 	            		
 	            		resultGrid.add(resultHead, BorderLayout.NORTH);
 	            		resultGrid.add(scrollBar, BorderLayout.CENTER);
@@ -128,7 +104,35 @@ public class SearchView extends AbstractView {
 	                }
             	}
             }
-        });		
+        };
+		
+		searchField.setPreferredSize(new Dimension(300,25));
+		searchField.addActionListener(search);
+		
+		searchButton.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
+		
+		searchButton.addActionListener(search);
 		
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(new FlowLayout());

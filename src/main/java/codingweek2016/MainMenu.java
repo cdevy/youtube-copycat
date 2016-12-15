@@ -18,7 +18,7 @@ import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
+//import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import codingweek2016.model.Account;
@@ -26,10 +26,12 @@ import codingweek2016.model.Account;
 import com.google.api.services.youtube.YouTube;
 import com.jayway.jsonpath.JsonPath;
 
-import codingweek2016.model.Authentification;
 import codingweek2016.model.SearchRequest;
 import codingweek2016.view.SettingsView;
 import extraction.GetJarResources;
+import codingweek2016.view.SearchView;
+import codingweek2016.view.TrendingView;
+import codingweek2016.view.UploadView;
 
 @SuppressWarnings("serial")
 public class MainMenu extends JPanel {
@@ -42,33 +44,30 @@ public class MainMenu extends JPanel {
 	
 	@SuppressWarnings("unused")
 	private static YouTube youtube;
-	/*
-	private URL iconhoturl = getClass().getResource("/icons/ic_whatshot_black_36dp_1x.png");
-	private URL iconsettingsurl = getClass().getResource("/icons/ic_settings_black_36dp_1x.png");
-	private URL iconfavoriteurl = getClass().getResource("/icons/ic_favorite_black_36dp_1x.png");
-	private URL iconlogurl = getClass().getResource("/icons/ic_subdirectory_arrow_right_black_24dp_1x.png");
-	private URL iconloggedinurl = getClass().getResource("/icons/ic_check_black_24dp_1x.png");
-	*/
 	
 	Image icon1 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_whatshot_black_36dp_1x.png"));
 	ImageIcon iconhot = new ImageIcon(icon1);
 	Image icon2 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_settings_black_36dp_1x.png"));
 	ImageIcon iconsettings = new ImageIcon(icon2);
-	Image icon3 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_favorite_black_36dp_1x.png"));
-	ImageIcon iconfavorite = new ImageIcon(icon3);
-	Image icon4 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_subdirectory_arrow_right_black_24dp_1x.png"));
-	ImageIcon iconlog = new ImageIcon(icon4);
-	Image icon5 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_check_black_24dp_1x.png"));
-	ImageIcon iconlogged = new ImageIcon(icon5);
+	Image icon3 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_search_black_24dp_2x.png"));
+	ImageIcon iconsearch = new ImageIcon(icon3);
+	Image icon6 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_file_upload_black_24dp_2x.png"));
+	ImageIcon iconupload = new ImageIcon(icon6);
+	//Image icon4 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_subdirectory_arrow_right_black_24dp_1x.png"));
+	//ImageIcon iconlog = new ImageIcon(icon4);
+	//Image icon5 = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/ic_check_black_24dp_1x.png"));
+	//ImageIcon iconlogged = new ImageIcon(icon5);
 		
 	private JPanel logPanel = new JPanel();
 
-	private JButton searchButton = new JButton(new ImageIcon(iconfavorite.getImage()));
-	private JButton suggestionButton = new JButton(new ImageIcon(iconhot.getImage()));
+	private JButton searchButton = new JButton(new ImageIcon(iconsearch.getImage()));
+	private JButton trendingButton = new JButton(new ImageIcon(iconhot.getImage()));
 	private JButton settingsButton = new JButton(new ImageIcon(iconsettings.getImage()));
-	private JButton logButton = new JButton(new ImageIcon(iconlog.getImage()));
+	private JButton uploadButton = new JButton(new ImageIcon(iconupload.getImage()));
+
+	//private JButton logButton = new JButton(new ImageIcon(iconlog.getImage()));
 	
-	private JLabel nameLabel = new JLabel(new ImageIcon(iconlogged.getImage()));
+	//private JLabel nameLabel = new JLabel(new ImageIcon(iconlogged.getImage()));
 	
 	private Dimension dim4Buttons = new Dimension(140,50);
 	private String usrName = "";
@@ -89,9 +88,10 @@ public class MainMenu extends JPanel {
 		layout.setVgap(10);
 		logPanel.setLayout(layout);
 		
-		logButton.setPreferredSize(dim4Buttons);
+		//logButton.setPreferredSize(dim4Buttons);
 		searchButton.setPreferredSize(dim4Buttons);
-		suggestionButton.setPreferredSize(dim4Buttons);
+		uploadButton.setPreferredSize(dim4Buttons);
+		trendingButton.setPreferredSize(dim4Buttons);
 		settingsButton.setPreferredSize(dim4Buttons);
 		
 		//settingsButton.setIcon(new ImageIcon("/resources/icons/ic_settings_black_36dp_1x.png")); 
@@ -99,14 +99,27 @@ public class MainMenu extends JPanel {
 		searchButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	//add(new View(new SearchRequest()));
+            	mainWindow.setMainView(new SearchView(mainWindow));
             }
         });
 		
-		suggestionButton.addActionListener(new ActionListener() {
+
+		uploadButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
-            	
+            	mainWindow.setMainView(new UploadView(mainWindow));
+            }
+        });
+		
+		trendingButton.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	try {
+					mainWindow.setMainView(new TrendingView(mainWindow));
+				} catch (IOException e1) {
+					System.out.println(e1);
+					e1.printStackTrace();
+				}
             }
         });
 		
@@ -119,7 +132,7 @@ public class MainMenu extends JPanel {
 		
 		/*enterNameZone.setPreferredSize(new Dimension(50,20));*/
 		
-		logButton.addActionListener(new ActionListener() {
+		/*logButton.addActionListener(new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
             	if (account == null) {
@@ -139,13 +152,13 @@ public class MainMenu extends JPanel {
 						/*
 						logPanel.add(enterName);
 						logPanel.add(enterNameZone);
-						logPanel.add(enterNameButton);*/
+						logPanel.add(enterNameButton);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
             	}
             }
-        });
+        });*/
 		/*
 		enterNameButton.addActionListener(new ActionListener() {
 			  
@@ -177,9 +190,9 @@ public class MainMenu extends JPanel {
 		
 		
 		this.setLayout(new FlowLayout());
-		if (account ==  null) {		
+		/*if (account ==  null) {		
 			logPanel.add(logButton);
-		} 
+		} */
 		
 		recreateMenuPanel(false);
 
@@ -225,17 +238,21 @@ public class MainMenu extends JPanel {
 			logPanel.revalidate();
 			logPanel.repaint();
 		}
-		logButton.setText("Log in");
-		suggestionButton.setText("Trends");
-		searchButton.setText("Favorites");
+
+		//logButton.setText("Log in");
+		searchButton.setText("Search");
 		settingsButton.setText("Settings");
+		trendingButton.setText("Trends");
+		uploadButton.setText("Upload");
 
 		if (account != null) {
-			nameLabel.setText("Logged in");
-			logPanel.add(nameLabel);
+			//nameLabel.setText("Logged in");
+			//logPanel.add(nameLabel);
 		}
+
+		logPanel.add(uploadButton);
 		logPanel.add(searchButton);
-		logPanel.add(suggestionButton);
+		logPanel.add(trendingButton);
 		logPanel.add(settingsButton);
 		
 	}

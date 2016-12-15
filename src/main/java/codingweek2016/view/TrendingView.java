@@ -27,6 +27,7 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchResult;
 import com.jayway.jsonpath.JsonPath;
 
+import codingweek2016.App;
 import codingweek2016.MainMenu;
 import codingweek2016.MainWindow;
 import codingweek2016.model.Authentification;
@@ -66,7 +67,7 @@ public class TrendingView extends AbstractView {
     		if (!videos.iterator().hasNext()) {
     			head += "<p><center><b> Impossible to access trending videos.<b/></center></p>";
     		} else {
-    			head += "<p><center><b>First " + NUMBER_OF_VIDEOS_RETURNED + " trending videos.<b/><br/><br/><br/><br/>";
+    			head += "<p><center><b>First " + App.NUMBER_OF_VIDEOS_RETURNED + " trending videos.<b/><br/><br/><br/><br/>";
     		}
     		
     		head += "</body></html>";
@@ -127,7 +128,7 @@ public class TrendingView extends AbstractView {
             t.printStackTrace();
         }
 		
-		URL webSite = new URL("https://www.googleapis.com/youtube/v3/videos?part=contentDetails&chart=mostPopular&regionCode=FR&maxResults="+NUMBER_OF_VIDEOS_RETURNED+"&key="+apiKey);
+		URL webSite = new URL("https://www.googleapis.com/youtube/v3/videos?part=contentDetails&chart=mostPopular&regionCode=FR&maxResults="+App.NUMBER_OF_VIDEOS_RETURNED+"&key="+apiKey);
 		
         URLConnection connection = null;
 		connection = webSite.openConnection();

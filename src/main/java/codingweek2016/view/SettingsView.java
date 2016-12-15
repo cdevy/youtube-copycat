@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import codingweek2016.App;
 import codingweek2016.MainMenu;
 import codingweek2016.MainWindow;
 
@@ -55,7 +56,28 @@ public class SettingsView extends AbstractView {
 		saveButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
+            	        
+            	//Changement des paramètres de taille de fenêtre :
+            	Integer height= mainWindow.getHeight();
+            	try {
+            		height = Integer.parseInt(heightField.getText());
+            	} catch (NumberFormatException ex) {        	}
+            	
+            	Integer width= mainWindow.getWidth();
+            	try {
+            		height = Integer.parseInt(heightField.getText());
+            	} catch (NumberFormatException ex) {        	   }
+            	     
+            	mainWindow.setPreferredSize(new Dimension(width,height));
+            	mainWindow.pack();
+            	mainWindow.setVisible(true);
             	mainWindow.setMainView(new SearchView(mainWindow));
+            	
+            	//Changement de nombres de vidéos affichées :
+            	try {
+            		App.NUMBER_OF_VIDEOS_RETURNED = Integer.parseInt(maxvidField.getText());
+            	} catch (NumberFormatException ex) {        	}
+            	
             }
         });
 		

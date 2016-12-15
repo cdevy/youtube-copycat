@@ -16,9 +16,7 @@ public abstract class AbstractView extends JPanel implements Observer {
 	protected JPanel mainMenu;
 	
 	protected List<Video> videos = new ArrayList<Video>();
-	
-	protected static long NUMBER_OF_VIDEOS_RETURNED=25;
-	
+		
 	
 	@SuppressWarnings("unchecked")
 	public void update(Observable observable, Object videos) {
@@ -37,15 +35,5 @@ public abstract class AbstractView extends JPanel implements Observer {
 		this.videos = videos;
 	}
 
-
-	public long getNUMBER_OF_VIDEOS_RETURNED() {
-		return NUMBER_OF_VIDEOS_RETURNED;
-	}
-
-
-	public static void setNUMBER_OF_VIDEOS_RETURNED(
-			long nUMBER_OF_VIDEOS_RETURNED) {
-		NUMBER_OF_VIDEOS_RETURNED = nUMBER_OF_VIDEOS_RETURNED;
-	}
 
 }

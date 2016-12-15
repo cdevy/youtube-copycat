@@ -13,6 +13,8 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
+import codingweek2016.App;
+
 public class SearchRequest extends Request {
     
     private List<Video> videos = new ArrayList<Video>();
@@ -36,7 +38,7 @@ public class SearchRequest extends Request {
         search.setType("video");
 
         search.setFields("items(id/kind,id/videoId,snippet/title,snippet/description,snippet/thumbnails/default/url)");
-        search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
+        search.setMaxResults(App.NUMBER_OF_VIDEOS_RETURNED);
         SearchListResponse searchResponse = search.execute();
         
         return(searchResponse.getItems());

@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import codingweek2016.UserProfile;
 
@@ -38,8 +39,6 @@ public class Comment extends JPanel {
     private static YouTube youtube;
     
 	private String videoId;
-	private String author;
-	private String channelUrl;
     
     public Comment (String id){
     	videoId = id;
@@ -117,8 +116,8 @@ public class Comment extends JPanel {
 			
 			CommentSnippet snippet = videoComment.getSnippet().getTopLevelComment().getSnippet();
 
-			author = snippet.getAuthorDisplayName();
-			channelUrl = snippet.getAuthorChannelUrl();
+			final String author = snippet.getAuthorDisplayName();
+			final String channelUrl = snippet.getAuthorChannelUrl();
 			final JButton authorButton = new JButton(author);
 			authorButton.setPreferredSize(new Dimension(200, 100));
 			authorButton.setText("<html><body><u>"+author+"</u></body><html/>");
@@ -160,7 +159,11 @@ public class Comment extends JPanel {
 	            }
 	        });
 			
-			JLabel text = new JLabel(snippet.getTextDisplay());
+			JTextArea text = new JTextArea(snippet.getTextDisplay());
+			text.setLineWrap(true);
+			text.setWrapStyleWord(true); 
+			text.setEditable(false);
+			text.setOpaque(false);
 			
 			comment.add(authorButton, BorderLayout.NORTH);
 			comment.add(text, BorderLayout.CENTER);

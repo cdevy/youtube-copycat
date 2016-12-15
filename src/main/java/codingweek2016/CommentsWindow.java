@@ -1,11 +1,15 @@
 package codingweek2016;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +58,45 @@ public class CommentsWindow extends JFrame {
         	
         });
         createComment.add(commentEntry);
+       
         
         JButton publish = new JButton("publish");
         publish.setPreferredSize(new Dimension(150,40));
         createComment.add(publish);
+        
+                
+        /* Action when clicking on the button publish */
+        publish.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	String text = commentEntry.getText();
+            	Comment com = new Comment(id);
+            	com.postcomment(text);
+            }
+        });
+        
+        /*publish.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				publish.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				publish.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });*/
         
         this.add(createComment, BorderLayout.NORTH);
         

@@ -79,7 +79,6 @@ public class Video extends JPanel {
             	new VideoViewer(title.getText(), id);
             }
         });
-		new GridBagLayout();
 		thumbnail.setOpaque(false);
 		thumbnail.setContentAreaFilled(false);
 		thumbnail.setBorderPainted(false);

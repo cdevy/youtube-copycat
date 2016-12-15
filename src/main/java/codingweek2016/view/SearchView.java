@@ -47,32 +47,7 @@ public class SearchView extends AbstractView {
 		
 		this.setLayout(new BorderLayout());
 		
-		searchField.setPreferredSize(new Dimension(300,25));
-		
-		searchButton.addMouseListener(new MouseListener() {
-
-			public void mouseClicked(MouseEvent arg0) {
-				// Do nothing
-			}
-
-			public void mouseEntered(MouseEvent arg0) {
-				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-
-			public void mouseExited(MouseEvent arg0) {
-				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			public void mousePressed(MouseEvent arg0) {
-				// Do nothing
-			}
-
-			public void mouseReleased(MouseEvent arg0) {
-				// Do nothing
-			}
-        });
-		
-		searchButton.addActionListener(new ActionListener() {
+		ActionListener search = new ActionListener() {
 			  
             public void actionPerformed(ActionEvent e) {
             	
@@ -117,7 +92,35 @@ public class SearchView extends AbstractView {
 	                }
             	}
             }
-        });		
+        };
+		
+		searchField.setPreferredSize(new Dimension(300,25));
+		searchField.addActionListener(search);
+		
+		searchButton.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
+		
+		searchButton.addActionListener(search);
 		
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(new FlowLayout());

@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -129,9 +131,16 @@ public class Comment extends JPanel {
 			authorButton.setPreferredSize(new Dimension(200, 100));
 			authorButton.setText("<html><body><u>"+author+"</u></body><html/>");
 			
-			Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/icon.png"));
-			ImageIcon icon = new ImageIcon(img);
-			authorButton.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
+			
+			ImageIcon img= new ImageIcon(Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/icon.png")));
+			try {
+				img = new ImageIcon(new URL(snippet.getAuthorProfileImageUrl()));
+			} catch (MalformedURLException e1) {
+				e1.printStackTrace();
+			}
+			
+			
+			authorButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
 			
 			
 			authorButton.setOpaque(false);

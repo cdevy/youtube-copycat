@@ -79,12 +79,18 @@ Execute
 
 ### Jeudi
 
-* Résolution des problèmes de mercredi si possible : Possibilité d'afficher au moins une fenêtre de commentaires et éventuellement d'intéragir avec, upload de vidéos,
+* Résolution des problèmes de mercredi si possible : possibilité d'afficher au moins une fenêtre de commentaires et éventuellement d'intéragir avec, upload de vidéos,
 plusieurs view sur la même fenêtre (settings, playlists, etc en plus de celle affichant le résultat de la recherche)
+
+		=> Implémenté avec succès ; implémentation des vues Settings, Upload et Trends.
 
 * Création de playlists (et consultation des playlist existantes)
 
+		=> Abandon de l'idée de création et consultation de playlists par manque de temps.
+
 * Mise en place de suggestions : utilisation des suggestions YT, vidéos du moment
+
+		=> L'implémentation de la vue affichant les vidéos tendances en France s'est faite avec succès par recherche dans le fichiers .json envoyés par Google comme réponse à la requète.
 
 
 ### Vendredi/Version finale

@@ -14,6 +14,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -21,6 +22,8 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -35,22 +38,27 @@ import extraction.GetJarResources;
 @SuppressWarnings("serial")
 public class UploadView extends AbstractView {
 	
+	private String[] statusChoices = {"public","private","unlisted"};
+	private JLabel videoUploaded = new JLabel("Video uploaded.");
+	private String status = "public";
+	
 	private JLabel yTImg;
 	private JPanel mainPanel = new JPanel();
 	private JTextField pathField = new JTextField("Path of the video to upload");
+	private JButton pathButton = new JButton("Choose video");
 	private JTextField nameField = new JTextField("Name");
-	private JTextField statusField = new JTextField("Status (public, private or unlisted)");
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private JComboBox statusField = new JComboBox(statusChoices);
 	private JTextArea description = new JTextArea("Description");
 	private JTextArea tags = new JTextArea("Tags, separated with commas");
 	private JButton uploadButton = new JButton("Upload");
-	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
-
+	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");	
 	
 	public UploadView(MainWindow mW) {
 		mainWindow = mW;
 		mainMenu = new MainMenu(mainWindow);
 		mainMenu.setBackground(Color.WHITE);
-		
+				
 		pathField.setPreferredSize(new Dimension(300,25));
 		nameField.setPreferredSize(new Dimension(300,25));
 		statusField.setPreferredSize(new Dimension(300,25));
@@ -63,7 +71,7 @@ public class UploadView extends AbstractView {
 		mainPanel.setBorder(new EmptyBorder(50, 20, 70, 20));
 		
 		pathField.setEnabled(false);
-		pathField.addMouseListener(new MouseAdapter() {
+		/*pathField.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent event) {
         		pathField.setEnabled(true);
         		pathField.requestFocus();
@@ -82,7 +90,7 @@ public class UploadView extends AbstractView {
 					pathField.setEnabled(false);
 				}
 			}
-        });
+        });*/
 		
 		nameField.setEnabled(false);
 		nameField.addMouseListener(new MouseAdapter() {
@@ -106,7 +114,7 @@ public class UploadView extends AbstractView {
 			}
         });
 		
-		statusField.setEnabled(false);
+		/*statusField.setEnabled(false);
 		statusField.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent event) {
         		statusField.setEnabled(true);
@@ -126,7 +134,7 @@ public class UploadView extends AbstractView {
 					statusField.setEnabled(false);
 				}
 			}
-        });
+        });*/
 		
 		description.setEnabled(false);
 		description.addMouseListener(new MouseAdapter() {
@@ -172,6 +180,29 @@ public class UploadView extends AbstractView {
 			}
         });
 		
+		pathButton.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	final JFileChooser fc = new JFileChooser();
+            	int returnVal = fc.showOpenDialog(mainWindow);
+            	if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = fc.getSelectedFile();
+                    pathField.setText(file.getAbsolutePath());
+                } else {
+                    
+                }
+            }
+         	
+		});
+		
+		statusField.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+			        @SuppressWarnings("rawtypes")
+					JComboBox cb = (JComboBox)e.getSource();
+			        status = (String)cb.getSelectedItem();
+				}
+		});
+		
 		Image upload = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/uploadIcon.png"));
 		ImageIcon img = new ImageIcon(upload);
 		uploadButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
@@ -182,8 +213,13 @@ public class UploadView extends AbstractView {
 			  
 	            public void actionPerformed(ActionEvent e) {
 	            	try {
-						new UploadVideo(pathField.getText(), statusField.getText(), nameField.getText(), description.getText(), Arrays.asList(tags.getText().split(",")));
-					} catch (IOException e1) {
+	            		if (!(pathField.getText().equals("Path of the video to upload") || nameField.getText().equals("Status (public, private or unlisted)"))) {
+	            			new UploadVideo(pathField.getText(), status, nameField.getText(), description.getText(), Arrays.asList(tags.getText().split(",")));
+	            			mainPanel.add(videoUploaded);
+	            			mainPanel.revalidate();
+	            			mainPanel.repaint();
+	            		}
+	            	} catch (IOException e1) {
 						System.out.println(e1);
 						e1.printStackTrace();
 					}
@@ -219,7 +255,9 @@ public class UploadView extends AbstractView {
         });
 		
 		JPanel pathPanel = new JPanel();
+		pathPanel.setLayout(new FlowLayout());
 		pathPanel.add(pathField);
+		pathPanel.add(pathButton);
 		JPanel namePanel = new JPanel();
 		namePanel.add(nameField);
 		JPanel statusPanel = new JPanel();

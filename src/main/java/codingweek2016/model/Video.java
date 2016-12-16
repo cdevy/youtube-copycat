@@ -1,6 +1,7 @@
 package codingweek2016.model;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 
@@ -13,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -43,6 +45,7 @@ public class Video extends JPanel {
 		super();
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		
 		this.add(Box.createHorizontalStrut(10));
 		
@@ -134,7 +137,6 @@ public class Video extends JPanel {
 		
 		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/commentIcon.png"));
 		ImageIcon icon = new ImageIcon(img);
-		//ImageIcon img = new ImageIcon(ImageIO.read(new File(iconcommenturl.getPath())));
 		comments.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
 		
 		comments.setOpaque(false);
@@ -184,6 +186,7 @@ public class Video extends JPanel {
 		super();
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		
 		this.add(Box.createHorizontalStrut(10));
 		
@@ -274,7 +277,6 @@ public class Video extends JPanel {
 		
 		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/commentIcon.png"));
 		ImageIcon icon = new ImageIcon(img);
-		//ImageIcon img = new ImageIcon(ImageIO.read(new File(iconcommenturl.getPath())));
 		comments.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
 		
 		comments.setOpaque(false);
@@ -312,10 +314,9 @@ public class Video extends JPanel {
 		
 		panel.add(title, BorderLayout.NORTH);
 		panel.add(description, BorderLayout.CENTER);
-		panel.add(description, BorderLayout.SOUTH);
+		panel.add(comments, BorderLayout.SOUTH);
 		
 		this.add(Box.createHorizontalStrut(10));
-		
 		this.add(panel);
 	}
 	

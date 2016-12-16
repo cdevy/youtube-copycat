@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +12,6 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -22,7 +20,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import codingweek2016.UserProfile;
@@ -30,7 +27,6 @@ import codingweek2016.UserProfile;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.youtube.YouTube;
-//import com.google.api.services.youtube.model.Comment;
 import com.google.api.services.youtube.model.CommentSnippet;
 import com.google.api.services.youtube.model.CommentThread;
 import com.google.api.services.youtube.model.CommentThreadListResponse;
@@ -43,8 +39,6 @@ import extraction.GetJarResources;
 public class Comment extends JPanel {
 	
     private static YouTube youtube;
-    
-    //private URL iconpersonurl = getClass().getResource("/icons/ic_person_black_24dp_2x.png");
 	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
 
     
@@ -110,7 +104,6 @@ public class Comment extends JPanel {
 			@SuppressWarnings("unused")
 			CommentThread videoCommentInsertResponse = youtube.commentThreads().insert("snippet", commentThread).execute();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

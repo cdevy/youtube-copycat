@@ -7,7 +7,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,13 +49,17 @@ public class MyUploadsView extends AbstractView {
 		editorPane.setContentType("text/html");
 		editorPane.setEditable(false);
 		if (playlist.getNbOfVideos()!=0) {
-			editorPane.setText("<html><body><p><center><b>Total Videos Uploaded: " + playlist.getNbOfVideos() + "<b/></center></p></body></html>");
+			editorPane.setText("<html><body><p><center><b>Total videos uploaded: " + playlist.getNbOfVideos() + ".<br/><br/><br/><br/><b/></center></p></body></html>");
 		} else {
-			editorPane.setText("<html><body><p><center><b>No Video Uploaded<b/></center></p></body></html>");
+			editorPane.setText("<html><body><p><center><b>No video uploaded.<b/></center></p></body></html>");
 		}
 
 		playlists.add(editorPane, BorderLayout.NORTH);
 
+		JPanel scroll = new JPanel();
+		scroll.setLayout(new BorderLayout());
+		scroll.setBorder(BorderFactory.createMatteBorder(10,10,10,10,(new JButton()).getBackground()));
+		
 		final JScrollPane scrollPane = new JScrollPane(playlist.display());
 		scrollPane.setBorder(null);
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -63,7 +69,9 @@ public class MyUploadsView extends AbstractView {
   				scrollPane.getVerticalScrollBar().setUnitIncrement(16);
   		   }
   		});
-        playlists.add(scrollPane, BorderLayout.CENTER);
+		
+		scroll.add(scrollPane, BorderLayout.CENTER);
+        playlists.add(scroll, BorderLayout.CENTER);
 		
 		JPanel north = new JPanel();
 		north.setLayout(new FlowLayout());

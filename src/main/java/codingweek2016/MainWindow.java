@@ -15,7 +15,7 @@ public class MainWindow extends JFrame {
 	
 	public MainWindow() {
 		super("Youtube Copycat");
-		setPreferredSize(new Dimension(1200,700));
+		setPreferredSize(new Dimension(1280,700));
 				
 		setLayout(new BorderLayout());
 		

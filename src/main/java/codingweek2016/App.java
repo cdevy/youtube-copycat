@@ -6,14 +6,14 @@ import codingweek2016.MainWindow;
 
 public class App {
 	
-	public static long NUMBER_OF_VIDEOS_RETURNED = 25;
+	public static long NUMBER_OF_VIDEOS_RETURNED = 15;
 	
 	public static void main(String[] args) {
-		//Vérifie le nom/existence du jar !
+		// Verify that the jar file exists and has the correct name
 		if (!new File("youtubeCopycat.jar").exists()) {
-		    throw new RuntimeException("L'exécutable doit se nommer \"youtubeCopycat.jar\" !");
+		    throw new RuntimeException("Executable file must be named \"youtubeCopycat.jar\" !");
 		}
-		//Lance l'appli à proprement parler
+		//Launch the app
 		new MainWindow();
 	}
 }

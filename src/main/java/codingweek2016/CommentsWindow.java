@@ -39,7 +39,7 @@ public class CommentsWindow extends JFrame {
 
 	public CommentsWindow(String title, final String id){
 		super("Comments on " + title);
-		this.setPreferredSize(new Dimension(500,800));
+		this.setPreferredSize(new Dimension(500,700));
 		
 		this.setLayout(new BorderLayout(30, 30));
 		
@@ -118,7 +118,7 @@ public class CommentsWindow extends JFrame {
         
         
         scroll = new JScrollPane(com.display(videoComments));
-        scroll.setPreferredSize(new Dimension(450,610));
+        scroll.setPreferredSize(new Dimension(450,520));
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
   		   public void run() { 
   			 scroll.getVerticalScrollBar().setValue(0);
@@ -151,7 +151,7 @@ public class CommentsWindow extends JFrame {
             	javax.swing.SwingUtilities.invokeLater(new Runnable() {
           		   public void run() { 
           			 scroll.getVerticalScrollBar().setValue(0);
-          			scroll.getHorizontalScrollBar().setValue(0);
+          			 scroll.getHorizontalScrollBar().setValue(0);
           		   }
           		});
             	scrollComment.add(scroll);

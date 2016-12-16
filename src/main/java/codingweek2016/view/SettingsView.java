@@ -39,7 +39,7 @@ public class SettingsView extends AbstractView {
 	private JTextField heightField = new JTextField("Window height");
 	private JTextField widthField = new JTextField("Window width");
 	private JTextField maxvidField = new JTextField("Number of videos to be displayed");
-	private JTextField apikeyField = new JTextField("API key");
+	//private JTextField apikeyField = new JTextField("API key");
 
 	private JButton saveButton = new JButton("Save");
 	private JPanel settingsGrid = new JPanel();
@@ -58,7 +58,7 @@ public class SettingsView extends AbstractView {
 		maxvidField.setPreferredSize(new Dimension(300,25));
 		heightField.setPreferredSize(new Dimension(300,25));
 		widthField.setPreferredSize(new Dimension(300,25));
-		apikeyField.setPreferredSize(new Dimension(300,25));
+		//apikeyField.setPreferredSize(new Dimension(300,25));
 		
 		Image upload = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/saveIcon.png"));
 		ImageIcon img = new ImageIcon(upload);
@@ -121,7 +121,7 @@ public class SettingsView extends AbstractView {
 			}
         });
 		
-		heightField.addActionListener(new ActionListener() {
+		/*heightField.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
             }
@@ -143,7 +143,7 @@ public class SettingsView extends AbstractView {
 
             public void actionPerformed(ActionEvent e) {
             }
-        });
+        });*/
 		
 		heightField.setEnabled(false);
 		heightField.addMouseListener(new MouseAdapter() {
@@ -211,6 +211,7 @@ public class SettingsView extends AbstractView {
 			}
         });
 		
+		/*
 		apikeyField.setEnabled(false);
 		apikeyField.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent event) {
@@ -231,7 +232,7 @@ public class SettingsView extends AbstractView {
 					apikeyField.setEnabled(false);
 				}
 			}
-        });
+        });*/
 		
 		JPanel heightPanel = new JPanel();
 		heightPanel.setLayout(new FlowLayout());
@@ -248,10 +249,10 @@ public class SettingsView extends AbstractView {
 		maxvidPanel.add(maxvidField);
 		settingsGrid.add(maxvidPanel);
 		
-		JPanel apikeyPanel = new JPanel();
+		/*JPanel apikeyPanel = new JPanel();
 		apikeyPanel.setLayout(new FlowLayout());
 		apikeyPanel.add(apikeyField);
-		settingsGrid.add(apikeyPanel);
+		settingsGrid.add(apikeyPanel);*/
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());

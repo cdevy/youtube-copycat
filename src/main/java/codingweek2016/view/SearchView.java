@@ -33,7 +33,6 @@ import extraction.GetJarResources;
 public class SearchView extends AbstractView {
 	
 	private JLabel logo;
-	//private URL youtubeiconurl = getClass().getResource("./youtube.png");
 
 	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
 	
@@ -96,7 +95,7 @@ public class SearchView extends AbstractView {
 	            		scrollBar.setBorder(null);
 	            		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 	              		   public void run() { 
-	              			   scrollBar.getVerticalScrollBar().setValue(0);
+	              			  scrollBar.getVerticalScrollBar().setValue(0);
 	              			  scrollBar.getHorizontalScrollBar().setValue(0);
 	              			  scrollBar.getVerticalScrollBar().setUnitIncrement(16);
 	              		   }
@@ -152,8 +151,6 @@ public class SearchView extends AbstractView {
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(new FlowLayout());
 		
-
-		//ImageIcon img = new ImageIcon(ImageIO.read(new File(youtubeiconurl.getPath())));
 		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("youtube.png"));
 		ImageIcon icon2 = new ImageIcon(img);
 		logo = new JLabel(new ImageIcon(icon2.getImage().getScaledInstance(200, 100, java.awt.Image.SCALE_SMOOTH)));

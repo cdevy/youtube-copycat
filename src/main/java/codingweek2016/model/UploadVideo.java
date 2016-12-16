@@ -60,8 +60,7 @@ public class UploadVideo extends Request {
 			final Video returnedVideo = videoInsert.execute();
  
         } catch (GoogleJsonResponseException e) {
-            System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
-                    + e.getDetails().getMessage());
+            System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
             e.printStackTrace();
         } catch (IOException e) {
             System.err.println("IOException: " + e.getMessage());

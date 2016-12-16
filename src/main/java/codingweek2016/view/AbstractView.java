@@ -34,6 +34,4 @@ public abstract class AbstractView extends JPanel implements Observer {
 	public void setVideos(List<Video> videos) {
 		this.videos = videos;
 	}
-
-
 }

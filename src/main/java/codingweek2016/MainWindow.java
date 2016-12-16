@@ -20,9 +20,6 @@ public class MainWindow extends JFrame {
 		setLayout(new BorderLayout());
 		
 		this.setMainView(new SearchView(this));
-		//SearchView v = new SearchView();
-		
-		//this.add(v);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();

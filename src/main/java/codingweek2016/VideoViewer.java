@@ -25,7 +25,6 @@ public class VideoViewer {
         browser.setVisible(true);
         shell.setVisible(true);
         
-        /* While the viewer window is open,  */
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch())
                 display.sleep();

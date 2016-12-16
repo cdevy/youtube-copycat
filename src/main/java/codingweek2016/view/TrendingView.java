@@ -94,8 +94,6 @@ public class TrendingView extends AbstractView {
     		
     		resultGrid.add(resultHead, BorderLayout.NORTH);
     		resultGrid.add(scrollBar, BorderLayout.CENTER);
-    		/*resultGrid.revalidate();
-    		resultGrid.repaint();*/
         }
     	
 		

@@ -13,13 +13,16 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import codingweek2016.UserProfile;
@@ -181,8 +184,15 @@ public class Comment extends JPanel {
 			text.setEditable(false);
 			text.setOpaque(false);
 			
+			
+			long rateValue= snippet.getLikeCount();
+			JLabel rate = new JLabel("Rate : " + rateValue);
+			
+			
+			
 			comment.add(authorButton, BorderLayout.NORTH);
 			comment.add(text, BorderLayout.CENTER);
+			comment.add(rate, BorderLayout.SOUTH);
 			
 			commentlist.add(comment);
 		}

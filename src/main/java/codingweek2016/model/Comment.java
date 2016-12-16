@@ -11,13 +11,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import codingweek2016.UserProfile;
@@ -129,9 +134,16 @@ public class Comment extends JPanel {
 			authorButton.setPreferredSize(new Dimension(200, 100));
 			authorButton.setText("<html><body><u>"+author+"</u></body><html/>");
 			
-			Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/icon.png"));
-			ImageIcon icon = new ImageIcon(img);
-			authorButton.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
+			
+			ImageIcon img= new ImageIcon(Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/icon.png")));
+			try {
+				img = new ImageIcon(new URL(snippet.getAuthorProfileImageUrl()));
+			} catch (MalformedURLException e1) {
+				e1.printStackTrace();
+			}
+			
+			
+			authorButton.setIcon(new ImageIcon(img.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
 			
 			
 			authorButton.setOpaque(false);
@@ -172,8 +184,15 @@ public class Comment extends JPanel {
 			text.setEditable(false);
 			text.setOpaque(false);
 			
+			
+			long rateValue= snippet.getLikeCount();
+			JLabel rate = new JLabel("Rate : " + rateValue);
+			
+			
+			
 			comment.add(authorButton, BorderLayout.NORTH);
 			comment.add(text, BorderLayout.CENTER);
+			comment.add(rate, BorderLayout.SOUTH);
 			
 			commentlist.add(comment);
 		}

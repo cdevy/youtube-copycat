@@ -42,6 +42,8 @@ public class UploadView extends AbstractView {
 	private JLabel videoUploaded = new JLabel("Video uploaded.");
 	private String status = "public";
 	
+	private Dimension dim4Buttons = new Dimension(130,30);
+	
 	private JLabel yTImg;
 	private JPanel mainPanel = new JPanel();
 	private JTextField pathField = new JTextField("Path of the video to upload");
@@ -71,26 +73,34 @@ public class UploadView extends AbstractView {
 		mainPanel.setBorder(new EmptyBorder(50, 20, 70, 20));
 		
 		pathField.setEnabled(false);
-		/*pathField.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent event) {
-        		pathField.setEnabled(true);
-        		pathField.requestFocus();
-            }
-        });
-		pathField.addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {
-				if (pathField.getText().equals("Path of the video to upload")){
-					pathField.setText("");
-				}
+		
+		pathButton.setPreferredSize(dim4Buttons);
+		pathButton.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
 			}
 
-			public void focusLost(FocusEvent e) {
-				if (pathField.getText().equals("")){
-					pathField.setText("Path of the video to upload");
-					pathField.setEnabled(false);
-				}
+			public void mouseEntered(MouseEvent arg0) {
+				pathButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				pathButton.setBackground(Color.WHITE);
+				pathButton.setBorder(BorderFactory.createMatteBorder(3,3,3,3,Color.red));
 			}
-        });*/
+
+			public void mouseExited(MouseEvent arg0) {
+				pathButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				pathButton.setBackground(new JButton().getBackground());
+				pathButton.setBorder(new JButton().getBorder());
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
 		
 		nameField.setEnabled(false);
 		nameField.addMouseListener(new MouseAdapter() {
@@ -113,28 +123,6 @@ public class UploadView extends AbstractView {
 				}
 			}
         });
-		
-		/*statusField.setEnabled(false);
-		statusField.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent event) {
-        		statusField.setEnabled(true);
-        		statusField.requestFocus();
-            }
-        });
-		statusField.addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {
-				if (statusField.getText().equals("Status (public, private or unlisted)")){
-					statusField.setText("");
-				}
-			}
-
-			public void focusLost(FocusEvent e) {
-				if (statusField.getText().equals("")){
-					statusField.setText("Status (public, private or unlisted)");
-					statusField.setEnabled(false);
-				}
-			}
-        });*/
 		
 		description.setEnabled(false);
 		description.addMouseListener(new MouseAdapter() {

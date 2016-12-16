@@ -123,6 +123,7 @@ public class CommentsWindow extends JFrame {
   		   public void run() { 
   			 scroll.getVerticalScrollBar().setValue(0);
   			 scroll.getHorizontalScrollBar().setValue(0);
+  			 scroll.getVerticalScrollBar().setUnitIncrement(16);
   		   }
   		});
         scrollComment.add(scroll);

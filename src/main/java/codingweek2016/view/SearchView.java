@@ -98,6 +98,7 @@ public class SearchView extends AbstractView {
 	              		   public void run() { 
 	              			   scrollBar.getVerticalScrollBar().setValue(0);
 	              			  scrollBar.getHorizontalScrollBar().setValue(0);
+	              			  scrollBar.getVerticalScrollBar().setUnitIncrement(16);
 	              		   }
 	              		});
 	            		

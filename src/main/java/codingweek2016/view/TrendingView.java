@@ -87,7 +87,8 @@ public class TrendingView extends AbstractView {
     		javax.swing.SwingUtilities.invokeLater(new Runnable() {
      		   public void run() { 
      			   scrollBar.getVerticalScrollBar().setValue(0);
-     			  scrollBar.getHorizontalScrollBar().setValue(0);
+     			   scrollBar.getHorizontalScrollBar().setValue(0);
+     			   scrollBar.getVerticalScrollBar().setUnitIncrement(16);
      		   }
      		});
     		

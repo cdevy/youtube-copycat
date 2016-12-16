@@ -2,81 +2,46 @@ package codingweek2016.model;
 
 import java.awt.GridLayout;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Properties;
 
 import javax.swing.JPanel;
 
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.services.samples.youtube.cmdline.Auth;
-import com.google.api.services.samples.youtube.cmdline.data.Search;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
-public class SearchRequest extends Observable {
-	
-	private static final String PROPERTIES_FILENAME = "youtube.properties";
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
-    private static YouTube youtube;
+import codingweek2016.App;
+
+public class SearchRequest extends Request {
     
     private List<Video> videos = new ArrayList<Video>();
-	
+    private static HttpRequestInitializer httpRequest = new HttpRequestInitializer() {public void initialize(HttpRequest request) throws IOException {}};
+	private static String appName = "youtube-search";
+    
 	public SearchRequest() {
-		super();
+		super(httpRequest,appName);
 	}
 	
-	public List<SearchResult> searchKeyWord(String userInput) {
-        Properties properties = new Properties();
-        try {
-            InputStream in = Search.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
-            properties.load(in);
+	public List<SearchResult> searchKeyWord(String userInput) throws IOException {
+		videos = new ArrayList<Video>();
 
-        } catch (IOException e) {
-            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
-                    + " : " + e.getMessage());
-            System.exit(1);
-        }
+        String queryTerm = userInput;
         
-        try {
+        YouTube.Search.List search = youtube.search().list("id,snippet");
+        
+        search.setKey(apiKey);
+        search.setQ(queryTerm);
 
-            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
-            	
-                public void initialize(HttpRequest request) throws IOException {
-                	
-                }
-            }).setApplicationName("youtube-cmdline-search-sample").build();
+        search.setType("video");
 
-            String queryTerm = userInput;
-            
-            YouTube.Search.List search = youtube.search().list("id,snippet");
-
-            String apiKey = properties.getProperty("youtube.apikey");
-            search.setKey(apiKey);
-            search.setQ(queryTerm);
-            System.out.println("");
-            search.setType("video");
-
-            search.setFields("items(id/kind,id/videoId,snippet/title,snippet/description,snippet/thumbnails/default/url)");
-            search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
-            SearchListResponse searchResponse = search.execute();
-            
-            return(searchResponse.getItems());
-            
-        } catch (GoogleJsonResponseException e) {
-            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
-                    + e.getDetails().getMessage());
-        } catch (IOException e) {
-            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-		return null;
+        search.setFields("items(id/kind,id/videoId,snippet/title,snippet/description,snippet/thumbnails/default/url)");
+        search.setMaxResults(App.NUMBER_OF_VIDEOS_RETURNED);
+        SearchListResponse searchResponse = search.execute();
+        
+        return(searchResponse.getItems());
 	}
 	
 	public void loadVideos(List<SearchResult> results) {
@@ -90,7 +55,7 @@ public class SearchRequest extends Observable {
 	
 	public JPanel display() {
 		JPanel panel = new JPanel();
-		GridLayout grid = new GridLayout(25,1);
+		GridLayout grid = new GridLayout((int) App.NUMBER_OF_VIDEOS_RETURNED,1);
 		grid.setVgap(10);
 		panel.setLayout(grid);
 		

@@ -3,7 +3,10 @@ package codingweek2016.model;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
+
+import java.awt.Image;
+import java.awt.Toolkit;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -19,15 +22,21 @@ import javax.swing.JTextArea;
 
 import com.google.api.services.youtube.model.SearchResult;
 
+import codingweek2016.CommentsWindow;
 import codingweek2016.VideoViewer;
+import extraction.GetJarResources;
 
 @SuppressWarnings("serial")
 public class Video extends JPanel {
 	
 	private JButton thumbnail = new JButton();
 	private JButton title = new JButton();
+	private JButton comments = new JButton("<html><body><u>Comments</u></body><html/>");
 	private JTextArea description = new JTextArea();
 	private String id;
+	
+	private GetJarResources jar = new GetJarResources("youtubeCopycat.jar");
+
 	
 	public Video(SearchResult result) {
 		super();
@@ -79,7 +88,6 @@ public class Video extends JPanel {
             	new VideoViewer(title.getText(), id);
             }
         });
-		new GridBagLayout();
 		thumbnail.setOpaque(false);
 		thumbnail.setContentAreaFilled(false);
 		thumbnail.setBorderPainted(false);
@@ -123,8 +131,47 @@ public class Video extends JPanel {
 
 		description.setOpaque(false);
 		
+		Image img = Toolkit.getDefaultToolkit().createImage(jar.getResource("icons/commentIcon.png"));
+		ImageIcon icon = new ImageIcon(img);
+		//ImageIcon img = new ImageIcon(ImageIO.read(new File(iconcommenturl.getPath())));
+		comments.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));	
+		
+		comments.setOpaque(false);
+		comments.setContentAreaFilled(false);
+		comments.setBorderPainted(false);
+		comments.setPreferredSize(new Dimension(200,80));
+		comments.addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				comments.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				comments.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// Do nothing
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+				// Do nothing
+			}
+        });
+		comments.addActionListener(new ActionListener() {
+			  
+            public void actionPerformed(ActionEvent e) {
+            	new CommentsWindow(title.getText(), id);
+            }
+        });
+		
 		panel.add(title, BorderLayout.NORTH);
 		panel.add(description, BorderLayout.CENTER);
+		panel.add(comments, BorderLayout.SOUTH);
 		
 		this.add(Box.createHorizontalStrut(10));
 		

@@ -55,7 +55,7 @@ public class SearchRequest extends Request {
 	
 	public JPanel display() {
 		JPanel panel = new JPanel();
-		GridLayout grid = new GridLayout(25,1);
+		GridLayout grid = new GridLayout((int) App.NUMBER_OF_VIDEOS_RETURNED,1);
 		grid.setVgap(10);
 		panel.setLayout(grid);
 		
